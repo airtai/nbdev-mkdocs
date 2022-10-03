@@ -1,4 +1,4 @@
-run_docker.ps
+run_docker.sh
 
 _publish.yml
 _quarto.yml

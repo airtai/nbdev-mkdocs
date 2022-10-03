@@ -18,7 +18,7 @@ import importlib
 # %% ../nbs/Generate_Docs_CLI.ipynb 5
 app = typer.Typer(help="CLI commands for generating mkdocs-material documentation")
 
-# %% ../nbs/Generate_Docs_CLI.ipynb 6
+# %% ../nbs/Generate_Docs_CLI.ipynb 7
 def list_submodules(package_name: types.ModuleType) -> List[str]:
     def _list_submodules(list_name, package_name):
         for loader, module_name, is_pkg in pkgutil.walk_packages(
@@ -38,7 +38,7 @@ def list_submodules(package_name: types.ModuleType) -> List[str]:
 
     return sorted(set(all_modules))
 
-# %% ../nbs/Generate_Docs_CLI.ipynb 8
+# %% ../nbs/Generate_Docs_CLI.ipynb 9
 def get_exported_symbols(submodules: List[str]) -> Dict[str, List[str]]:
     modules = {name: __import__(name, fromlist="dummylist") for name in submodules}
     return {
@@ -47,7 +47,7 @@ def get_exported_symbols(submodules: List[str]) -> Dict[str, List[str]]:
         if hasattr(module, "__all__")
     }
 
-# %% ../nbs/Generate_Docs_CLI.ipynb 10
+# %% ../nbs/Generate_Docs_CLI.ipynb 11
 def generate_nav_tree(level, summary, m, all_modules):
     """Function to generate multi-level natigation in the docs"""
     base_module = ".".join(m.split(".")[: -(level - 1)])
@@ -73,7 +73,7 @@ def generate_nav_tree(level, summary, m, all_modules):
 
     return summary, all_modules
 
-# %% ../nbs/Generate_Docs_CLI.ipynb 11
+# %% ../nbs/Generate_Docs_CLI.ipynb 12
 _summary = """
 - [Home](index.md)
 """
@@ -135,5 +135,5 @@ def build_api_docs(
 
 # print(build_api_docs(docs_path = "../docs"))
 
-# %% ../nbs/Generate_Docs_CLI.ipynb 13
+# %% ../nbs/Generate_Docs_CLI.ipynb 14
 app.command()(build_api_docs)
