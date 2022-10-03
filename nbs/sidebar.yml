@@ -1,0 +1,6 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - Docstring_helpers.ipynb
+      - Generate_Docs_CLI.ipynb

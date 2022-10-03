@@ -1,0 +1,12 @@
+
+- [Home](index.md)
+- API
+    - nbdev_mkdocs.cli
+        - [app](API/cli/app.md)
+        - [list_submodules](API/cli/list_submodules.md)
+        - [get_exported_symbols](API/cli/get_exported_symbols.md)
+        - [generate_nav_tree](API/cli/generate_nav_tree.md)
+        - [build_api_docs](API/cli/build_api_docs.md)
+    - nbdev_mkdocs.docstring
+        - helpers
+            - [run_examples_from_docstring](API/helpers/run_examples_from_docstring.md)

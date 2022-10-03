@@ -1,0 +1,76 @@
+# Site
+site_name: nbdev mkdocs
+site_url: https://airt.ai
+site_author: airt.ai
+site_description: nbdev extension for material for mkdocs
+  
+# Repository
+repo_name: github
+repo_url: https://github.com/airtai/nbdev_mkdocs
+edit_uri: ""
+
+copyright: Copyright &copy; 2022 onwards <a href="https://www.airt.ai" target="_blank">airt technologies d.o.o.</a>
+
+docs_dir: docs
+site_dir: site
+
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+            heading_level: 2
+            show_signature_annotations: True
+- literate-nav:
+    nav_file: SUMMARY.md
+            
+markdown_extensions:
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+        linenums: false
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  
+theme:
+  name: material
+  custom_dir: overrides
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+#     - navigation.sections
+#     - navigation.expand
+    - navigation.indexes
+    - navigation.top
+#     - toc.integrates
+    - search.suggest
+    - search.highlight
+    - search.share
+  palette:
+    - scheme: slate
+      primary: black
+      accent: yellow
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+    - scheme: default
+      primary: black # deep orange
+      accent: red
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+  icon:
+    repo: fontawesome/brands/github
+#     repo: fontawesome/brands/gitlab
+    logo: material/compass-outline
+#     admonition:
+#         <type>: <icon> 
+  favicon: images/favicon.ico
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js

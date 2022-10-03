@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "nbdev_mkdocs"
+  site-url: "https://airtai.github.io/nbdev_mkdocs"
+  description: "Extension to nbdev for usage of Material for Mkdocs instead of Quarto"
+  repo-branch: main
+  repo-url: "https://github.com/airtai/nbdev_mkdocs"
