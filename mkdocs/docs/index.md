@@ -14,6 +14,14 @@ pip install nbdev_mkdocs
 
 ## How to use
 
+``` python
+import nbdev_mkdocs.mkdocs
+```
+
+``` python
+# print(nbdev_mkdocs.mkdocs.new_req_to_add)
+```
+
 Fill me in please! Don’t forget code examples:
 
 ```` python

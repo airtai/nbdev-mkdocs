@@ -1,5 +1,11 @@
 run_docker.sh
 
+.sast_bandit
+.sast_semgrep
+.semgrepignore
+.local_install
+.local_reinstall
+
 _publish.yml
 _quarto.yml
 _proc/
