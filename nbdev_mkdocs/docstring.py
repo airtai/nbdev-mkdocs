@@ -25,18 +25,30 @@ import logging
 # %% ../nbs/Docstring.ipynb 3
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-logger.getEffectiveLevel()
 
-# %% ../nbs/Docstring.ipynb 5
+
+# %% ../nbs/Docstring.ipynb 4
+try:
+    import griffe
+    
+    griffe_logger = logging.getLogger("griffe.docstrings.google")
+    
+    griffe_logger.setLevel(logging.ERROR)
+    
+    griffe_logger.warning("you should not see this")
+except: # nosec: B110:try_except_pass] Try, Except, Pass detected.
+    pass 
+
+# %% ../nbs/Docstring.ipynb 6
 import rich.jupyter
 
 rich.jupyter.JUPYTER_HTML_FORMAT = """\
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace;font-size:.68rem">{code}</pre>
 """
 
-logger.info(f"{rich.jupyter.JUPYTER_HTML_FORMAT=}")
+# logger.info(f"{rich.jupyter.JUPYTER_HTML_FORMAT=}")
 
-# %% ../nbs/Docstring.ipynb 9
+# %% ../nbs/Docstring.ipynb 10
 def _extract_examples_from_docstring(o: Any) -> List[str]:
     try:
         import griffe
@@ -66,7 +78,7 @@ def _extract_examples_from_docstring(o: Any) -> List[str]:
 
     return examples
 
-# %% ../nbs/Docstring.ipynb 16
+# %% ../nbs/Docstring.ipynb 17
 def _get_keywords(examples: List[str]) -> List[str]:
     keywords: List[str] = sum(
         [
@@ -78,7 +90,7 @@ def _get_keywords(examples: List[str]) -> List[str]:
 
     return keywords
 
-# %% ../nbs/Docstring.ipynb 18
+# %% ../nbs/Docstring.ipynb 19
 def _replace_keywords(examples: List[str], **kwargs) -> List[str]:
     keywords = _get_keywords(examples)
 
@@ -93,7 +105,7 @@ def _replace_keywords(examples: List[str], **kwargs) -> List[str]:
 
     return examples
 
-# %% ../nbs/Docstring.ipynb 20
+# %% ../nbs/Docstring.ipynb 21
 def _format_output(
     s: str,
     *,
@@ -112,7 +124,7 @@ def _format_output(
         return Group(Rule(title), s)
 #         return Panel(s, title=title, width=width)
 
-# %% ../nbs/Docstring.ipynb 22
+# %% ../nbs/Docstring.ipynb 23
 def run_examples_from_docstring(
     o: Any,
     *,

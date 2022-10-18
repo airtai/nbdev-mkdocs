@@ -42,10 +42,6 @@ from nbdev_mkdocs.docstring import run_examples_from_docstring
 run_examples_from_docstring(f, supress_stderr=True)
 ```
 
-    WARNING:griffe.docstrings.google:<module>:3: No type or annotation for parameter 's'
-    WARNING:griffe.docstrings.google:<module>:4: No type or annotation for parameter 'i'
-    WARNING:griffe.docstrings.google:<module>:5: Failed to get 'name: description' pair from ''
-
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace;font-size:.68rem">Example:
 <span style="color: #00ff00; text-decoration-color: #00ff00">───────────────────────────────────── </span>code<span style="color: #00ff00; text-decoration-color: #00ff00"> ─────────────────────────────────────</span>
 

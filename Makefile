@@ -25,6 +25,7 @@ install: .local_install .local_reinstall
 
 README.md: .local_install .local_reinstall
 	nbdev_readme
+	cp _proc/_site/README.md .
 
 # the difference between install and dist target is that dist has the latest README.md installed
 dist: README.md
