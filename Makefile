@@ -8,6 +8,7 @@ nbdev_mkdocs: $(SRC) $(PACKAGE_DATA) settings.ini Makefile
 	rm -rf nbdev_mkdocs/package_data; cp -r package_data nbdev_mkdocs/
 	touch nbdev_mkdocs
 
+.PHONY: install
 install: .local_install .local_reinstall 
 
 # install wheel locally, but don't reinstall dependancies
@@ -22,7 +23,7 @@ install: .local_install .local_reinstall
 	pip install --force-reinstall `ls dist/nbdev_mkdocs-*-py3-none-any.whl`\[dev\]
 	touch .local_reinstall
 
-README.md: install
+README.md: .local_install .local_reinstall
 	nbdev_readme
 
 # the difference between install and dist target is that dist has the latest README.md installed
@@ -32,12 +33,15 @@ dist: README.md
 	pip install `ls dist/nbdev_mkdocs-*-py3-none-any.whl`\[dev\]
 	touch dist
 
+.PHONY: test
 test: install
 	nbdev_test
     
+.PHONY: mypy
 mypy: nbdev_mkdocs
 	mypy nbdev_mkdocs --ignore-missing-imports
     
+.PHONY: sast
 sast: .sast_bandit .sast_semgrep
 
 .sast_bandit: nbdev_mkdocs
@@ -48,18 +52,22 @@ sast: .sast_bandit .sast_semgrep
 	semgrep --config auto --error nbdev_mkdocs
 	touch .sast_semgrep
 
+.PHONY: check_all
 check_all: mypy sast test
 
-mkdocs/site: install
+mkdocs/site: dist
 	nbdev_mkdocs prepare
 	touch mkdocs/site
     
+.PHONY: preview
 preview: mkdocs/site
 	nbdev_mkdocs preview
 
+.PHONY: prepare
 prepare: dist mkdocs/site check_all
 	nbdev_clean
 
+.PHONY: clean
 clean:
 	rm -rf nbdev_mkdocs
 	rm -rf dist

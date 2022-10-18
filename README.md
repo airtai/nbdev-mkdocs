@@ -14,16 +14,6 @@ pip install nbdev_mkdocs
 
 ## How to use
 
-``` python
-import nbdev_mkdocs.mkdocs
-```
-
-``` python
-# print(nbdev_mkdocs.mkdocs.new_req_to_add)
-```
-
-Fill me in please! Don’t forget code examples:
-
 ```` python
 def f(s: str, i: int):
     """ A simple function
@@ -43,28 +33,30 @@ def f(s: str, i: int):
     print((s + " ")*i)
 ````
 
+You can use the following code to run example from the function’s
+documentation above:
+
 ``` python
+from nbdev_mkdocs.docstring import run_examples_from_docstring
+
 run_examples_from_docstring(f, supress_stderr=True)
 ```
 
-    <module>:3: No type or annotation for parameter 's'
-    <module>:4: No type or annotation for parameter 'i'
-    <module>:5: Failed to get 'name: description' pair from ''
+    WARNING:griffe.docstrings.google:<module>:3: No type or annotation for parameter 's'
+    WARNING:griffe.docstrings.google:<module>:4: No type or annotation for parameter 'i'
+    WARNING:griffe.docstrings.google:<module>:5: Failed to get 'name: description' pair from ''
 
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Example:                                                                                                        │
-│                                                                                                                 │
-│     s = "Hello World! "                                                                                         │
-│     i = 2                                                                                                       │
-│                                                                                                                 │
-│     print(s * i)                                                                                                │
-│                                                                                                                 │
-│ ╭────────────────────────────────────────────────── stdout ───────────────────────────────────────────────────╮ │
-│ │ Hello World! Hello World!                                                                                   │ │
-│ │                                                                                                             │ │
-│ ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │
-│ ╭───────────────────────────────────────────── stderr supressed ──────────────────────────────────────────────╮ │
-│ │                                                                                                             │ │
-│ ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace;font-size:.68rem">Example:
+<span style="color: #00ff00; text-decoration-color: #00ff00">───────────────────────────────────── </span>code<span style="color: #00ff00; text-decoration-color: #00ff00"> ─────────────────────────────────────</span>
+
+    s = <span style="color: #008000; text-decoration-color: #008000">"Hello World! "</span>
+    i = <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>
+
+    <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">print</span><span style="font-weight: bold">(</span>s * i<span style="font-weight: bold">)</span>
+
+<span style="color: #00ff00; text-decoration-color: #00ff00">──────────────────────────────────── </span>stdout<span style="color: #00ff00; text-decoration-color: #00ff00"> ────────────────────────────────────</span>
+Hello World! Hello World! 
+
+<span style="color: #00ff00; text-decoration-color: #00ff00">─────────────────────────────── </span>stderr supressed<span style="color: #00ff00; text-decoration-color: #00ff00"> ───────────────────────────────</span>
+N/A
 </pre>

@@ -525,12 +525,13 @@
 
 
 
+
   <div class="doc doc-object doc-function">
 
 
 
 <h2 id="nbdev_mkdocs.docstring.run_examples_from_docstring" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">run_examples_from_docstring</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">supress_stdout</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">supress_stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sub_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">run_examples_from_docstring</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">supress_stdout</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">supress_stderr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sub_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 <a href="#nbdev_mkdocs.docstring.run_examples_from_docstring" class="headerlink" title="Permanent link">¤</a></h2>
@@ -633,7 +634,8 @@ stderr, typically used to mask sensitive information such as passwords</p></td>
     <span class="n">supress_stdout</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">supress_stderr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">sub_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span>
+    <span class="n">width</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Runs example from a docstring</span>
 
@@ -674,6 +676,8 @@ stderr, typically used to mask sensitive information such as passwords</p></td>
 <span class="sd">        run_examples_from_docstring(f, name=&quot;John&quot;, other_name=&quot;Jane&quot;)</span>
 <span class="sd">        ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+
     <span class="n">examples</span> <span class="o">=</span> <span class="n">_extract_examples_from_docstring</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No examples found in:</span><span class="se">\n</span><span class="si">{</span><span class="n">o</span><span class="o">.</span><span class="vm">__doc__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -687,12 +691,27 @@ stderr, typically used to mask sensitive information such as passwords</p></td>
             <span class="n">process</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span>  <span class="c1"># nosec: B603</span>
                 <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">cmd_path</span><span class="p">)],</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)</span>
-            <span class="n">panel_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span>
-                <span class="s2">&quot;Example:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
-                <span class="n">_format_output</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;stdout&quot;</span><span class="p">,</span> <span class="n">supress</span><span class="o">=</span><span class="n">supress_stdout</span><span class="p">,</span> <span class="n">sub_dict</span><span class="o">=</span><span class="n">sub_dict</span><span class="p">),</span>
-                <span class="n">_format_output</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span> <span class="n">supress</span><span class="o">=</span><span class="n">supress_stderr</span><span class="p">,</span> <span class="n">sub_dict</span><span class="o">=</span><span class="n">sub_dict</span><span class="p">),</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span>
+                <span class="s2">&quot;Example:&quot;</span><span class="p">,</span>
+                <span class="n">Rule</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">),</span>
+                <span class="n">textwrap</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
+                <span class="n">_format_output</span><span class="p">(</span>
+                    <span class="n">process</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;stdout&quot;</span><span class="p">,</span>
+                    <span class="n">supress</span><span class="o">=</span><span class="n">supress_stdout</span><span class="p">,</span>
+                    <span class="n">sub_dict</span><span class="o">=</span><span class="n">sub_dict</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">_format_output</span><span class="p">(</span>
+                    <span class="n">process</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span>
+                    <span class="n">supress</span><span class="o">=</span><span class="n">supress_stderr</span><span class="p">,</span>
+                    <span class="n">sub_dict</span><span class="o">=</span><span class="n">sub_dict</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">Panel</span><span class="p">(</span><span class="n">panel_group</span><span class="p">))</span>
+<span class="c1">#             print(Panel(panel_group, width=width))</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 </code></pre></div>

@@ -516,11 +516,6 @@ documentation.</p>
 <div class="highlight"><pre><span></span><code>pip install nbdev_mkdocs
 </code></pre></div>
 <h2 id="how-to-use">How to use<a class="headerlink" href="#how-to-use" title="Permanent link">¤</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">nbdev_mkdocs.mkdocs</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># print(nbdev_mkdocs.mkdocs.new_req_to_add)</span>
-</code></pre></div>
-<p>Fill me in please! Don’t forget code examples:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; A simple function</span>
 
@@ -538,28 +533,29 @@ documentation.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">((</span><span class="n">s</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">run_examples_from_docstring</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">supress_stderr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>You can use the following code to run example from the function’s
+documentation above:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">nbdev_mkdocs.docstring</span> <span class="kn">import</span> <span class="n">run_examples_from_docstring</span>
+
+<span class="n">run_examples_from_docstring</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">supress_stderr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>&lt;module&gt;:3: No type or annotation for parameter &#39;s&#39;
-&lt;module&gt;:4: No type or annotation for parameter &#39;i&#39;
-&lt;module&gt;:5: Failed to get &#39;name: description&#39; pair from &#39;&#39;
+<div class="highlight"><pre><span></span><code>WARNING:griffe.docstrings.google:&lt;module&gt;:3: No type or annotation for parameter &#39;s&#39;
+WARNING:griffe.docstrings.google:&lt;module&gt;:4: No type or annotation for parameter &#39;i&#39;
+WARNING:griffe.docstrings.google:&lt;module&gt;:5: Failed to get &#39;name: description&#39; pair from &#39;&#39;
 </code></pre></div>
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Example:                                                                                                        │
-│                                                                                                                 │
-│     s = "Hello World! "                                                                                         │
-│     i = 2                                                                                                       │
-│                                                                                                                 │
-│     print(s * i)                                                                                                │
-│                                                                                                                 │
-│ ╭────────────────────────────────────────────────── stdout ───────────────────────────────────────────────────╮ │
-│ │ Hello World! Hello World!                                                                                   │ │
-│ │                                                                                                             │ │
-│ ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │
-│ ╭───────────────────────────────────────────── stderr supressed ──────────────────────────────────────────────╮ │
-│ │                                                                                                             │ │
-│ ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace;font-size:.68rem">Example:
+<span style="color: #00ff00; text-decoration-color: #00ff00">───────────────────────────────────── </span>code<span style="color: #00ff00; text-decoration-color: #00ff00"> ─────────────────────────────────────</span>
+
+    s = <span style="color: #008000; text-decoration-color: #008000">"Hello World! "</span>
+    i = <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>
+
+    <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">print</span><span style="font-weight: bold">(</span>s * i<span style="font-weight: bold">)</span>
+
+<span style="color: #00ff00; text-decoration-color: #00ff00">──────────────────────────────────── </span>stdout<span style="color: #00ff00; text-decoration-color: #00ff00"> ────────────────────────────────────</span>
+Hello World! Hello World! 
+
+<span style="color: #00ff00; text-decoration-color: #00ff00">─────────────────────────────── </span>stderr supressed<span style="color: #00ff00; text-decoration-color: #00ff00"> ───────────────────────────────</span>
+N/A
 </pre>
 
               

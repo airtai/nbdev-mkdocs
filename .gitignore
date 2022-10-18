@@ -5,6 +5,7 @@ run_docker.sh
 .semgrepignore
 .local_install
 .local_reinstall
+.secret.baseline
 
 _publish.yml
 _quarto.yml
