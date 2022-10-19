@@ -25,6 +25,9 @@ from configupdater.option import Option
 
 from configparser import ConfigParser
 
+from nbdev.serve import proc_nbs
+import nbconvert
+
 from .package_data import get_root_data_path
 
 # %% ../nbs/Mkdocs.ipynb 5
@@ -169,6 +172,38 @@ def _create_mkdocs_yaml(root_path: str):
         raise typer.Exit(code=3)
 
 # %% ../nbs/Mkdocs.ipynb 20
+_summary_template = """- [Home](index.md)
+{guides}
+{api}
+{cli}
+"""
+
+def _create_summary_template(root_path: str):
+    try:
+        # create mkdocs folder if necessary
+        summary_template_path = Path(root_path) / "mkdocs" / "summary_template.txt"
+        summary_template_path.parent.mkdir(exist_ok=True)
+        # summary_template_path.yml already exists, just return
+        if summary_template_path.exists():
+            typer.secho(
+                f"Path '{summary_template_path.resolve()}' exists, skipping generation of it."
+            )
+            return
+
+        # get default values from settings.ini
+        with open(summary_template_path, "w") as f:
+            f.write(_summary_template)
+            typer.secho(f"File '{summary_template_path.resolve()}' generated.")
+            return
+    except Exception as e:
+        typer.secho(
+            f"Unexpected Error while creating '{summary_template_path.resolve()}': {e}",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=3)
+
+# %% ../nbs/Mkdocs.ipynb 23
 def new(root_path: str):
     """Initialize mkdocs project files
 
@@ -182,8 +217,44 @@ def new(root_path: str):
     _add_requirements_to_settings(root_path)
     _create_mkdocs_dir(root_path)
     _create_mkdocs_yaml(root_path)
+    _create_summary_template(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 23
+# %% ../nbs/Mkdocs.ipynb 29
+def _generate_markdown_from_nbs(root_path: str):
+    doc_path = Path(root_path) / "mkdocs" / "docs"
+    doc_path.mkdir(exist_ok=True, parents=True)
+
+    cache = proc_nbs()
+    notebooks = list(cache.glob("**/*.ipynb"))
+    print(f"{cache=}")
+    print(f"{notebooks=}")
+    
+    converter = nbconvert.MarkdownExporter()
+    for nb in notebooks:
+        body, _ = converter.from_filename(nb)
+        dir_prefix = str(nb.parent)[len(str(cache))+1:]
+        md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
+        md.parent.mkdir(parents=True, exist_ok=True)
+        with open(md, mode="w") as f:
+            typer.secho(
+                f"File '{md.resolve()}' created.",
+            )
+            f.write(body)
+
+# %% ../nbs/Mkdocs.ipynb 32
+def _generate_summary_for_guides(root_path: str) -> str:
+    doc_path = Path(root_path) / "mkdocs" / "docs"
+    mds = [md for md in doc_path.glob("**/*.md") if md.name.lower().startswith("guide")]
+
+    i = len(doc_path.parts)
+    if len(mds) > 0:
+        return "- Guides\n    - " + "    - ".join(
+            [f"[{md.stem.replace('_', ' ')}]({'/'.join(md.parts[i:])})" for md in mds]
+        )
+    else:
+        return ""
+
+# %% ../nbs/Mkdocs.ipynb 36
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -198,7 +269,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 25
+# %% ../nbs/Mkdocs.ipynb 38
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -223,7 +294,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 27
+# %% ../nbs/Mkdocs.ipynb 41
 def build_summary(
     root_path: str,
     module: str,
@@ -235,17 +306,31 @@ def build_summary(
     # copy README.md as index.md
     shutil.copy(Path(root_path) / "README.md", docs_path / "index.md")
 
-    api_summary = generate_api_docs_for_module(root_path, module)
+    # generate markdown files
+    _generate_markdown_from_nbs(root_path)
+    
+    # generates guides
+    guides = _generate_summary_for_guides(root_path)
+    
+    # generate API
+    api = generate_api_docs_for_module(root_path, module)
+    
+    # generate CLI
+    cli = """- CLI
+    - [CLI 1](index.md)"""
 
-    summary = "- [Home](index.md)\n"
-    summary = summary + api_summary
-
+    # read summary template from file
+    with open(Path(root_path) / "mkdocs" / "summary_template.txt") as f:
+        summary_template = f.read()
+        
+    summary = summary_template.format(guides=guides, api=api, cli=cli)
+    summary = "\n".join([l for l in [l.rstrip() for l in summary.split("\n")] if l != ""])
+    
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-    return summary
 
-# %% ../nbs/Mkdocs.ipynb 29
+# %% ../nbs/Mkdocs.ipynb 46
 def prepare(root_path: str):
     """Prepares mkdocs for serving
 
@@ -280,7 +365,7 @@ def prepare(root_path: str):
         )
         raise typer.Exit(5)
 
-# %% ../nbs/Mkdocs.ipynb 33
+# %% ../nbs/Mkdocs.ipynb 50
 import shlex
 
 

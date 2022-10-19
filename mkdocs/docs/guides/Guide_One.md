@@ -1,6 +1,6 @@
 ---
 description: Extension to nbdev for usage of Material for Mkdocs instead of Quarto
-output-file: index.html
+output-file: guide_one.html
 title: nbdev_mkdocs
 
 ---

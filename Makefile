@@ -25,7 +25,8 @@ install: .local_install .local_reinstall
 
 README.md: .local_install .local_reinstall
 	nbdev_readme
-	cp _proc/_site/README.md .
+
+#	cp _proc/_site/README.md .
 
 # the difference between install and dist target is that dist has the latest README.md installed
 dist: README.md
@@ -74,6 +75,8 @@ clean:
 	rm -rf dist
 	rm -rf build
 	rm -rf _proc
+	rm -rf _docs
 	rm -rf nbdev_mkdocs.egg-info
 	rm -rf mkdocs/site
+	rm -rf mkdocs/docs
 	pip uninstall -y nbdev_mkdocs
