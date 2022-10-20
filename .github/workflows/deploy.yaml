@@ -1,9 +1,28 @@
-name: Deploy to GitHub Pages
+#name: Deploy to GitHub Pages
+#on:
+#  push:
+#    branches: [ "main", "master" ]
+#  workflow_dispatch:
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#    steps: [uses: fastai/workflows/quarto-ghp@master]
+
+
+name: Deploy nbdev-mkdocs generated documentation to GitHub Pages
 on:
   push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+    branches:
+      - master 
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps: [uses: fastai/workflows/quarto-ghp@master]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install mkdocs-material 
+      - run: cd mkdocs; mkdocs gh-deploy --force
+
