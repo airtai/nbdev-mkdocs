@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/CLI/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/CLI/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/Docstring/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/Docstring/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/Mkdocs/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/Mkdocs/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/PackageData/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/PackageData/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -31,22 +31,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/API/nbdev_mkdocs/cli/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/API/nbdev_mkdocs/cli/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/API/nbdev_mkdocs/docstring/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/API/nbdev_mkdocs/docstring/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/API/nbdev_mkdocs/mkdocs/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/API/nbdev_mkdocs/mkdocs/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev_mkdocs/guides/Guide_One/</loc>
+         <loc>https://airtai.github.io/nbdev-mkdocs/guides/Guide_One/</loc>
          <lastmod>2022-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
