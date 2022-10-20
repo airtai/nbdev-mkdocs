@@ -45,8 +45,8 @@ with TemporaryDirectory() as d:
     print(updater)
 ```
 
-    Requirements added to '/tmp/tmpyqws2vi5/settings.ini'.
-    Requirements already added to '/tmp/tmpyqws2vi5/settings.ini'.
+    Requirements added to '/tmp/tmpox0d8w7h/settings.ini'.
+    Requirements already added to '/tmp/tmpox0d8w7h/settings.ini'.
     [DEFAULT]
     # All sections below are required unless otherwise specified.
     # See https://github.com/fastai/nbdev/blob/master/settings.ini for examples.
@@ -122,60 +122,60 @@ with TemporaryDirectory() as d:
     print("\n".join([str(p) for p in (Path(d) / "mkdocs").glob("**/*")]))
 ```
 
-    Directory /tmp/tmpldqi0gal/mkdocs created.
-    /tmp/tmpldqi0gal/mkdocs/overrides
-    /tmp/tmpldqi0gal/mkdocs/site
-    /tmp/tmpldqi0gal/mkdocs/overrides/main.html
-    /tmp/tmpldqi0gal/mkdocs/site/stylesheets
-    /tmp/tmpldqi0gal/mkdocs/site/images
-    /tmp/tmpldqi0gal/mkdocs/site/javascripts
-    /tmp/tmpldqi0gal/mkdocs/site/assets
-    /tmp/tmpldqi0gal/mkdocs/site/404.html
-    /tmp/tmpldqi0gal/mkdocs/site/stylesheets/extra.css
-    /tmp/tmpldqi0gal/mkdocs/site/images/favicon.ico
-    /tmp/tmpldqi0gal/mkdocs/site/javascripts/extra.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/stylesheets
-    /tmp/tmpldqi0gal/mkdocs/site/assets/images
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts
-    /tmp/tmpldqi0gal/mkdocs/site/assets/_mkdocstrings.css
-    /tmp/tmpldqi0gal/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css
-    /tmp/tmpldqi0gal/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css.map
-    /tmp/tmpldqi0gal/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css.map
-    /tmp/tmpldqi0gal/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css
-    /tmp/tmpldqi0gal/mkdocs/site/assets/images/favicon.png
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/workers
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js.map
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js.map
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/wordcut.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/tinyseg.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.ro.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.pt.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.sv.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.ja.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.stemmer.support.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.hu.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.multi.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.ru.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.jp.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.es.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.no.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.it.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.ar.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.fr.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.zh.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.nl.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.hi.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.fi.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.de.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.da.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.tr.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.th.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.du.min.js
-    /tmp/tmpldqi0gal/mkdocs/site/assets/javascripts/lunr/min/lunr.vi.min.js
+    Directory /tmp/tmp7pveq4sk/mkdocs created.
+    /tmp/tmp7pveq4sk/mkdocs/overrides
+    /tmp/tmp7pveq4sk/mkdocs/site
+    /tmp/tmp7pveq4sk/mkdocs/overrides/main.html
+    /tmp/tmp7pveq4sk/mkdocs/site/stylesheets
+    /tmp/tmp7pveq4sk/mkdocs/site/images
+    /tmp/tmp7pveq4sk/mkdocs/site/javascripts
+    /tmp/tmp7pveq4sk/mkdocs/site/assets
+    /tmp/tmp7pveq4sk/mkdocs/site/404.html
+    /tmp/tmp7pveq4sk/mkdocs/site/stylesheets/extra.css
+    /tmp/tmp7pveq4sk/mkdocs/site/images/favicon.ico
+    /tmp/tmp7pveq4sk/mkdocs/site/javascripts/extra.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/images
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/_mkdocstrings.css
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css.map
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css.map
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/images/favicon.png
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/workers
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js.map
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js.map
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/wordcut.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/tinyseg.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ro.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.pt.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.sv.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ja.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.stemmer.support.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.hu.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.multi.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ru.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.jp.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.es.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.no.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.it.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ar.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.fr.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.zh.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.nl.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.hi.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.fi.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.de.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.da.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.tr.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.th.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.du.min.js
+    /tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.vi.min.js
 
 
 ### Create Mkdocs.yml
@@ -330,7 +330,7 @@ with TemporaryDirectory() as d:
 y
 ```
 
-    File '/tmp/tmpdg1sbvz7/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpuq7ru08i/mkdocs/mkdocs.yml' generated.
 
 
 
@@ -426,8 +426,8 @@ with TemporaryDirectory() as d:
 print(summary)
 ```
 
-    File '/tmp/tmpnwwlgsws/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpnwwlgsws/mkdocs/summary_template.txt' generated.
+    File '/tmp/tmping37xcf/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmping37xcf/mkdocs/summary_template.txt' generated.
     - [Home](index.md)
     - Guides
         - [Guide one](docs/guide_1.md)
@@ -486,10 +486,10 @@ with TemporaryDirectory() as d:
     assert (mkdocs_path / "summary_template.txt").exists()
 ```
 
-    Requirements already added to '/tmp/tmpwvhbwthf/settings.ini'.
-    Directory /tmp/tmpwvhbwthf/mkdocs created.
-    File '/tmp/tmpwvhbwthf/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpwvhbwthf/mkdocs/summary_template.txt' generated.
+    Requirements already added to '/tmp/tmpl_krgmvp/settings.ini'.
+    Directory /tmp/tmpl_krgmvp/mkdocs created.
+    File '/tmp/tmpl_krgmvp/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpl_krgmvp/mkdocs/summary_template.txt' generated.
 
 
 ## Build
@@ -534,40 +534,28 @@ with TemporaryDirectory() as d:
     assert len(mds) == 6
 ```
 
-    Requirements already added to '/tmp/tmpd7uwe01u/settings.ini'.
-    Directory /tmp/tmpd7uwe01u/mkdocs created.
-    File '/tmp/tmpd7uwe01u/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpd7uwe01u/mkdocs/summary_template.txt' generated.
-
-
-    /root/.local/lib/python3.8/site-packages/nbdev/processors.py:182: UserWarning: Found cells containing imports and other code. See FAQ.
-    ---
-    from nbdev_mkdocs._package_data import get_root_data_path
-    
-    print(get_root_data_path.__doc__)
-    ---
-    
-      warn(f'Found cells containing imports and other code. See FAQ.\n---\n{cell.source}\n---\n')
-
-
+    Requirements already added to '/tmp/tmpoketlbwi/settings.ini'.
+    Directory /tmp/tmpoketlbwi/mkdocs created.
+    File '/tmp/tmpoketlbwi/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpoketlbwi/mkdocs/summary_template.txt' generated.
     cache=Path('/tf/nbdev-mkdocs/_proc')
     notebooks=[Path('/tf/nbdev-mkdocs/_proc/index.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb'), Path('/tf/nbdev-mkdocs/_proc/CLI.ipynb'), Path('/tf/nbdev-mkdocs/_proc/PackageData.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Docstring.ipynb'), Path('/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb')]
-    File '/tmp/tmpd7uwe01u/mkdocs/docs/index.md' created.
-    File '/tmp/tmpd7uwe01u/mkdocs/docs/Mkdocs.md' created.
-    File '/tmp/tmpd7uwe01u/mkdocs/docs/CLI.md' created.
-    File '/tmp/tmpd7uwe01u/mkdocs/docs/PackageData.md' created.
-    File '/tmp/tmpd7uwe01u/mkdocs/docs/Docstring.md' created.
-    File '/tmp/tmpd7uwe01u/mkdocs/docs/guides/Guide_One.md' created.
+    File '/tmp/tmpoketlbwi/mkdocs/docs/index.md' created.
+    File '/tmp/tmpoketlbwi/mkdocs/docs/Mkdocs.md' created.
+    File '/tmp/tmpoketlbwi/mkdocs/docs/CLI.md' created.
+    File '/tmp/tmpoketlbwi/mkdocs/docs/PackageData.md' created.
+    File '/tmp/tmpoketlbwi/mkdocs/docs/Docstring.md' created.
+    File '/tmp/tmpoketlbwi/mkdocs/docs/guides/Guide_One.md' created.
     Checks:
-    /tmp/tmpd7uwe01u/mkdocs/docs/CLI.md
-    /tmp/tmpd7uwe01u/mkdocs/docs/PackageData.md
-    /tmp/tmpd7uwe01u/mkdocs/docs/Docstring.md
-    /tmp/tmpd7uwe01u/mkdocs/docs/index.md
-    /tmp/tmpd7uwe01u/mkdocs/docs/Mkdocs.md
-    /tmp/tmpd7uwe01u/mkdocs/docs/guides/Guide_One.md
+    /tmp/tmpoketlbwi/mkdocs/docs/CLI.md
+    /tmp/tmpoketlbwi/mkdocs/docs/PackageData.md
+    /tmp/tmpoketlbwi/mkdocs/docs/Docstring.md
+    /tmp/tmpoketlbwi/mkdocs/docs/index.md
+    /tmp/tmpoketlbwi/mkdocs/docs/Mkdocs.md
+    /tmp/tmpoketlbwi/mkdocs/docs/guides/Guide_One.md
 
 
-    /root/.local/lib/python3.8/site-packages/nbformat/__init__.py:92: MissingIDFieldWarning: Code cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
+    /usr/local/lib/python3.8/dist-packages/nbformat/__init__.py:92: MissingIDFieldWarning: Code cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
       validate(nb)
 
 
@@ -587,18 +575,18 @@ with TemporaryDirectory() as d:
 print(guides)
 ```
 
-    Requirements already added to '/tmp/tmpi1sjtwj1/settings.ini'.
-    Directory /tmp/tmpi1sjtwj1/mkdocs created.
-    File '/tmp/tmpi1sjtwj1/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpi1sjtwj1/mkdocs/summary_template.txt' generated.
+    Requirements already added to '/tmp/tmpdpcbqc69/settings.ini'.
+    Directory /tmp/tmpdpcbqc69/mkdocs created.
+    File '/tmp/tmpdpcbqc69/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpdpcbqc69/mkdocs/summary_template.txt' generated.
     cache=Path('/tf/nbdev-mkdocs/_proc')
     notebooks=[Path('/tf/nbdev-mkdocs/_proc/index.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb'), Path('/tf/nbdev-mkdocs/_proc/CLI.ipynb'), Path('/tf/nbdev-mkdocs/_proc/PackageData.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Docstring.ipynb'), Path('/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb')]
-    File '/tmp/tmpi1sjtwj1/mkdocs/docs/index.md' created.
-    File '/tmp/tmpi1sjtwj1/mkdocs/docs/Mkdocs.md' created.
-    File '/tmp/tmpi1sjtwj1/mkdocs/docs/CLI.md' created.
-    File '/tmp/tmpi1sjtwj1/mkdocs/docs/PackageData.md' created.
-    File '/tmp/tmpi1sjtwj1/mkdocs/docs/Docstring.md' created.
-    File '/tmp/tmpi1sjtwj1/mkdocs/docs/guides/Guide_One.md' created.
+    File '/tmp/tmpdpcbqc69/mkdocs/docs/index.md' created.
+    File '/tmp/tmpdpcbqc69/mkdocs/docs/Mkdocs.md' created.
+    File '/tmp/tmpdpcbqc69/mkdocs/docs/CLI.md' created.
+    File '/tmp/tmpdpcbqc69/mkdocs/docs/PackageData.md' created.
+    File '/tmp/tmpdpcbqc69/mkdocs/docs/Docstring.md' created.
+    File '/tmp/tmpdpcbqc69/mkdocs/docs/guides/Guide_One.md' created.
     - Guides
         - [Guide One](guides/Guide_One.md)
 
@@ -756,10 +744,10 @@ with TemporaryDirectory() as d:
         assert path.exists(), path
 ```
 
-    Requirements already added to '/tmp/tmpg7kzwtdz/settings.ini'.
-    Directory /tmp/tmpg7kzwtdz/mkdocs created.
-    File '/tmp/tmpg7kzwtdz/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpg7kzwtdz/mkdocs/summary_template.txt' generated.
+    Requirements already added to '/tmp/tmpn84hj2w_/settings.ini'.
+    Directory /tmp/tmpn84hj2w_/mkdocs created.
+    File '/tmp/tmpn84hj2w_/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpn84hj2w_/mkdocs/summary_template.txt' generated.
     - API
         - [mkdocs.commands](API/mkdocs/commands.md)
             - [babel](API/mkdocs/commands/babel.md)
@@ -858,18 +846,18 @@ with TemporaryDirectory() as d:
     print(summary)
 ```
 
-    Requirements already added to '/tmp/tmpmfyelqoi/settings.ini'.
-    Directory /tmp/tmpmfyelqoi/mkdocs created.
-    File '/tmp/tmpmfyelqoi/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpmfyelqoi/mkdocs/summary_template.txt' generated.
+    Requirements already added to '/tmp/tmpetk8k_o9/settings.ini'.
+    Directory /tmp/tmpetk8k_o9/mkdocs created.
+    File '/tmp/tmpetk8k_o9/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpetk8k_o9/mkdocs/summary_template.txt' generated.
     cache=Path('/tf/nbdev-mkdocs/_proc')
     notebooks=[Path('/tf/nbdev-mkdocs/_proc/index.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb'), Path('/tf/nbdev-mkdocs/_proc/CLI.ipynb'), Path('/tf/nbdev-mkdocs/_proc/PackageData.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Docstring.ipynb'), Path('/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb')]
-    File '/tmp/tmpmfyelqoi/mkdocs/docs/index.md' created.
-    File '/tmp/tmpmfyelqoi/mkdocs/docs/Mkdocs.md' created.
-    File '/tmp/tmpmfyelqoi/mkdocs/docs/CLI.md' created.
-    File '/tmp/tmpmfyelqoi/mkdocs/docs/PackageData.md' created.
-    File '/tmp/tmpmfyelqoi/mkdocs/docs/Docstring.md' created.
-    File '/tmp/tmpmfyelqoi/mkdocs/docs/guides/Guide_One.md' created.
+    File '/tmp/tmpetk8k_o9/mkdocs/docs/index.md' created.
+    File '/tmp/tmpetk8k_o9/mkdocs/docs/Mkdocs.md' created.
+    File '/tmp/tmpetk8k_o9/mkdocs/docs/CLI.md' created.
+    File '/tmp/tmpetk8k_o9/mkdocs/docs/PackageData.md' created.
+    File '/tmp/tmpetk8k_o9/mkdocs/docs/Docstring.md' created.
+    File '/tmp/tmpetk8k_o9/mkdocs/docs/guides/Guide_One.md' created.
     - [Home](index.md)
     - Guides
         - [Guide One](guides/Guide_One.md)
@@ -934,86 +922,45 @@ with TemporaryDirectory() as d:
         - [CLI 1](index.md)
 
 
-
-```
-summary = "\n".join([l for l in [l.rstrip() for l in summary.split("\n")] if l != ""])
-print(summary)
-```
-
-    - [Home](index.md)
-    - Guides
-        - [Guide One](guides/Guide_One.md)
-    - API
-        - [mkdocs.commands](API/mkdocs/commands.md)
-            - [babel](API/mkdocs/commands/babel.md)
-            - [build](API/mkdocs/commands/build.md)
-            - [gh_deploy](API/mkdocs/commands/gh_deploy.md)
-            - [new](API/mkdocs/commands/new.md)
-            - [serve](API/mkdocs/commands/serve.md)
-            - [setup](API/mkdocs/commands/setup.md)
-        - [mkdocs.config](API/mkdocs/config.md)
-            - [base](API/mkdocs/config/base.md)
-            - [config_options](API/mkdocs/config/config_options.md)
-            - [defaults](API/mkdocs/config/defaults.md)
-        - [mkdocs.contrib](API/mkdocs/contrib.md)
-            - [search](API/mkdocs/contrib/search.md)
-                - [search_index](API/mkdocs/contrib/search/search_index.md)
-        - [mkdocs.exceptions](API/mkdocs/exceptions.md)
-        - [mkdocs.livereload](API/mkdocs/livereload.md)
-        - [mkdocs.localization](API/mkdocs/localization.md)
-        - [mkdocs.plugins](API/mkdocs/plugins.md)
-        - [mkdocs.structure](API/mkdocs/structure.md)
-            - [files](API/mkdocs/structure/files.md)
-            - [nav](API/mkdocs/structure/nav.md)
-            - [pages](API/mkdocs/structure/pages.md)
-            - [toc](API/mkdocs/structure/toc.md)
-        - [mkdocs.tests](API/mkdocs/tests.md)
-            - [babel_cmd_tests](API/mkdocs/tests/babel_cmd_tests.md)
-            - [base](API/mkdocs/tests/base.md)
-            - [build_tests](API/mkdocs/tests/build_tests.md)
-            - [cli_tests](API/mkdocs/tests/cli_tests.md)
-            - [config](API/mkdocs/tests/config.md)
-                - [base_tests](API/mkdocs/tests/config/base_tests.md)
-                - [config_options_tests](API/mkdocs/tests/config/config_options_tests.md)
-                - [config_tests](API/mkdocs/tests/config/config_tests.md)
-            - [gh_deploy_tests](API/mkdocs/tests/gh_deploy_tests.md)
-            - [integration](API/mkdocs/tests/integration.md)
-            - [livereload_tests](API/mkdocs/tests/livereload_tests.md)
-            - [localization_tests](API/mkdocs/tests/localization_tests.md)
-            - [new_tests](API/mkdocs/tests/new_tests.md)
-            - [plugin_tests](API/mkdocs/tests/plugin_tests.md)
-            - [search_tests](API/mkdocs/tests/search_tests.md)
-            - [structure](API/mkdocs/tests/structure.md)
-                - [file_tests](API/mkdocs/tests/structure/file_tests.md)
-                - [nav_tests](API/mkdocs/tests/structure/nav_tests.md)
-                - [page_tests](API/mkdocs/tests/structure/page_tests.md)
-                - [toc_tests](API/mkdocs/tests/structure/toc_tests.md)
-            - [theme_tests](API/mkdocs/tests/theme_tests.md)
-            - [utils](API/mkdocs/tests/utils.md)
-                - [babel_stub_tests](API/mkdocs/tests/utils/babel_stub_tests.md)
-                - [utils_tests](API/mkdocs/tests/utils/utils_tests.md)
-        - [mkdocs.theme](API/mkdocs/theme.md)
-        - [mkdocs.themes](API/mkdocs/themes.md)
-            - [mkdocs](API/mkdocs/themes/mkdocs.md)
-            - [readthedocs](API/mkdocs/themes/readthedocs.md)
-        - [mkdocs.utils](API/mkdocs/utils.md)
-            - [babel_stub](API/mkdocs/utils/babel_stub.md)
-            - [filters](API/mkdocs/utils/filters.md)
-            - [meta](API/mkdocs/utils/meta.md)
-    - CLI
-        - [CLI 1](index.md)
-
+### Copy CNAME if needed
 
 
 ```
-summary
+#|output: asis
+#| echo: false
+show_doc(copy_cname_if_needed)
 ```
 
 
 
 
-    '- [Home](index.md)\n- Guides\n    - [Guide One](guides/Guide_One.md)\n- API\n    - [mkdocs.commands](API/mkdocs/commands.md)\n        - [babel](API/mkdocs/commands/babel.md)\n        - [build](API/mkdocs/commands/build.md)\n        - [gh_deploy](API/mkdocs/commands/gh_deploy.md)\n        - [new](API/mkdocs/commands/new.md)\n        - [serve](API/mkdocs/commands/serve.md)\n        - [setup](API/mkdocs/commands/setup.md)\n    - [mkdocs.config](API/mkdocs/config.md)\n        - [base](API/mkdocs/config/base.md)\n        - [config_options](API/mkdocs/config/config_options.md)\n        - [defaults](API/mkdocs/config/defaults.md)\n    - [mkdocs.contrib](API/mkdocs/contrib.md)\n        - [search](API/mkdocs/contrib/search.md)\n            - [search_index](API/mkdocs/contrib/search/search_index.md)\n    - [mkdocs.exceptions](API/mkdocs/exceptions.md)\n    - [mkdocs.livereload](API/mkdocs/livereload.md)\n    - [mkdocs.localization](API/mkdocs/localization.md)\n    - [mkdocs.plugins](API/mkdocs/plugins.md)\n    - [mkdocs.structure](API/mkdocs/structure.md)\n        - [files](API/mkdocs/structure/files.md)\n        - [nav](API/mkdocs/structure/nav.md)\n        - [pages](API/mkdocs/structure/pages.md)\n        - [toc](API/mkdocs/structure/toc.md)\n    - [mkdocs.tests](API/mkdocs/tests.md)\n        - [babel_cmd_tests](API/mkdocs/tests/babel_cmd_tests.md)\n        - [base](API/mkdocs/tests/base.md)\n        - [build_tests](API/mkdocs/tests/build_tests.md)\n        - [cli_tests](API/mkdocs/tests/cli_tests.md)\n        - [config](API/mkdocs/tests/config.md)\n            - [base_tests](API/mkdocs/tests/config/base_tests.md)\n            - [config_options_tests](API/mkdocs/tests/config/config_options_tests.md)\n            - [config_tests](API/mkdocs/tests/config/config_tests.md)\n        - [gh_deploy_tests](API/mkdocs/tests/gh_deploy_tests.md)\n        - [integration](API/mkdocs/tests/integration.md)\n        - [livereload_tests](API/mkdocs/tests/livereload_tests.md)\n        - [localization_tests](API/mkdocs/tests/localization_tests.md)\n        - [new_tests](API/mkdocs/tests/new_tests.md)\n        - [plugin_tests](API/mkdocs/tests/plugin_tests.md)\n        - [search_tests](API/mkdocs/tests/search_tests.md)\n        - [structure](API/mkdocs/tests/structure.md)\n            - [file_tests](API/mkdocs/tests/structure/file_tests.md)\n            - [nav_tests](API/mkdocs/tests/structure/nav_tests.md)\n            - [page_tests](API/mkdocs/tests/structure/page_tests.md)\n            - [toc_tests](API/mkdocs/tests/structure/toc_tests.md)\n        - [theme_tests](API/mkdocs/tests/theme_tests.md)\n        - [utils](API/mkdocs/tests/utils.md)\n            - [babel_stub_tests](API/mkdocs/tests/utils/babel_stub_tests.md)\n            - [utils_tests](API/mkdocs/tests/utils/utils_tests.md)\n    - [mkdocs.theme](API/mkdocs/theme.md)\n    - [mkdocs.themes](API/mkdocs/themes.md)\n        - [mkdocs](API/mkdocs/themes/mkdocs.md)\n        - [readthedocs](API/mkdocs/themes/readthedocs.md)\n    - [mkdocs.utils](API/mkdocs/utils.md)\n        - [babel_stub](API/mkdocs/utils/babel_stub.md)\n        - [filters](API/mkdocs/utils/filters.md)\n        - [meta](API/mkdocs/utils/meta.md)\n- CLI\n    - [CLI 1](index.md)'
+---
 
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L334){target="_blank" style="float:right; font-size:smaller"}
+
+### copy_cname_if_needed
+
+>      copy_cname_if_needed (root_path:str)
+
+
+
+
+```
+for has_cname in [True, False]:
+    with TemporaryDirectory() as d:
+        settings_path = Path(d) / "settings.ini"
+        for fname in ["settings.ini", "README.md"] + ["CNAME"] if has_cname else []:
+            shutil.copyfile(Path("..") / fname, Path(d) / fname)
+
+        copy_cname_if_needed(d)
+        if has_cname:
+            assert (Path(d) / "mkdocs" / "docs" / "CNAME").exists()
+        else:
+            assert not (Path(d) / "mkdocs" / "docs" / "CNAME").exists()
+```
+
+    File '/tmp/tmprel24f79/CNAME' copied to '/tmp/tmprel24f79/mkdocs/docs/CNAME'.
+    File '/tmp/tmp_m88pnc4/CNAME' not found, skipping copying..
 
 
 
@@ -1033,7 +980,7 @@ show_doc(prepare)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L334){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L349){target="_blank" style="float:right; font-size:smaller"}
 
 ### prepare
 
@@ -1050,7 +997,7 @@ Params:
 ```
 with TemporaryDirectory() as d:
     settings_path = Path(d) / "settings.ini"
-    for fname in ["settings.ini", "README.md"]:
+    for fname in ["settings.ini", "README.md", "CNAME"]:
         shutil.copyfile(Path("..") / fname, Path(d) / fname)
 
     new(d)
@@ -1059,28 +1006,30 @@ with TemporaryDirectory() as d:
     
     !ll {d}/mkdocs/
 
+    assert (Path(d) / "mkdocs" / "docs" / "CNAME").exists
     assert (Path(d) / "mkdocs" / "docs" / "API").exists
     assert (Path(d) / "mkdocs" / "docs" / "SUMMARY.md").exists
     assert (Path(d) / "mkdocs" / "docs" / "index.md").exists
 #     !ls {d}/mkdocs/docs
 ```
 
-    Requirements already added to '/tmp/tmpp4xtnvxo/settings.ini'.
-    Directory /tmp/tmpp4xtnvxo/mkdocs created.
-    File '/tmp/tmpp4xtnvxo/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpp4xtnvxo/mkdocs/summary_template.txt' generated.
+    Requirements already added to '/tmp/tmpe39h2cxm/settings.ini'.
+    Directory /tmp/tmpe39h2cxm/mkdocs created.
+    File '/tmp/tmpe39h2cxm/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmpe39h2cxm/mkdocs/summary_template.txt' generated.
+    File '/tmp/tmpe39h2cxm/CNAME' copied to '/tmp/tmpe39h2cxm/mkdocs/docs/CNAME'.
     cache=Path('/tf/nbdev-mkdocs/_proc')
     notebooks=[Path('/tf/nbdev-mkdocs/_proc/index.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb'), Path('/tf/nbdev-mkdocs/_proc/CLI.ipynb'), Path('/tf/nbdev-mkdocs/_proc/PackageData.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Docstring.ipynb'), Path('/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb')]
-    File '/tmp/tmpp4xtnvxo/mkdocs/docs/index.md' created.
-    File '/tmp/tmpp4xtnvxo/mkdocs/docs/Mkdocs.md' created.
-    File '/tmp/tmpp4xtnvxo/mkdocs/docs/CLI.md' created.
-    File '/tmp/tmpp4xtnvxo/mkdocs/docs/PackageData.md' created.
-    File '/tmp/tmpp4xtnvxo/mkdocs/docs/Docstring.md' created.
-    File '/tmp/tmpp4xtnvxo/mkdocs/docs/guides/Guide_One.md' created.
+    File '/tmp/tmpe39h2cxm/mkdocs/docs/index.md' created.
+    File '/tmp/tmpe39h2cxm/mkdocs/docs/Mkdocs.md' created.
+    File '/tmp/tmpe39h2cxm/mkdocs/docs/CLI.md' created.
+    File '/tmp/tmpe39h2cxm/mkdocs/docs/PackageData.md' created.
+    File '/tmp/tmpe39h2cxm/mkdocs/docs/Docstring.md' created.
+    File '/tmp/tmpe39h2cxm/mkdocs/docs/guides/Guide_One.md' created.
     /root/.local/lib/python3.8/site-packages/mkdocstrings/handlers/python/__init__.py:13: UserWarning: The 'python-legacy' extra of mkdocstrings will become mandatory in the next release. We have no way to detect if you already specify it, so if you do, please ignore this warning. You can globally disable it with the PYTHONWARNINGS environment variable: PYTHONWARNINGS=ignore::UserWarning:mkdocstrings.handlers.python
       warnings.warn(
     INFO     -  Cleaning site directory
-    INFO     -  Building documentation to directory: /tmp/tmpp4xtnvxo/mkdocs/site
+    INFO     -  Building documentation to directory: /tmp/tmpe39h2cxm/mkdocs/site
     INFO     -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
       - CLI.md
       - Docstring.md
@@ -1089,17 +1038,12 @@ with TemporaryDirectory() as d:
     INFO     -  Documentation built in 1.14 seconds
     
     total 20K
-    drwxr-xr-x  4 davor davor 4.0K Oct 20 04:26 docs/
-    -rw-r--r--  1 davor davor 2.3K Oct 20 04:26 mkdocs.yml
-    drwxr-xr-x  2 davor davor 4.0K Oct 20 04:25 overrides/
-    drwxr-xr-x 11 davor davor 4.0K Oct 20 04:26 site/
-    -rw-r--r--  1 davor davor   40 Oct 20 04:26 summary_template.txt
+    drwxr-xr-x  4 davor davor 4.0K Oct 20 11:26 docs/
+    -rw-r--r--  1 davor davor 2.3K Oct 20 11:26 mkdocs.yml
+    drwxr-xr-x  2 davor davor 4.0K Oct 20 10:16 overrides/
+    drwxr-xr-x 11 davor davor 4.0K Oct 20 11:26 site/
+    -rw-r--r--  1 davor davor   40 Oct 20 11:26 summary_template.txt
 
-
-
-```
-
-```
 
 ## Preview
 
@@ -1115,7 +1059,7 @@ show_doc(preview)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L373){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L391){target="_blank" style="float:right; font-size:smaller"}
 
 ### preview
 
@@ -1133,7 +1077,7 @@ Params:
 ```
 with TemporaryDirectory() as d:
     settings_path = Path(d) / "settings.ini"
-    for fname in ["settings.ini", "README.md"]:
+    for fname in ["settings.ini", "README.md", "CNAME"]:
         shutil.copyfile(Path("..") / fname, Path(d) / fname)
 
     new(d)
@@ -1149,31 +1093,15 @@ with TemporaryDirectory() as d:
     preview(d, port=4000)
 ```
 
-    Requirements already added to '/tmp/tmpuzyw5j72/settings.ini'.
-    Directory /tmp/tmpuzyw5j72/mkdocs created.
-    File '/tmp/tmpuzyw5j72/mkdocs/mkdocs.yml' generated.
-    File '/tmp/tmpuzyw5j72/mkdocs/summary_template.txt' generated.
+    Requirements already added to '/tmp/tmp1rsf837o/settings.ini'.
+    Directory /tmp/tmp1rsf837o/mkdocs created.
+    File '/tmp/tmp1rsf837o/mkdocs/mkdocs.yml' generated.
+    File '/tmp/tmp1rsf837o/mkdocs/summary_template.txt' generated.
+    File '/tmp/tmp1rsf837o/CNAME' copied to '/tmp/tmp1rsf837o/mkdocs/docs/CNAME'.
     cache=Path('/tf/nbdev-mkdocs/_proc')
     notebooks=[Path('/tf/nbdev-mkdocs/_proc/index.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb'), Path('/tf/nbdev-mkdocs/_proc/CLI.ipynb'), Path('/tf/nbdev-mkdocs/_proc/PackageData.ipynb'), Path('/tf/nbdev-mkdocs/_proc/Docstring.ipynb'), Path('/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb')]
-    File '/tmp/tmpuzyw5j72/mkdocs/docs/index.md' created.
-    File '/tmp/tmpuzyw5j72/mkdocs/docs/Mkdocs.md' created.
-    File '/tmp/tmpuzyw5j72/mkdocs/docs/CLI.md' created.
-    File '/tmp/tmpuzyw5j72/mkdocs/docs/PackageData.md' created.
-    File '/tmp/tmpuzyw5j72/mkdocs/docs/Docstring.md' created.
-    File '/tmp/tmpuzyw5j72/mkdocs/docs/guides/Guide_One.md' created.
-    /root/.local/lib/python3.8/site-packages/mkdocstrings/handlers/python/__init__.py:13: UserWarning: The 'python-legacy' extra of mkdocstrings will become mandatory in the next release. We have no way to detect if you already specify it, so if you do, please ignore this warning. You can globally disable it with the PYTHONWARNINGS environment variable: PYTHONWARNINGS=ignore::UserWarning:mkdocstrings.handlers.python
-      warnings.warn(
-    INFO     -  Cleaning site directory
-    INFO     -  Building documentation to directory: /tmp/tmpuzyw5j72/mkdocs/site
-    INFO     -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
-      - CLI.md
-      - Docstring.md
-      - Mkdocs.md
-      - PackageData.md
-    INFO     -  Documentation built in 1.15 seconds
-    
-    API/    Docstring.md  PackageData.md  guides/
-    CLI.md  Mkdocs.md     SUMMARY.md      index.md
+    File '/tmp/tmp1rsf837o/mkdocs/docs/index.md' created.
+    File '/tmp/tmp1rsf837o/mkdocs/docs/Mkdocs.md' created.
 
 
 
@@ -1181,23 +1109,153 @@ with TemporaryDirectory() as d:
 
     KeyboardInterrupt                         Traceback (most recent call last)
 
-    Cell In [37], line 18
-         15 assert (Path(d) / "mkdocs" / "docs" / "index.md").exists
-         16 get_ipython().system('ls {d}/mkdocs/docs')
-    ---> 18 preview(d, port=4000)
+    Cell In [37], line 10
+          6     shutil.copyfile(Path("..") / fname, Path(d) / fname)
+          8 new(d)
+    ---> 10 prepare(d)
+         13 assert (Path(d) / "mkdocs" / "docs" / "API").exists
+         14 assert (Path(d) / "mkdocs" / "docs" / "SUMMARY.md").exists
 
 
-    Cell In [36], line 24, in preview(root_path, port)
-         15     cmd = cmd + f":{port}"
-         17 with subprocess.Popen( #nosec B603:subprocess_without_shell_equals_true
-         18     shlex.split(cmd),
-         19     stdout=subprocess.PIPE,
+    Cell In [34], line 20, in prepare(root_path)
+         17 lib_name = config["DEFAULT"]["lib_name"]
+         18 lib_path = config["DEFAULT"]["lib_path"]
+    ---> 20 build_summary(root_path, lib_path)
+         22 cmd = f"mkdocs build -f {root_path}/mkdocs/mkdocs.yml"
+         24 # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+
+
+    Cell In [30], line 15, in build_summary(root_path, module)
+         12 shutil.copy(Path(root_path) / "README.md", docs_path / "index.md")
+         14 # generate markdown files
+    ---> 15 _generate_markdown_from_nbs(root_path)
+         17 # generates guides
+         18 guides = _generate_summary_for_guides(root_path)
+
+
+    Cell In [22], line 14, in _generate_markdown_from_nbs(root_path)
+         12 converter = nbconvert.MarkdownExporter()
+         13 for nb in notebooks:
+    ---> 14     body, _ = converter.from_filename(nb)
+         15     dir_prefix = str(nb.parent)[len(str(cache))+1:]
+         16     md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:190, in Exporter.from_filename(self, filename, resources, **kw)
+        187 resources["metadata"]["modified_date"] = modified_date.strftime(date_format)
+        189 with open(filename, encoding="utf-8") as f:
+    --> 190     return self.from_file(f, resources=resources, **kw)
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:207, in Exporter.from_file(self, file_stream, resources, **kw)
+        192 def from_file(self, file_stream, resources=None, **kw):
+        193     """
+        194     Convert a notebook from a notebook file.
+        195 
        (...)
-         22     universal_newlines=True,
-         23 ) as p:
-    ---> 24     for line in p.stdout:  # type: ignore
-         25         print(line, end="")
-         27 if p.returncode != 0:
+        205 
+        206     """
+    --> 207     return self.from_notebook_node(
+        208         nbformat.read(file_stream, as_version=4), resources=resources, **kw
+        209     )
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/templateexporter.py:386, in TemplateExporter.from_notebook_node(self, nb, resources, **kw)
+        374 def from_notebook_node(self, nb, resources=None, **kw):
+        375     """
+        376     Convert a notebook from a notebook node instance.
+        377 
+       (...)
+        384         preprocessors and filters.
+        385     """
+    --> 386     nb_copy, resources = super().from_notebook_node(nb, resources, **kw)
+        387     resources.setdefault("raw_mimetypes", self.raw_mimetypes)
+        388     resources["global_content_filter"] = {
+        389         "include_code": not self.exclude_code_cell,
+        390         "include_markdown": not self.exclude_markdown,
+       (...)
+        398         "no_prompt": self.exclude_input_prompt and self.exclude_output_prompt,
+        399     }
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:147, in Exporter.from_notebook_node(self, nb, resources, **kw)
+        144     resources["language"] = nb["metadata"]["language"].lower()
+        146 # Preprocess
+    --> 147 nb_copy, resources = self._preprocess(nb_copy, resources)
+        148 notebook_name = ""
+        149 if resources is not None:
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:344, in Exporter._preprocess(self, nb, resources)
+        342     nbc, resc = preprocessor(nbc, resc)
+        343     if not self.optimistic_validation:
+    --> 344         self._validate_preprocessor(nbc, preprocessor)
+        346 if self.optimistic_validation:
+        347     self._validate_preprocessor(nbc, preprocessor)
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:311, in Exporter._validate_preprocessor(self, nbc, preprocessor)
+        309         nbformat.validate(nbc, relax_add_props=True)
+        310     else:
+    --> 311         nbformat.validate(nbc)
+        312 except nbformat.ValidationError:
+        313     self.log.error("Notebook is invalid after preprocessor %s", preprocessor)
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbformat/validator.py:494, in validate(nbdict, ref, version, version_minor, relax_add_props, nbjson, repair_duplicate_cell_ids, strip_invalid_metadata)
+        484     assert isinstance(version_minor, int)
+        485     _normalize(
+        486         nbdict,
+        487         version,
+       (...)
+        491         strip_invalid_metadata=strip_invalid_metadata,
+        492     )
+    --> 494 for error in iter_validate(
+        495     nbdict,
+        496     ref=ref,
+        497     version=version,
+        498     version_minor=version_minor,
+        499     relax_add_props=relax_add_props,
+        500     strip_invalid_metadata=strip_invalid_metadata,
+        501 ):
+        503     raise error
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbformat/validator.py:629, in iter_validate(nbdict, ref, version, version_minor, relax_add_props, nbjson, strip_invalid_metadata)
+        623         _strip_invalida_metadata(nbdict, version, version_minor, relax_add_props)
+        625     # Validate one more time to ensure that us removing metadata
+        626     # didn't cause another complex validation issue in the schema.
+        627     # Also to ensure that higher-level errors produced by individual metadata validation
+        628     # failures are removed.
+    --> 629     errors = validator.iter_errors(nbdict)
+        631 for error in errors:
+        632     yield better_validation_error(error, version, version_minor)
+
+
+    File /usr/local/lib/python3.8/dist-packages/nbformat/json_compat.py:59, in FastJsonSchemaValidator.iter_errors(self, data, schema)
+         57 validate_func = self._validator
+         58 try:
+    ---> 59     validate_func(data)
+         60 except _JsonSchemaException as error:
+         61     errors = [ValidationError(str(error), schema_path=error.path)]
+
+
+    File <string>:135, in validate(data, custom_formats, name_prefix)
+
+
+    File <string>:156, in validate___definitions_cell(data, custom_formats, name_prefix)
+
+
+    File <string>:262, in validate___definitions_code_cell(data, custom_formats, name_prefix)
+
+
+    File <string>:286, in validate___definitions_output(data, custom_formats, name_prefix)
+
+
+    File <string>:410, in validate___definitions_display_data(data, custom_formats, name_prefix)
+
+
+    File <string>:434, in validate___definitions_misc_mimebundle(data, custom_formats, name_prefix)
 
 
     KeyboardInterrupt: 
