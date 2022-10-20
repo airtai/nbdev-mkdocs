@@ -24,7 +24,7 @@ show_doc(preview)
 ### preview
 
 >      preview (root_path:str=<typer.models.OptionInfo object at
->               0x7f171379a520>)
+>               0x7f8e85b94430>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -47,7 +47,7 @@ show_doc(prepare)
 ### prepare
 
 >      prepare (root_path:str=<typer.models.OptionInfo object at
->               0x7f171379a490>)
+>               0x7f8e85b94700>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -69,7 +69,7 @@ show_doc(new)
 
 ### new
 
->      new (root_path:str=<typer.models.OptionInfo object at 0x7f171379a400>)
+>      new (root_path:str=<typer.models.OptionInfo object at 0x7f8e85b946a0>)
 
 CLI command for creating files for nbdev_mkdocs command
 
