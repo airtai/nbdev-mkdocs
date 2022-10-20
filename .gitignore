@@ -1,3 +1,23 @@
+run_docker.sh
+
+.sast_bandit
+.sast_semgrep
+.local_install
+.local_reinstall
+.secret.baseline
+
+_publish.yml
+_quarto.yml
+_proc/
+tests/settings.ini
+idx/
+.install
+conda/
+_site/
+_docs/
+test_settings.ini
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
