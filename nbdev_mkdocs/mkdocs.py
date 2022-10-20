@@ -28,7 +28,7 @@ from configparser import ConfigParser
 from nbdev.serve import proc_nbs
 import nbconvert
 
-from .package_data import get_root_data_path
+from ._package_data import get_root_data_path
 
 # %% ../nbs/Mkdocs.ipynb 5
 def _add_requirements_to_settings(root_path: str):
@@ -342,8 +342,9 @@ def prepare(root_path: str):
     config = ConfigParser()
     config.read(settings_path)
     lib_name = config["DEFAULT"]["lib_name"]
+    lib_path = config["DEFAULT"]["lib_path"]
 
-    build_summary(root_path, lib_name)
+    build_summary(root_path, lib_path)
 
     cmd = f"mkdocs build -f {root_path}/mkdocs/mkdocs.yml"
     

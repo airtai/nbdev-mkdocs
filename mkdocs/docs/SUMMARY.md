@@ -5,6 +5,5 @@
     - [nbdev_mkdocs.cli](API/nbdev_mkdocs/cli.md)
     - [nbdev_mkdocs.docstring](API/nbdev_mkdocs/docstring.md)
     - [nbdev_mkdocs.mkdocs](API/nbdev_mkdocs/mkdocs.md)
-    - [nbdev_mkdocs.package_data](API/nbdev_mkdocs/package_data.md)
 - CLI
     - [CLI 1](index.md)

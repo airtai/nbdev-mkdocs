@@ -19,12 +19,12 @@ show_doc(preview)
 
 ---
 
-[source](https://github.com/airtai/nbdev_mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L372){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L373){target="_blank" style="float:right; font-size:smaller"}
 
 ### preview
 
 >      preview (root_path:str=<typer.models.OptionInfo object at
->               0x7f8cfa74b610>)
+>               0x7f171379a520>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -42,12 +42,12 @@ show_doc(prepare)
 
 ---
 
-[source](https://github.com/airtai/nbdev_mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L334){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L334){target="_blank" style="float:right; font-size:smaller"}
 
 ### prepare
 
 >      prepare (root_path:str=<typer.models.OptionInfo object at
->               0x7f8cfa74b580>)
+>               0x7f171379a490>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -65,11 +65,11 @@ show_doc(new)
 
 ---
 
-[source](https://github.com/airtai/nbdev_mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L207){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L207){target="_blank" style="float:right; font-size:smaller"}
 
 ### new
 
->      new (root_path:str=<typer.models.OptionInfo object at 0x7f8cfa74b4f0>)
+>      new (root_path:str=<typer.models.OptionInfo object at 0x7f171379a400>)
 
 CLI command for creating files for nbdev_mkdocs command
 

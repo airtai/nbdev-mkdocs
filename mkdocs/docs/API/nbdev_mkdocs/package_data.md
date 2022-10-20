@@ -1,1 +1,0 @@
-::: nbdev_mkdocs.package_data
