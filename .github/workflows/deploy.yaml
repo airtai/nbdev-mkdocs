@@ -25,6 +25,6 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install nbdev
-      - run: make mkdocs/site
+      - run: make install
       - run: cd mkdocs; mkdocs gh-deploy --force
 
