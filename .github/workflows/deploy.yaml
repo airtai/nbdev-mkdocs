@@ -25,7 +25,6 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install nbdev
-      - run: make install
-      - run: pip install mkdocstrings mkdocs-material mkdocs-literate-nav mkdocs-section-index mkdocstrings-python-legacy
+      - run: make mkdocs/site
       - run: cd mkdocs; mkdocs gh-deploy --force
 

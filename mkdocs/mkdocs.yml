@@ -1,12 +1,12 @@
 # Site
-site_name: nbdev_mkdocs
-site_url: https://airtai.github.io/nbdev_mkdocs
+site_name: nbdev-mkdocs
+site_url: https://airtai.github.io/nbdev-mkdocs
 site_author: airt
 site_description: Extension to nbdev for usage of Material for Mkdocs instead of Quarto
   
 # Repository
-repo_name: nbdev_mkdocs
-repo_url: https://github.com/airtai/nbdev_mkdocs
+repo_name: nbdev-mkdocs
+repo_url: https://github.com/airtai/nbdev-mkdocs
 edit_uri: ""
 
 copyright: 2022 onwards, airt

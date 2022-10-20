@@ -669,6 +669,7 @@
 
 
 
+
   <div class="doc doc-object doc-function">
 
 
@@ -770,6 +771,9 @@ needed.</p>
 <span class="sd">    Params:</span>
 <span class="sd">        root_path: path under which mkdocs directory will be created</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># copy cname if it exists</span>
+    <span class="n">copy_cname_if_needed</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+
     <span class="c1"># get lib name from settings.ini</span>
     <span class="n">settings_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;settings.ini&quot;</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>

@@ -19,12 +19,12 @@ show_doc(preview)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L373){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L391){target="_blank" style="float:right; font-size:smaller"}
 
 ### preview
 
 >      preview (root_path:str=<typer.models.OptionInfo object at
->               0x7f8e85b94430>)
+>               0x7f3cda129100>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -42,12 +42,12 @@ show_doc(prepare)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L334){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L349){target="_blank" style="float:right; font-size:smaller"}
 
 ### prepare
 
 >      prepare (root_path:str=<typer.models.OptionInfo object at
->               0x7f8e85b94700>)
+>               0x7f3cda129400>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -69,7 +69,7 @@ show_doc(new)
 
 ### new
 
->      new (root_path:str=<typer.models.OptionInfo object at 0x7f8e85b946a0>)
+>      new (root_path:str=<typer.models.OptionInfo object at 0x7f3cda129370>)
 
 CLI command for creating files for nbdev_mkdocs command
 
