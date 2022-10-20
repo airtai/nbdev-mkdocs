@@ -1,0 +1,11 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - CLI.ipynb
+      - Docstring.ipynb
+      - Mkdocs.ipynb
+      - PackageData.ipynb
+      - section: guides
+        contents:
+          - guides/Guide_One.ipynb
