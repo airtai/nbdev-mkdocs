@@ -19,8 +19,8 @@ def get_root_data_path() -> Path:
         req_path = get_root_data_path() / "requirements.txt"
         print(f"Path is: {req_path.resolve()}")
         assert req_path.exists()
-        
+
         ```
-        
+
     """
     return Path(__file__).parent / "package_data"
