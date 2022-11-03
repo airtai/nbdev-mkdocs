@@ -7,3 +7,4 @@
     - [nbdev_mkdocs.mkdocs](API/nbdev_mkdocs/mkdocs.md)
 - CLI
     - [CLI 1](index.md)
+- [Releases](CHANGELOG.md)

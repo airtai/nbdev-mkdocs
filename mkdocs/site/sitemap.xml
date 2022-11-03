@@ -2,52 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://airtai.github.io/nbdev-mkdocs/CHANGELOG/</loc>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/CLI/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/Docstring/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/Mkdocs/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/PackageData/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>None</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/API/nbdev_mkdocs/cli/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/API/nbdev_mkdocs/docstring/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/API/nbdev_mkdocs/mkdocs/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/guides/Guide_One/</loc>
-         <lastmod>2022-10-20</lastmod>
+         <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

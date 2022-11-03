@@ -2,3 +2,4 @@
 {guides}
 {api}
 {cli}
+- [Releases](CHANGELOG.md)

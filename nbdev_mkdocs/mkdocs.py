@@ -176,7 +176,7 @@ _summary_template = """- [Home](index.md)
 {guides}
 {api}
 {cli}
-- [Releases](RELEASE.md)
+- [Releases](CHANGELOG.md)
 """
 
 
@@ -321,8 +321,8 @@ def build_summary(
     cli = """- CLI
     - [CLI 1](index.md)"""
 
-    # copy RELEASE.md as RELEASE.md
-    shutil.copy(Path(root_path) / "RELEASE.md", docs_path / "RELEASE.md")
+    # copy CHANGELOG.md as CHANGELOG.md
+    shutil.copy(Path(root_path) / "CHANGELOG.md", docs_path / "CHANGELOG.md")
 
     # read summary template from file
     with open(Path(root_path) / "mkdocs" / "summary_template.txt") as f:

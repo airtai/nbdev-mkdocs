@@ -9,8 +9,8 @@ runner = CliRunner()
 
 
 ```
-#|output: asis
 #| echo: false
+#| output: asis
 show_doc(preview)
 ```
 
@@ -19,12 +19,12 @@ show_doc(preview)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L391){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L397){target="_blank" style="float:right; font-size:smaller"}
 
 ### preview
 
 >      preview (root_path:str=<typer.models.OptionInfo object at
->               0x7f054acbd610>)
+>               0x7f2931afe9d0>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -32,8 +32,8 @@ CLI command for creating files for nbdev_mkdocs command
 
 
 ```
-#|output: asis
 #| echo: false
+#| output: asis
 show_doc(prepare)
 ```
 
@@ -42,12 +42,12 @@ show_doc(prepare)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L349){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L355){target="_blank" style="float:right; font-size:smaller"}
 
 ### prepare
 
 >      prepare (root_path:str=<typer.models.OptionInfo object at
->               0x7f054acbd550>)
+>               0x7f2931afeca0>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -55,8 +55,8 @@ CLI command for creating files for nbdev_mkdocs command
 
 
 ```
-#|output: asis
 #| echo: false
+#| output: asis
 show_doc(new)
 ```
 
@@ -65,11 +65,11 @@ show_doc(new)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L207){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L209){target="_blank" style="float:right; font-size:smaller"}
 
 ### new
 
->      new (root_path:str=<typer.models.OptionInfo object at 0x7f054acbd4c0>)
+>      new (root_path:str=<typer.models.OptionInfo object at 0x7f2931afec40>)
 
 CLI command for creating files for nbdev_mkdocs command
 
@@ -102,6 +102,7 @@ result = runner.invoke(_app, ["--help"])
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7f7f7f; text-decoration-color: #7f7f7f">╭─ Commands ──────────────────────────────────────────────────────────────────────────────────────────────────────╮</span>
 <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">│</span> <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">new       </span> Creates files in **mkdocs** subdirectory needed for other **nbdev_mkdocs** subcommands               <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">│</span>
 <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">│</span> <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">prepare   </span> Prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them                     <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">│</span>
+<span style="color: #7f7f7f; text-decoration-color: #7f7f7f">│</span> <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">preview   </span> Prepares files in **mkdocs/docs** and then runs **mkdocs serve** command on them                     <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">│</span>
 <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>
 </pre>
 

@@ -274,6 +274,18 @@
   
 
       
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../CHANGELOG/" class="md-tabs__link">
+      Releases
+    </a>
+  </li>
+
+      
     </ul>
   </div>
 </nav>
@@ -579,6 +591,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CHANGELOG/" class="md-nav__link">
+        Releases
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -786,7 +813,7 @@ needed.</p>
     <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;mkdocs build -f </span><span class="si">{</span><span class="n">root_path</span><span class="si">}</span><span class="s2">/mkdocs/mkdocs.yml&quot;</span>
 
     <span class="c1"># nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true</span>
-    <span class="n">sp</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span> <span class="c1"># nosec: B602:subprocess_popen_with_shell_equals_true</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>  <span class="c1"># nosec: B602:subprocess_popen_with_shell_equals_true</span>
         <span class="n">cmd</span><span class="p">,</span>
         <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="c1">#         check=True,</span>
@@ -862,7 +889,7 @@ needed.</p>
     <span class="k">if</span> <span class="n">port</span><span class="p">:</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">with</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span> <span class="c1">#nosec B603:subprocess_without_shell_equals_true</span>
+    <span class="k">with</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>  <span class="c1"># nosec B603:subprocess_without_shell_equals_true</span>
         <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">),</span>
         <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
         <span class="n">bufsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>

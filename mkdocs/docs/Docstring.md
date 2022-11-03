@@ -293,8 +293,8 @@ N/A
 
 
 ```
-#|output: asis
 #| echo: false
+#| output: asis
 show_doc(run_examples_from_docstring)
 ```
 
@@ -303,7 +303,7 @@ show_doc(run_examples_from_docstring)
 
 ---
 
-[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/docstring.py#L128){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/docstring.py#L129){target="_blank" style="float:right; font-size:smaller"}
 
 ### run_examples_from_docstring
 
@@ -572,9 +572,9 @@ print(get_root_data_path.__doc__)
             req_path = get_root_data_path() / "requirements.txt"
             print(f"Path is: {req_path.resolve()}")
             assert req_path.exists()
-            
+    
             ```
-            
+    
         
 
 
