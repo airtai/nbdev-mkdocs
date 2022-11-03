@@ -11,26 +11,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://airtai.github.io/nbdev-mkdocs/CLI/</loc>
-         <lastmod>2022-11-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://airtai.github.io/nbdev-mkdocs/Docstring/</loc>
-         <lastmod>2022-11-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://airtai.github.io/nbdev-mkdocs/Mkdocs/</loc>
-         <lastmod>2022-11-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://airtai.github.io/nbdev-mkdocs/PackageData/</loc>
-         <lastmod>2022-11-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>None</loc>
          <lastmod>2022-11-03</lastmod>
          <changefreq>daily</changefreq>

@@ -192,7 +192,7 @@ def _create_summary_template(root_path: str):
             )
             return
 
-        # get default values from settings.ini
+        # generated a new summary_template_path.yml file
         with open(summary_template_path, "w") as f:
             f.write(_summary_template)
             typer.secho(f"File '{summary_template_path.resolve()}' generated.")
@@ -227,7 +227,9 @@ def _generate_markdown_from_nbs(root_path: str):
     doc_path.mkdir(exist_ok=True, parents=True)
 
     cache = proc_nbs()
-    notebooks = list(cache.glob("**/*.ipynb"))
+    notebooks = list(cache.glob("**/index.ipynb")) + list(
+        cache.glob("**/guides/*.ipynb")
+    )
     print(f"{cache=}")
     print(f"{notebooks=}")
 
@@ -251,7 +253,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     i = len(doc_path.parts)
     if len(mds) > 0:
         return "- Guides\n    - " + "    - ".join(
-            [f"[{md.stem.replace('_', ' ')}]({'/'.join(md.parts[i:])})" for md in mds]
+            [f"[{md.stem.replace('_', ' ')}]({'/'.join(md.parts[i:])})\n" for md in mds]
         )
     else:
         return ""
