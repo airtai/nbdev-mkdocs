@@ -16,7 +16,7 @@ import shutil
 import types
 import pkgutil
 import importlib
-import subprocess # nosec: B404
+import subprocess  # nosec: B404
 
 import typer
 
@@ -176,7 +176,9 @@ _summary_template = """- [Home](index.md)
 {guides}
 {api}
 {cli}
+- [Releases](CHANGELOG.md)
 """
+
 
 def _create_summary_template(root_path: str):
     try:
@@ -228,11 +230,11 @@ def _generate_markdown_from_nbs(root_path: str):
     notebooks = list(cache.glob("**/*.ipynb"))
     print(f"{cache=}")
     print(f"{notebooks=}")
-    
+
     converter = nbconvert.MarkdownExporter()
     for nb in notebooks:
         body, _ = converter.from_filename(nb)
-        dir_prefix = str(nb.parent)[len(str(cache))+1:]
+        dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
         md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
         md.parent.mkdir(parents=True, exist_ok=True)
         with open(md, mode="w") as f:
@@ -308,27 +310,31 @@ def build_summary(
 
     # generate markdown files
     _generate_markdown_from_nbs(root_path)
-    
+
     # generates guides
     guides = _generate_summary_for_guides(root_path)
-    
+
     # generate API
     api = generate_api_docs_for_module(root_path, module)
-    
+
     # generate CLI
     cli = """- CLI
     - [CLI 1](index.md)"""
 
+    # copy CHANGELOG.md as CHANGELOG.md
+    shutil.copy(Path(root_path) / "CHANGELOG.md", docs_path / "CHANGELOG.md")
+
     # read summary template from file
     with open(Path(root_path) / "mkdocs" / "summary_template.txt") as f:
         summary_template = f.read()
-        
+
     summary = summary_template.format(guides=guides, api=api, cli=cli)
-    summary = "\n".join([l for l in [l.rstrip() for l in summary.split("\n")] if l != ""])
-    
+    summary = "\n".join(
+        [l for l in [l.rstrip() for l in summary.split("\n")] if l != ""]
+    )
+
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
-
 
 # %% ../nbs/Mkdocs.ipynb 44
 def copy_cname_if_needed(root_path: str):
@@ -354,7 +360,7 @@ def prepare(root_path: str):
     """
     # copy cname if it exists
     copy_cname_if_needed(root_path)
-    
+
     # get lib name from settings.ini
     settings_path = Path(root_path) / "settings.ini"
     config = ConfigParser()
@@ -365,9 +371,9 @@ def prepare(root_path: str):
     build_summary(root_path, lib_path)
 
     cmd = f"mkdocs build -f {root_path}/mkdocs/mkdocs.yml"
-    
+
     # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-    sp = subprocess.run( # nosec: B602:subprocess_popen_with_shell_equals_true
+    sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
         cmd,
         shell=True,
         #         check=True,
@@ -399,7 +405,7 @@ def preview(root_path: str, port: Optional[int] = None):
     if port:
         cmd = cmd + f":{port}"
 
-    with subprocess.Popen( #nosec B603:subprocess_without_shell_equals_true
+    with subprocess.Popen(  # nosec B603:subprocess_without_shell_equals_true
         shlex.split(cmd),
         stdout=subprocess.PIPE,
         bufsize=1,

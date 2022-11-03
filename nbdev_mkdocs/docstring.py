@@ -26,18 +26,17 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 # %% ../nbs/Docstring.ipynb 4
 try:
     import griffe
-    
+
     griffe_logger = logging.getLogger("griffe.docstrings.google")
-    
+
     griffe_logger.setLevel(logging.ERROR)
-    
+
     griffe_logger.warning("you should not see this")
-except: # nosec: B110:try_except_pass] Try, Except, Pass detected.
-    pass 
+except:  # nosec: B110:try_except_pass] Try, Except, Pass detected.
+    pass
 
 # %% ../nbs/Docstring.ipynb 6
 import rich.jupyter
@@ -119,9 +118,11 @@ def _format_output(
             s = re.sub(pattern, replacement, s)
     if supress:
         return Group(Rule(f"{title} supressed"), "N/A")
-#         return Panel("", title=f"{title} supressed", width=width)
+    #         return Panel("", title=f"{title} supressed", width=width)
     else:
         return Group(Rule(title), s)
+
+
 #         return Panel(s, title=title, width=width)
 
 # %% ../nbs/Docstring.ipynb 23
@@ -174,7 +175,7 @@ def run_examples_from_docstring(
         ```
     """
     console = Console(width=width)
-    
+
     examples = _extract_examples_from_docstring(o)
     if len(examples) == 0:
         raise ValueError(f"No examples found in:\n{o.__doc__}")
@@ -207,7 +208,7 @@ def run_examples_from_docstring(
                     width=width,
                 ),
             )
-#             print(Panel(panel_group, width=width))
+            #             print(Panel(panel_group, width=width))
             console.print(group)
             if process.returncode != 0:
                 raise RuntimeError(process.stderr)

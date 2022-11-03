@@ -1,4 +1,3 @@
-run_docker.sh
 token
 
 .sast_bandit

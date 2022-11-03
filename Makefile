@@ -57,7 +57,11 @@ sast: .sast_bandit .sast_semgrep
 .PHONY: check_all
 check_all: mypy sast test
 
-mkdocs/site: dist
+.PHONY: new
+new: dist
+	nbdev_mkdocs new
+    
+mkdocs/site: dist new
 	nbdev_mkdocs prepare
 	touch mkdocs/site
     
@@ -79,4 +83,5 @@ clean:
 	rm -rf nbdev_mkdocs.egg-info
 	rm -rf mkdocs/site
 	rm -rf mkdocs/docs
+	rm -rf mkdocs/summary_template.txt
 	pip uninstall -y nbdev_mkdocs

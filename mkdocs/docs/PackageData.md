@@ -2,8 +2,8 @@
 
 
 ```
-#|output: asis
 #| echo: false
+#| output: asis
 show_doc(get_root_data_path)
 ```
 

@@ -39,6 +39,7 @@ def prepare(root_path: str = typer.Option(".", help="")):
         typer.secho("Unexpected internal error :/", err=True, fg=typer.colors.RED)
         raise typer.Exit(1)
 
+
 @_app.command(
     help="Prepares files in **mkdocs/docs** and then runs **mkdocs serve** command on them ",
 )
@@ -49,4 +50,3 @@ def preview(root_path: str = typer.Option(".", help="")):
     except Exception as e:
         typer.secho("Unexpected internal error :/", err=True, fg=typer.colors.RED)
         raise typer.Exit(1)
-

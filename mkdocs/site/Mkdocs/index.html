@@ -272,6 +272,18 @@
   
 
       
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../CHANGELOG/" class="md-tabs__link">
+      Releases
+    </a>
+  </li>
+
+      
     </ul>
   </div>
 </nav>
@@ -513,6 +525,21 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        Releases
+      </a>
     </li>
   
 
@@ -761,8 +788,8 @@ import yaml
 
     print(updater)
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements added to &#39;/tmp/tmpox0d8w7h/settings.ini&#39;.
-Requirements already added to &#39;/tmp/tmpox0d8w7h/settings.ini&#39;.
+<div class="highlight"><pre><span></span><code>Requirements added to &#39;/tmp/tmphhvwn25i/settings.ini&#39;.
+Requirements already added to &#39;/tmp/tmphhvwn25i/settings.ini&#39;.
 [DEFAULT]
 # All sections below are required unless otherwise specified.
 # See https://github.com/fastai/nbdev/blob/master/settings.ini for examples.
@@ -819,7 +846,8 @@ dev_requirements = \
     bandit&gt;=1.7.4 \
     semgrep&gt;=0.115.0 \
     pytest&gt;=7.1.3 \
-    numpy&gt;=1.0
+    numpy&gt;=1.0 \
+    black&gt;=22.8.0
 
 console_scripts = nbdev_mkdocs=nbdev_mkdocs.cli:_app
 </code></pre></div>
@@ -832,60 +860,60 @@ console_scripts = nbdev_mkdocs=nbdev_mkdocs.cli:_app
 
     print(&quot;\n&quot;.join([str(p) for p in (Path(d) / &quot;mkdocs&quot;).glob(&quot;**/*&quot;)]))
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Directory /tmp/tmp7pveq4sk/mkdocs created.
-/tmp/tmp7pveq4sk/mkdocs/overrides
-/tmp/tmp7pveq4sk/mkdocs/site
-/tmp/tmp7pveq4sk/mkdocs/overrides/main.html
-/tmp/tmp7pveq4sk/mkdocs/site/stylesheets
-/tmp/tmp7pveq4sk/mkdocs/site/images
-/tmp/tmp7pveq4sk/mkdocs/site/javascripts
-/tmp/tmp7pveq4sk/mkdocs/site/assets
-/tmp/tmp7pveq4sk/mkdocs/site/404.html
-/tmp/tmp7pveq4sk/mkdocs/site/stylesheets/extra.css
-/tmp/tmp7pveq4sk/mkdocs/site/images/favicon.ico
-/tmp/tmp7pveq4sk/mkdocs/site/javascripts/extra.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets
-/tmp/tmp7pveq4sk/mkdocs/site/assets/images
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts
-/tmp/tmp7pveq4sk/mkdocs/site/assets/_mkdocstrings.css
-/tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css
-/tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css.map
-/tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css.map
-/tmp/tmp7pveq4sk/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css
-/tmp/tmp7pveq4sk/mkdocs/site/assets/images/favicon.png
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/workers
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js.map
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js.map
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/wordcut.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/tinyseg.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ro.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.pt.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.sv.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ja.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.stemmer.support.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.hu.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.multi.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ru.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.jp.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.es.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.no.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.it.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.ar.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.fr.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.zh.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.nl.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.hi.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.fi.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.de.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.da.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.tr.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.th.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.du.min.js
-/tmp/tmp7pveq4sk/mkdocs/site/assets/javascripts/lunr/min/lunr.vi.min.js
+<div class="highlight"><pre><span></span><code>Directory /tmp/tmpvyyqulrs/mkdocs created.
+/tmp/tmpvyyqulrs/mkdocs/overrides
+/tmp/tmpvyyqulrs/mkdocs/site
+/tmp/tmpvyyqulrs/mkdocs/overrides/main.html
+/tmp/tmpvyyqulrs/mkdocs/site/stylesheets
+/tmp/tmpvyyqulrs/mkdocs/site/images
+/tmp/tmpvyyqulrs/mkdocs/site/javascripts
+/tmp/tmpvyyqulrs/mkdocs/site/assets
+/tmp/tmpvyyqulrs/mkdocs/site/404.html
+/tmp/tmpvyyqulrs/mkdocs/site/stylesheets/extra.css
+/tmp/tmpvyyqulrs/mkdocs/site/images/favicon.ico
+/tmp/tmpvyyqulrs/mkdocs/site/javascripts/extra.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/stylesheets
+/tmp/tmpvyyqulrs/mkdocs/site/assets/images
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts
+/tmp/tmpvyyqulrs/mkdocs/site/assets/_mkdocstrings.css
+/tmp/tmpvyyqulrs/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css
+/tmp/tmpvyyqulrs/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css.map
+/tmp/tmpvyyqulrs/mkdocs/site/assets/stylesheets/main.3de6f41f.min.css.map
+/tmp/tmpvyyqulrs/mkdocs/site/assets/stylesheets/palette.cc9b2e1e.min.css
+/tmp/tmpvyyqulrs/mkdocs/site/assets/images/favicon.png
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/workers
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/bundle.c2e1ee47.min.js.map
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js.map
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/workers/search.2a1c317c.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/wordcut.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/tinyseg.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.ro.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.pt.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.sv.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.ja.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.stemmer.support.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.hu.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.multi.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.ru.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.jp.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.es.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.no.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.it.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.ar.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.fr.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.zh.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.nl.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.hi.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.fi.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.de.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.da.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.tr.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.th.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.du.min.js
+/tmp/tmpvyyqulrs/mkdocs/site/assets/javascripts/lunr/min/lunr.vi.min.js
 </code></pre></div>
 <h3 id="create-mkdocsyml">Create Mkdocs.yml<a class="headerlink" href="#create-mkdocsyml" title="Permanent link">¤</a></h3>
 <div class="highlight"><pre><span></span><code>assert _mkdocs_template_path.exists()
@@ -1020,7 +1048,7 @@ kwargs
 
 y
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>File &#39;/tmp/tmpuq7ru08i/mkdocs/mkdocs.yml&#39; generated.
+<div class="highlight"><pre><span></span><code>File &#39;/tmp/tmptjh5zacd/mkdocs/mkdocs.yml&#39; generated.
 
 
 
@@ -1110,8 +1138,8 @@ y
 
 print(summary)
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>File &#39;/tmp/tmping37xcf/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmping37xcf/mkdocs/summary_template.txt&#39; generated.
+<div class="highlight"><pre><span></span><code>File &#39;/tmp/tmpbroors3u/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmpbroors3u/mkdocs/summary_template.txt&#39; generated.
 - [Home](index.md)
 - Guides
     - [Guide one](docs/guide_1.md)
@@ -1119,14 +1147,15 @@ File &#39;/tmp/tmping37xcf/mkdocs/summary_template.txt&#39; generated.
     - [numpy.array](api/numpy/array.md)
 - CLI
     - [my-cli](cli/my_cli.md)
+- [Releases](CHANGELOG.md)
 </code></pre></div>
 <h3 id="bringing-it-all-together">Bringing it all together<a class="headerlink" href="#bringing-it-all-together" title="Permanent link">¤</a></h3>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(new)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L207">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L209">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="new">new<a class="headerlink" href="#new" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> new (root_path:str)
@@ -1152,10 +1181,10 @@ needed.</p>
     assert (mkdocs_path / &quot;site&quot;).exists()
     assert (mkdocs_path / &quot;summary_template.txt&quot;).exists()
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpl_krgmvp/settings.ini&#39;.
-Directory /tmp/tmpl_krgmvp/mkdocs created.
-File &#39;/tmp/tmpl_krgmvp/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmpl_krgmvp/mkdocs/summary_template.txt&#39; generated.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmphdaxt52s/settings.ini&#39;.
+Directory /tmp/tmphdaxt52s/mkdocs created.
+File &#39;/tmp/tmphdaxt52s/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmphdaxt52s/mkdocs/summary_template.txt&#39; generated.
 </code></pre></div>
 <h2 id="build">Build<a class="headerlink" href="#build" title="Permanent link">¤</a></h2>
 <h3 id="build-markdown-files">Build markdown files<a class="headerlink" href="#build-markdown-files" title="Permanent link">¤</a></h3>
@@ -1165,8 +1194,8 @@ File &#39;/tmp/tmpl_krgmvp/mkdocs/summary_template.txt&#39; generated.
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>!ls /tmp
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>fish.davor/  tmp2imt9_a__kernels/  tmpocn0mm0j.less
-fish.root/   tmpmw7n5cwp.less
+<div class="highlight"><pre><span></span><code>fish.harish/  tmp2imt9_a__kernels/  tmplobsjxr1.less
+fish.root/    tmpg_5zcqs5.less
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>with TemporaryDirectory() as d:
     settings_path = Path(d) / &quot;settings.ini&quot;
@@ -1182,28 +1211,28 @@ fish.root/   tmpmw7n5cwp.less
     print(&quot;\n&quot;.join([str(md) for md in mds]))
     assert len(mds) == 6
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpoketlbwi/settings.ini&#39;.
-Directory /tmp/tmpoketlbwi/mkdocs created.
-File &#39;/tmp/tmpoketlbwi/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmpoketlbwi/mkdocs/summary_template.txt&#39; generated.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmppdvh7hbx/settings.ini&#39;.
+Directory /tmp/tmppdvh7hbx/mkdocs created.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/summary_template.txt&#39; generated.
 cache=Path(&#39;/tf/nbdev-mkdocs/_proc&#39;)
-notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
-File &#39;/tmp/tmpoketlbwi/mkdocs/docs/index.md&#39; created.
-File &#39;/tmp/tmpoketlbwi/mkdocs/docs/Mkdocs.md&#39; created.
-File &#39;/tmp/tmpoketlbwi/mkdocs/docs/CLI.md&#39; created.
-File &#39;/tmp/tmpoketlbwi/mkdocs/docs/PackageData.md&#39; created.
-File &#39;/tmp/tmpoketlbwi/mkdocs/docs/Docstring.md&#39; created.
-File &#39;/tmp/tmpoketlbwi/mkdocs/docs/guides/Guide_One.md&#39; created.
+notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
+File &#39;/tmp/tmppdvh7hbx/mkdocs/docs/Mkdocs.md&#39; created.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/docs/index.md&#39; created.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/docs/CLI.md&#39; created.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/docs/Docstring.md&#39; created.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/docs/PackageData.md&#39; created.
+File &#39;/tmp/tmppdvh7hbx/mkdocs/docs/guides/Guide_One.md&#39; created.
 Checks:
-/tmp/tmpoketlbwi/mkdocs/docs/CLI.md
-/tmp/tmpoketlbwi/mkdocs/docs/PackageData.md
-/tmp/tmpoketlbwi/mkdocs/docs/Docstring.md
-/tmp/tmpoketlbwi/mkdocs/docs/index.md
-/tmp/tmpoketlbwi/mkdocs/docs/Mkdocs.md
-/tmp/tmpoketlbwi/mkdocs/docs/guides/Guide_One.md
+/tmp/tmppdvh7hbx/mkdocs/docs/CLI.md
+/tmp/tmppdvh7hbx/mkdocs/docs/PackageData.md
+/tmp/tmppdvh7hbx/mkdocs/docs/Docstring.md
+/tmp/tmppdvh7hbx/mkdocs/docs/index.md
+/tmp/tmppdvh7hbx/mkdocs/docs/Mkdocs.md
+/tmp/tmppdvh7hbx/mkdocs/docs/guides/Guide_One.md
 
 
-/usr/local/lib/python3.8/dist-packages/nbformat/__init__.py:92: MissingIDFieldWarning: Code cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
+/root/.local/lib/python3.8/site-packages/nbformat/__init__.py:92: MissingIDFieldWarning: Code cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
   validate(nb)
 </code></pre></div>
 <h3 id="build-summary-for-guides">Build summary for guides<a class="headerlink" href="#build-summary-for-guides" title="Permanent link">¤</a></h3>
@@ -1218,30 +1247,30 @@ Checks:
 
 print(guides)
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpdpcbqc69/settings.ini&#39;.
-Directory /tmp/tmpdpcbqc69/mkdocs created.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/summary_template.txt&#39; generated.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmp4kv7an9_/settings.ini&#39;.
+Directory /tmp/tmp4kv7an9_/mkdocs created.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/summary_template.txt&#39; generated.
 cache=Path(&#39;/tf/nbdev-mkdocs/_proc&#39;)
-notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
-File &#39;/tmp/tmpdpcbqc69/mkdocs/docs/index.md&#39; created.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/docs/Mkdocs.md&#39; created.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/docs/CLI.md&#39; created.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/docs/PackageData.md&#39; created.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/docs/Docstring.md&#39; created.
-File &#39;/tmp/tmpdpcbqc69/mkdocs/docs/guides/Guide_One.md&#39; created.
+notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
+File &#39;/tmp/tmp4kv7an9_/mkdocs/docs/Mkdocs.md&#39; created.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/docs/index.md&#39; created.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/docs/CLI.md&#39; created.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/docs/Docstring.md&#39; created.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/docs/PackageData.md&#39; created.
+File &#39;/tmp/tmp4kv7an9_/mkdocs/docs/guides/Guide_One.md&#39; created.
 - Guides
     - [Guide One](guides/Guide_One.md)
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>
 </code></pre></div>
 <h3 id="build-api">Build API<a class="headerlink" href="#build-api" title="Permanent link">¤</a></h3>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(get_submodules)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L258">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L260">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="get_submodules">get_submodules<a class="headerlink" href="#get_submodules" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> get_submodules (package_name:str)
@@ -1307,23 +1336,23 @@ submodules
  &#39;mkdocs.utils.filters&#39;,
  &#39;mkdocs.utils.meta&#39;]
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(generate_api_docs_for_module)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L286">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L288">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="generate_api_docs_for_module">generate_api_docs_for_module<a class="headerlink" href="#generate_api_docs_for_module" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> generate_api_docs_for_module (root_path:str, module_name:str)
 </code></pre></div>
 </blockquote>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(generate_api_doc_for_submodule)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L273">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L275">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="generate_api_doc_for_submodule">generate_api_doc_for_submodule<a class="headerlink" href="#generate_api_doc_for_submodule" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> generate_api_doc_for_submodule (root_path:str, submodule:str)
@@ -1344,10 +1373,10 @@ show_doc(generate_api_doc_for_submodule)
     for path in paths:
         assert path.exists(), path
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpn84hj2w_/settings.ini&#39;.
-Directory /tmp/tmpn84hj2w_/mkdocs created.
-File &#39;/tmp/tmpn84hj2w_/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmpn84hj2w_/mkdocs/summary_template.txt&#39; generated.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpooflx091/settings.ini&#39;.
+Directory /tmp/tmpooflx091/mkdocs created.
+File &#39;/tmp/tmpooflx091/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmpooflx091/mkdocs/summary_template.txt&#39; generated.
 - API
     - [mkdocs.commands](API/mkdocs/commands.md)
         - [babel](API/mkdocs/commands/babel.md)
@@ -1407,12 +1436,12 @@ File &#39;/tmp/tmpn84hj2w_/mkdocs/summary_template.txt&#39; generated.
         - [meta](API/mkdocs/utils/meta.md)
 </code></pre></div>
 <h3 id="brining-it-all-together">Brining it all together<a class="headerlink" href="#brining-it-all-together" title="Permanent link">¤</a></h3>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(build_summary)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L298">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L300">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="build_summary">build_summary<a class="headerlink" href="#build_summary" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> build_summary (root_path:str, module:str)
@@ -1420,7 +1449,7 @@ show_doc(build_summary)
 </blockquote>
 <div class="highlight"><pre><span></span><code>with TemporaryDirectory() as d:
     settings_path = Path(d) / &quot;settings.ini&quot;
-    for fname in [&quot;settings.ini&quot;, &quot;README.md&quot;]:
+    for fname in [&quot;settings.ini&quot;, &quot;README.md&quot;, &quot;CHANGELOG.md&quot;]:
         shutil.copyfile(Path(&quot;..&quot;) / fname, Path(d) / fname)
 
     new(d)
@@ -1432,18 +1461,18 @@ show_doc(build_summary)
 
     print(summary)
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpetk8k_o9/settings.ini&#39;.
-Directory /tmp/tmpetk8k_o9/mkdocs created.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/summary_template.txt&#39; generated.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpqdiuaunv/settings.ini&#39;.
+Directory /tmp/tmpqdiuaunv/mkdocs created.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/summary_template.txt&#39; generated.
 cache=Path(&#39;/tf/nbdev-mkdocs/_proc&#39;)
-notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
-File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/index.md&#39; created.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/Mkdocs.md&#39; created.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/CLI.md&#39; created.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/PackageData.md&#39; created.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/Docstring.md&#39; created.
-File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/guides/Guide_One.md&#39; created.
+notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
+File &#39;/tmp/tmpqdiuaunv/mkdocs/docs/Mkdocs.md&#39; created.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/docs/index.md&#39; created.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/docs/CLI.md&#39; created.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/docs/Docstring.md&#39; created.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/docs/PackageData.md&#39; created.
+File &#39;/tmp/tmpqdiuaunv/mkdocs/docs/guides/Guide_One.md&#39; created.
 - [Home](index.md)
 - Guides
     - [Guide One](guides/Guide_One.md)
@@ -1506,14 +1535,15 @@ File &#39;/tmp/tmpetk8k_o9/mkdocs/docs/guides/Guide_One.md&#39; created.
         - [meta](API/mkdocs/utils/meta.md)
 - CLI
     - [CLI 1](index.md)
+- [Releases](CHANGELOG.md)
 </code></pre></div>
 <h3 id="copy-cname-if-needed">Copy CNAME if needed<a class="headerlink" href="#copy-cname-if-needed" title="Permanent link">¤</a></h3>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(copy_cname_if_needed)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L334">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L340">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="copy_cname_if_needed">copy_cname_if_needed<a class="headerlink" href="#copy_cname_if_needed" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> copy_cname_if_needed (root_path:str)
@@ -1531,17 +1561,17 @@ show_doc(copy_cname_if_needed)
         else:
             assert not (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;CNAME&quot;).exists()
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>File &#39;/tmp/tmprel24f79/CNAME&#39; copied to &#39;/tmp/tmprel24f79/mkdocs/docs/CNAME&#39;.
-File &#39;/tmp/tmp_m88pnc4/CNAME&#39; not found, skipping copying..
+<div class="highlight"><pre><span></span><code>File &#39;/tmp/tmpskfnb0z6/CNAME&#39; copied to &#39;/tmp/tmpskfnb0z6/mkdocs/docs/CNAME&#39;.
+File &#39;/tmp/tmptiy7ctp0/CNAME&#39; not found, skipping copying..
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(prepare)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L349">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L355">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="prepare">prepare<a class="headerlink" href="#prepare" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> prepare (root_path:str)
@@ -1552,7 +1582,7 @@ show_doc(prepare)
     root_path: path under which mkdocs directory will be created</p>
 <div class="highlight"><pre><span></span><code>with TemporaryDirectory() as d:
     settings_path = Path(d) / &quot;settings.ini&quot;
-    for fname in [&quot;settings.ini&quot;, &quot;README.md&quot;, &quot;CNAME&quot;]:
+    for fname in [&quot;settings.ini&quot;, &quot;README.md&quot;, &quot;CNAME&quot;, &quot;CHANGELOG.md&quot;]:
         shutil.copyfile(Path(&quot;..&quot;) / fname, Path(d) / fname)
 
     new(d)
@@ -1565,46 +1595,47 @@ show_doc(prepare)
     assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;API&quot;).exists
     assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;SUMMARY.md&quot;).exists
     assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;index.md&quot;).exists
+    assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;CHANGELOG.md&quot;).exists
 #     !ls {d}/mkdocs/docs
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpe39h2cxm/settings.ini&#39;.
-Directory /tmp/tmpe39h2cxm/mkdocs created.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/summary_template.txt&#39; generated.
-File &#39;/tmp/tmpe39h2cxm/CNAME&#39; copied to &#39;/tmp/tmpe39h2cxm/mkdocs/docs/CNAME&#39;.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpnygw_kt5/settings.ini&#39;.
+Directory /tmp/tmpnygw_kt5/mkdocs created.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/summary_template.txt&#39; generated.
+File &#39;/tmp/tmpnygw_kt5/CNAME&#39; copied to &#39;/tmp/tmpnygw_kt5/mkdocs/docs/CNAME&#39;.
 cache=Path(&#39;/tf/nbdev-mkdocs/_proc&#39;)
-notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
-File &#39;/tmp/tmpe39h2cxm/mkdocs/docs/index.md&#39; created.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/docs/Mkdocs.md&#39; created.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/docs/CLI.md&#39; created.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/docs/PackageData.md&#39; created.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/docs/Docstring.md&#39; created.
-File &#39;/tmp/tmpe39h2cxm/mkdocs/docs/guides/Guide_One.md&#39; created.
+notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
+File &#39;/tmp/tmpnygw_kt5/mkdocs/docs/Mkdocs.md&#39; created.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/docs/index.md&#39; created.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/docs/CLI.md&#39; created.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/docs/Docstring.md&#39; created.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/docs/PackageData.md&#39; created.
+File &#39;/tmp/tmpnygw_kt5/mkdocs/docs/guides/Guide_One.md&#39; created.
 /root/.local/lib/python3.8/site-packages/mkdocstrings/handlers/python/__init__.py:13: UserWarning: The &#39;python-legacy&#39; extra of mkdocstrings will become mandatory in the next release. We have no way to detect if you already specify it, so if you do, please ignore this warning. You can globally disable it with the PYTHONWARNINGS environment variable: PYTHONWARNINGS=ignore::UserWarning:mkdocstrings.handlers.python
   warnings.warn(
 INFO     -  Cleaning site directory
-INFO     -  Building documentation to directory: /tmp/tmpe39h2cxm/mkdocs/site
+INFO     -  Building documentation to directory: /tmp/tmpnygw_kt5/mkdocs/site
 INFO     -  The following pages exist in the docs directory, but are not included in the &quot;nav&quot; configuration:
   - CLI.md
   - Docstring.md
   - Mkdocs.md
   - PackageData.md
-INFO     -  Documentation built in 1.14 seconds
+INFO     -  Documentation built in 1.18 seconds
 
 total 20K
-drwxr-xr-x  4 davor davor 4.0K Oct 20 11:26 docs/
--rw-r--r--  1 davor davor 2.3K Oct 20 11:26 mkdocs.yml
-drwxr-xr-x  2 davor davor 4.0K Oct 20 10:16 overrides/
-drwxr-xr-x 11 davor davor 4.0K Oct 20 11:26 site/
--rw-r--r--  1 davor davor   40 Oct 20 11:26 summary_template.txt
+drwxr-xr-x  4 harish harish 4.0K Nov  3 06:08 docs/
+-rw-r--r--  1 harish harish 2.3K Nov  3 06:08 mkdocs.yml
+drwxr-xr-x  2 harish harish 4.0K Nov  3 05:59 overrides/
+drwxr-xr-x 12 harish harish 4.0K Nov  3 06:08 site/
+-rw-r--r--  1 harish harish   67 Nov  3 06:08 summary_template.txt
 </code></pre></div>
 <h2 id="preview">Preview<a class="headerlink" href="#preview" title="Permanent link">¤</a></h2>
-<div class="highlight"><pre><span></span><code>#|output: asis
-#| echo: false
+<div class="highlight"><pre><span></span><code>#| echo: false
+#| output: asis
 show_doc(preview)
 </code></pre></div>
 <hr />
-<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L391">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
+<p><a href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/mkdocs.py#L397">source</a>{target="_blank" style="float:right; font-size:smaller"}</p>
 <h3 id="preview_1">preview<a class="headerlink" href="#preview_1" title="Permanent link">¤</a></h3>
 <blockquote>
 <div class="highlight"><pre><span></span><code> preview (root_path:str, port:Union[int,NoneType]=None)
@@ -1616,7 +1647,7 @@ show_doc(preview)
     port: port to use</p>
 <div class="highlight"><pre><span></span><code>with TemporaryDirectory() as d:
     settings_path = Path(d) / &quot;settings.ini&quot;
-    for fname in [&quot;settings.ini&quot;, &quot;README.md&quot;, &quot;CNAME&quot;]:
+    for fname in [&quot;settings.ini&quot;, &quot;README.md&quot;, &quot;CNAME&quot;, &quot;CHANGELOG.md&quot;]:
         shutil.copyfile(Path(&quot;..&quot;) / fname, Path(d) / fname)
 
     new(d)
@@ -1627,19 +1658,37 @@ show_doc(preview)
     assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;API&quot;).exists
     assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;SUMMARY.md&quot;).exists
     assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;index.md&quot;).exists
+    assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;CHANGELOG.md&quot;).exists
     !ls {d}/mkdocs/docs
 
     preview(d, port=4000)
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmp1rsf837o/settings.ini&#39;.
-Directory /tmp/tmp1rsf837o/mkdocs created.
-File &#39;/tmp/tmp1rsf837o/mkdocs/mkdocs.yml&#39; generated.
-File &#39;/tmp/tmp1rsf837o/mkdocs/summary_template.txt&#39; generated.
-File &#39;/tmp/tmp1rsf837o/CNAME&#39; copied to &#39;/tmp/tmp1rsf837o/mkdocs/docs/CNAME&#39;.
+<div class="highlight"><pre><span></span><code>Requirements already added to &#39;/tmp/tmpvn5kr580/settings.ini&#39;.
+Directory /tmp/tmpvn5kr580/mkdocs created.
+File &#39;/tmp/tmpvn5kr580/mkdocs/mkdocs.yml&#39; generated.
+File &#39;/tmp/tmpvn5kr580/mkdocs/summary_template.txt&#39; generated.
+File &#39;/tmp/tmpvn5kr580/CNAME&#39; copied to &#39;/tmp/tmpvn5kr580/mkdocs/docs/CNAME&#39;.
 cache=Path(&#39;/tf/nbdev-mkdocs/_proc&#39;)
-notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
-File &#39;/tmp/tmp1rsf837o/mkdocs/docs/index.md&#39; created.
-File &#39;/tmp/tmp1rsf837o/mkdocs/docs/Mkdocs.md&#39; created.
+notebooks=[Path(&#39;/tf/nbdev-mkdocs/_proc/Mkdocs.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/index.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/CLI.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/Docstring.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/PackageData.ipynb&#39;), Path(&#39;/tf/nbdev-mkdocs/_proc/guides/Guide_One.ipynb&#39;)]
+File &#39;/tmp/tmpvn5kr580/mkdocs/docs/Mkdocs.md&#39; created.
+File &#39;/tmp/tmpvn5kr580/mkdocs/docs/index.md&#39; created.
+File &#39;/tmp/tmpvn5kr580/mkdocs/docs/CLI.md&#39; created.
+File &#39;/tmp/tmpvn5kr580/mkdocs/docs/Docstring.md&#39; created.
+File &#39;/tmp/tmpvn5kr580/mkdocs/docs/PackageData.md&#39; created.
+File &#39;/tmp/tmpvn5kr580/mkdocs/docs/guides/Guide_One.md&#39; created.
+/root/.local/lib/python3.8/site-packages/mkdocstrings/handlers/python/__init__.py:13: UserWarning: The &#39;python-legacy&#39; extra of mkdocstrings will become mandatory in the next release. We have no way to detect if you already specify it, so if you do, please ignore this warning. You can globally disable it with the PYTHONWARNINGS environment variable: PYTHONWARNINGS=ignore::UserWarning:mkdocstrings.handlers.python
+  warnings.warn(
+INFO     -  Cleaning site directory
+INFO     -  Building documentation to directory: /tmp/tmpvn5kr580/mkdocs/site
+INFO     -  The following pages exist in the docs directory, but are not included in the &quot;nav&quot; configuration:
+  - CLI.md
+  - Docstring.md
+  - Mkdocs.md
+  - PackageData.md
+INFO     -  Documentation built in 1.22 seconds
+
+API/          CLI.md  Docstring.md  PackageData.md  guides/
+CHANGELOG.md  CNAME   Mkdocs.md     SUMMARY.md      index.md
 
 
 
@@ -1647,153 +1696,23 @@ File &#39;/tmp/tmp1rsf837o/mkdocs/docs/Mkdocs.md&#39; created.
 
 KeyboardInterrupt                         Traceback (most recent call last)
 
-Cell In [37], line 10
-      6     shutil.copyfile(Path(&quot;..&quot;) / fname, Path(d) / fname)
-      8 new(d)
----&gt; 10 prepare(d)
-     13 assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;API&quot;).exists
-     14 assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;SUMMARY.md&quot;).exists
+Cell In [37], line 19
+     16 assert (Path(d) / &quot;mkdocs&quot; / &quot;docs&quot; / &quot;CHANGELOG.md&quot;).exists
+     17 get_ipython().system(&#39;ls {d}/mkdocs/docs&#39;)
+---&gt; 19 preview(d, port=4000)
 
 
-Cell In [34], line 20, in prepare(root_path)
-     17 lib_name = config[&quot;DEFAULT&quot;][&quot;lib_name&quot;]
-     18 lib_path = config[&quot;DEFAULT&quot;][&quot;lib_path&quot;]
----&gt; 20 build_summary(root_path, lib_path)
-     22 cmd = f&quot;mkdocs build -f {root_path}/mkdocs/mkdocs.yml&quot;
-     24 # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-
-
-Cell In [30], line 15, in build_summary(root_path, module)
-     12 shutil.copy(Path(root_path) / &quot;README.md&quot;, docs_path / &quot;index.md&quot;)
-     14 # generate markdown files
----&gt; 15 _generate_markdown_from_nbs(root_path)
-     17 # generates guides
-     18 guides = _generate_summary_for_guides(root_path)
-
-
-Cell In [22], line 14, in _generate_markdown_from_nbs(root_path)
-     12 converter = nbconvert.MarkdownExporter()
-     13 for nb in notebooks:
----&gt; 14     body, _ = converter.from_filename(nb)
-     15     dir_prefix = str(nb.parent)[len(str(cache))+1:]
-     16     md = doc_path / f&quot;{dir_prefix}&quot; / f&quot;{nb.stem}.md&quot;
-
-
-File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:190, in Exporter.from_filename(self, filename, resources, **kw)
-    187 resources[&quot;metadata&quot;][&quot;modified_date&quot;] = modified_date.strftime(date_format)
-    189 with open(filename, encoding=&quot;utf-8&quot;) as f:
---&gt; 190     return self.from_file(f, resources=resources, **kw)
-
-
-File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:207, in Exporter.from_file(self, file_stream, resources, **kw)
-    192 def from_file(self, file_stream, resources=None, **kw):
-    193     &quot;&quot;&quot;
-    194     Convert a notebook from a notebook file.
-    195 
+Cell In [36], line 24, in preview(root_path, port)
+     15     cmd = cmd + f&quot;:{port}&quot;
+     17 with subprocess.Popen( #nosec B603:subprocess_without_shell_equals_true
+     18     shlex.split(cmd),
+     19     stdout=subprocess.PIPE,
    (...)
-    205 
-    206     &quot;&quot;&quot;
---&gt; 207     return self.from_notebook_node(
-    208         nbformat.read(file_stream, as_version=4), resources=resources, **kw
-    209     )
-
-
-File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/templateexporter.py:386, in TemplateExporter.from_notebook_node(self, nb, resources, **kw)
-    374 def from_notebook_node(self, nb, resources=None, **kw):
-    375     &quot;&quot;&quot;
-    376     Convert a notebook from a notebook node instance.
-    377 
-   (...)
-    384         preprocessors and filters.
-    385     &quot;&quot;&quot;
---&gt; 386     nb_copy, resources = super().from_notebook_node(nb, resources, **kw)
-    387     resources.setdefault(&quot;raw_mimetypes&quot;, self.raw_mimetypes)
-    388     resources[&quot;global_content_filter&quot;] = {
-    389         &quot;include_code&quot;: not self.exclude_code_cell,
-    390         &quot;include_markdown&quot;: not self.exclude_markdown,
-   (...)
-    398         &quot;no_prompt&quot;: self.exclude_input_prompt and self.exclude_output_prompt,
-    399     }
-
-
-File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:147, in Exporter.from_notebook_node(self, nb, resources, **kw)
-    144     resources[&quot;language&quot;] = nb[&quot;metadata&quot;][&quot;language&quot;].lower()
-    146 # Preprocess
---&gt; 147 nb_copy, resources = self._preprocess(nb_copy, resources)
-    148 notebook_name = &quot;&quot;
-    149 if resources is not None:
-
-
-File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:344, in Exporter._preprocess(self, nb, resources)
-    342     nbc, resc = preprocessor(nbc, resc)
-    343     if not self.optimistic_validation:
---&gt; 344         self._validate_preprocessor(nbc, preprocessor)
-    346 if self.optimistic_validation:
-    347     self._validate_preprocessor(nbc, preprocessor)
-
-
-File /usr/local/lib/python3.8/dist-packages/nbconvert/exporters/exporter.py:311, in Exporter._validate_preprocessor(self, nbc, preprocessor)
-    309         nbformat.validate(nbc, relax_add_props=True)
-    310     else:
---&gt; 311         nbformat.validate(nbc)
-    312 except nbformat.ValidationError:
-    313     self.log.error(&quot;Notebook is invalid after preprocessor %s&quot;, preprocessor)
-
-
-File /usr/local/lib/python3.8/dist-packages/nbformat/validator.py:494, in validate(nbdict, ref, version, version_minor, relax_add_props, nbjson, repair_duplicate_cell_ids, strip_invalid_metadata)
-    484     assert isinstance(version_minor, int)
-    485     _normalize(
-    486         nbdict,
-    487         version,
-   (...)
-    491         strip_invalid_metadata=strip_invalid_metadata,
-    492     )
---&gt; 494 for error in iter_validate(
-    495     nbdict,
-    496     ref=ref,
-    497     version=version,
-    498     version_minor=version_minor,
-    499     relax_add_props=relax_add_props,
-    500     strip_invalid_metadata=strip_invalid_metadata,
-    501 ):
-    503     raise error
-
-
-File /usr/local/lib/python3.8/dist-packages/nbformat/validator.py:629, in iter_validate(nbdict, ref, version, version_minor, relax_add_props, nbjson, strip_invalid_metadata)
-    623         _strip_invalida_metadata(nbdict, version, version_minor, relax_add_props)
-    625     # Validate one more time to ensure that us removing metadata
-    626     # didn&#39;t cause another complex validation issue in the schema.
-    627     # Also to ensure that higher-level errors produced by individual metadata validation
-    628     # failures are removed.
---&gt; 629     errors = validator.iter_errors(nbdict)
-    631 for error in errors:
-    632     yield better_validation_error(error, version, version_minor)
-
-
-File /usr/local/lib/python3.8/dist-packages/nbformat/json_compat.py:59, in FastJsonSchemaValidator.iter_errors(self, data, schema)
-     57 validate_func = self._validator
-     58 try:
----&gt; 59     validate_func(data)
-     60 except _JsonSchemaException as error:
-     61     errors = [ValidationError(str(error), schema_path=error.path)]
-
-
-File &lt;string&gt;:135, in validate(data, custom_formats, name_prefix)
-
-
-File &lt;string&gt;:156, in validate___definitions_cell(data, custom_formats, name_prefix)
-
-
-File &lt;string&gt;:262, in validate___definitions_code_cell(data, custom_formats, name_prefix)
-
-
-File &lt;string&gt;:286, in validate___definitions_output(data, custom_formats, name_prefix)
-
-
-File &lt;string&gt;:410, in validate___definitions_display_data(data, custom_formats, name_prefix)
-
-
-File &lt;string&gt;:434, in validate___definitions_misc_mimebundle(data, custom_formats, name_prefix)
+     22     universal_newlines=True,
+     23 ) as p:
+---&gt; 24     for line in p.stdout:  # type: ignore
+     25         print(line, end=&quot;&quot;)
+     27 if p.returncode != 0:
 
 
 KeyboardInterrupt:
