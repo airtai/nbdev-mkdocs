@@ -33,7 +33,16 @@ import nbconvert
 from ._package_data import get_root_data_path
 from .helpers.cli_doc import generate_cli_doc
 
-# %% ../nbs/Mkdocs.ipynb 5
+# %% ../nbs/Mkdocs.ipynb 4
+def _get_value_from_config(root_path: str, config_name: str):
+    """Get the value from settings.ini file"""
+
+    settings_path = Path(root_path) / "settings.ini"
+    config = ConfigParser()
+    config.read(settings_path)
+    return config["DEFAULT"][config_name]
+
+# %% ../nbs/Mkdocs.ipynb 8
 def _add_requirements_to_settings(root_path: str):
     """Adds requirments needed for mkdocs to settings.ini
 
@@ -104,7 +113,7 @@ def _add_requirements_to_settings(root_path: str):
 
     return
 
-# %% ../nbs/Mkdocs.ipynb 8
+# %% ../nbs/Mkdocs.ipynb 11
 def _create_mkdocs_dir(root_path: str):
     mkdocs_template_path = get_root_data_path() / "mkdocs_template"
     if not mkdocs_template_path.exists():
@@ -126,14 +135,14 @@ def _create_mkdocs_dir(root_path: str):
             f"Directory {dst_path.resolve()} created.",
         )
 
-# %% ../nbs/Mkdocs.ipynb 11
+# %% ../nbs/Mkdocs.ipynb 14
 _mkdocs_template_path = get_root_data_path() / "mkdocs_template.yml"
 
-# %% ../nbs/Mkdocs.ipynb 13
+# %% ../nbs/Mkdocs.ipynb 16
 with open(_mkdocs_template_path, "r") as f:
     _mkdocs_template = f.read()
 
-# %% ../nbs/Mkdocs.ipynb 15
+# %% ../nbs/Mkdocs.ipynb 18
 def _get_kwargs_from_settings(
     settings_path: Path, mkdocs_template: Optional[str] = None
 ) -> Dict[str, str]:
@@ -145,7 +154,7 @@ def _get_kwargs_from_settings(
     kwargs = {k: config["DEFAULT"][k] for k in keys}
     return kwargs
 
-# %% ../nbs/Mkdocs.ipynb 17
+# %% ../nbs/Mkdocs.ipynb 20
 def _create_mkdocs_yaml(root_path: str):
     try:
         # create mkdocs folder if necessary
@@ -174,7 +183,7 @@ def _create_mkdocs_yaml(root_path: str):
         )
         raise typer.Exit(code=3)
 
-# %% ../nbs/Mkdocs.ipynb 20
+# %% ../nbs/Mkdocs.ipynb 23
 _summary_template = """- [Home](index.md)
 {guides}
 {api}
@@ -208,7 +217,7 @@ def _create_summary_template(root_path: str):
         )
         raise typer.Exit(code=3)
 
-# %% ../nbs/Mkdocs.ipynb 23
+# %% ../nbs/Mkdocs.ipynb 26
 def new(root_path: str):
     """Initialize mkdocs project files
 
@@ -224,7 +233,7 @@ def new(root_path: str):
     _create_mkdocs_yaml(root_path)
     _create_summary_template(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 29
+# %% ../nbs/Mkdocs.ipynb 32
 def _generate_markdown_from_nbs(root_path: str):
     doc_path = Path(root_path) / "mkdocs" / "docs"
     doc_path.mkdir(exist_ok=True, parents=True)
@@ -246,7 +255,7 @@ def _generate_markdown_from_nbs(root_path: str):
             )
             f.write(body)
 
-# %% ../nbs/Mkdocs.ipynb 32
+# %% ../nbs/Mkdocs.ipynb 35
 def _generate_summary_for_guides(root_path: str) -> str:
     doc_path = Path(root_path) / "mkdocs" / "docs"
     mds = [md for md in doc_path.glob("**/*.md") if md.name.lower().startswith("guide")]
@@ -259,7 +268,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     else:
         return ""
 
-# %% ../nbs/Mkdocs.ipynb 36
+# %% ../nbs/Mkdocs.ipynb 39
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -274,7 +283,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 38
+# %% ../nbs/Mkdocs.ipynb 41
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -300,8 +309,12 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 40
-def generate_cli_doc_for_submodule(root_path: str, module_name: str) -> str:
+# %% ../nbs/Mkdocs.ipynb 43
+def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
+
+    module_name = cmd.split("=")[0]
+    app_name = cmd.split("=")[1].split(":")[0]
+
     subpath = f"CLI/{module_name}.md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
@@ -309,8 +322,14 @@ def generate_cli_doc_for_submodule(root_path: str, module_name: str) -> str:
     app = typer.Typer()
     app.command()(generate_cli_doc)
     runner = CliRunner()
-    result = runner.invoke(app, [module_name])
-    cli_doc = str(result.stdout)
+    result = runner.invoke(app, [app_name])
+
+    if result.exit_code == 0:
+        cli_doc = str(result.stdout)
+    else:
+        cli_doc = subprocess.run([cmd, "--help"], stdout=subprocess.PIPE).stdout.decode(
+            "utf-8"
+        )
 
     with open(path, "w") as f:
         f.write(f"{cli_doc}")
@@ -320,12 +339,18 @@ def generate_cli_doc_for_submodule(root_path: str, module_name: str) -> str:
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
     shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "CLI", ignore_errors=True)
-    submodule_summary = generate_cli_doc_for_submodule(
-        root_path=root_path, module_name=module_name
+    console_scripts = _get_value_from_config(root_path, "console_scripts").split("\n")
+
+    submodule_summary = "\n".join(
+        [
+            generate_cli_doc_for_submodule(root_path=root_path, cmd=cmd)
+            for cmd in console_scripts
+        ]
     )
+
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 43
+# %% ../nbs/Mkdocs.ipynb 46
 def build_summary(
     root_path: str,
     module: str,
@@ -364,7 +389,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 46
+# %% ../nbs/Mkdocs.ipynb 49
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -379,7 +404,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 49
+# %% ../nbs/Mkdocs.ipynb 52
 def prepare(root_path: str):
     """Prepares mkdocs for serving
 
@@ -390,11 +415,8 @@ def prepare(root_path: str):
     copy_cname_if_needed(root_path)
 
     # get lib name from settings.ini
-    settings_path = Path(root_path) / "settings.ini"
-    config = ConfigParser()
-    config.read(settings_path)
-    lib_name = config["DEFAULT"]["lib_name"]
-    lib_path = config["DEFAULT"]["lib_path"]
+    lib_name = _get_value_from_config(root_path, "lib_name")
+    lib_path = _get_value_from_config(root_path, "lib_path")
 
     build_summary(root_path, lib_path)
 
@@ -418,7 +440,7 @@ def prepare(root_path: str):
         )
         raise typer.Exit(5)
 
-# %% ../nbs/Mkdocs.ipynb 52
+# %% ../nbs/Mkdocs.ipynb 55
 import shlex
 
 

@@ -180,7 +180,7 @@ def generate_cli_doc(
     """
     Generate Markdown docs for a Typer app.
     """
-    _state.module = f"{module_name}.cli"
+    _state.module = f"{module_name}"
     typer_obj = _get_typer_from_state()
 
     if not typer_obj:
