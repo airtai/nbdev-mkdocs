@@ -6,6 +6,9 @@ token
 .local_reinstall
 .secret.baseline
 
+# Docs related
+mkdocs/
+
 _publish.yml
 _quarto.yml
 _proc/
