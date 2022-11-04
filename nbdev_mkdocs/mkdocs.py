@@ -227,9 +227,7 @@ def _generate_markdown_from_nbs(root_path: str):
     doc_path.mkdir(exist_ok=True, parents=True)
 
     cache = proc_nbs()
-    notebooks = list(cache.glob("**/index.ipynb")) + list(
-        cache.glob("**/guides/*.ipynb")
-    )
+    notebooks = list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
     print(f"{cache=}")
     print(f"{notebooks=}")
 
