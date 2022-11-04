@@ -2,7 +2,6 @@
 - Guides
     - [Guide One](guides/Guide_One.md)
 - API
-    - [nbdev_mkdocs.cli](API/nbdev_mkdocs/cli.md)
     - [nbdev_mkdocs.docstring](API/nbdev_mkdocs/docstring.md)
     - [nbdev_mkdocs.helpers](API/nbdev_mkdocs/helpers.md)
         - [cli_doc](API/nbdev_mkdocs/helpers/cli_doc.md)

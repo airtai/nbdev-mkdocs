@@ -295,6 +295,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
         [
             generate_api_doc_for_submodule(root_path=root_path, submodule=x)
             for x in submodules
+            if x.split(".")[1] != "cli"
         ]
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
