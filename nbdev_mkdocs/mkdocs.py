@@ -319,6 +319,7 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
 
+    # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(app_name)
     if isinstance(getattr(m, method_name), typer.Typer):
         app = typer.Typer()
