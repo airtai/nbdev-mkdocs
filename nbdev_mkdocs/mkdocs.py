@@ -332,10 +332,10 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
         A new string in which each line is less than the specified width.
     """
     _s = ""
-    ignore_list = ["usage:", "positional arguments:", "optional arguments:"]
+    _ignore_defaults = ("usage:", "positional arguments:", "optional arguments:")
 
     for line in s.split("\n\n"):
-        if (len(line) > width) and (not line.startswith(tuple(ignore_list))):
+        if (len(line) > width) and (not line.startswith(_ignore_defaults)):
             line = line.replace("\n", " ")
             line = "\n".join(textwrap.wrap(line, width=width, replace_whitespace=False))
         _s += line + "\n\n"
