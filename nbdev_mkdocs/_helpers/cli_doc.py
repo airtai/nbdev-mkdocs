@@ -176,6 +176,7 @@ def _get_docs_for_click(
 def generate_cli_doc(
     ctx: typer.Context,
     module_name: str,
+    app_name: str,
 ) -> None:
     """
     Generate Markdown docs for a Typer app.
@@ -187,6 +188,6 @@ def generate_cli_doc(
         typer.echo(f"No Typer app found", err=True)
         raise typer.Abort()
     click_obj = typer.main.get_command(typer_obj)
-    docs = _get_docs_for_click(obj=click_obj, ctx=ctx, name=module_name)
+    docs = _get_docs_for_click(obj=click_obj, ctx=ctx, name=app_name)
     clean_docs = f"{docs.strip()}\n"
     typer.echo(clean_docs)

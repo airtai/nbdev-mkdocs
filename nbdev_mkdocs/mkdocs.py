@@ -32,7 +32,7 @@ from nbdev.serve import proc_nbs
 import nbconvert
 
 from ._package_data import get_root_data_path
-from .helpers.cli_doc import generate_cli_doc
+from ._helpers.cli_doc import generate_cli_doc
 
 # %% ../nbs/Mkdocs.ipynb 4
 def _get_value_from_config(root_path: str, config_name: str):
@@ -347,24 +347,24 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
 # %% ../nbs/Mkdocs.ipynb 45
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
-    module_name = cmd.split("=")[0]
-    app_name = cmd.split("=")[1].split(":")[0]
+    cli_app_name = cmd.split("=")[0]
+    module_name = cmd.split("=")[1].split(":")[0]
     method_name = cmd.split("=")[1].split(":")[1]
 
-    subpath = f"CLI/{module_name}.md"
+    subpath = f"CLI/{cli_app_name}.md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
 
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
-    m = importlib.import_module(app_name)
+    m = importlib.import_module(module_name)
     if isinstance(getattr(m, method_name), typer.Typer):
         app = typer.Typer()
         app.command()(generate_cli_doc)
         runner = CliRunner()
-        result = runner.invoke(app, [app_name])
+        result = runner.invoke(app, [module_name, cli_app_name])
         cli_doc = str(result.stdout)
     else:
-        cmd = f"{module_name} --help"
+        cmd = f"{cli_app_name} --help"
         print(f"Not a typer command. Documenting: {cmd=}")
 
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
@@ -381,7 +381,7 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
     with open(path, "w") as f:
         f.write(cli_doc)
 
-    return f"- [{module_name}]({subpath})"
+    return f"- [{cli_app_name}]({subpath})"
 
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
