@@ -332,13 +332,16 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
         A new string in which each line is less than the specified width.
     """
     _s = ""
-    _ignore_defaults = ("usage:", "positional arguments:", "optional arguments:")
 
-    for line in s.split("\n\n"):
-        if (len(line) > width) and (not line.startswith(_ignore_defaults)):
+    for blocks in s.split("\n\n"):
+        sub_block = blocks.split("\n  ")
+        for line in sub_block:
             line = line.replace("\n", " ")
             line = "\n".join(textwrap.wrap(line, width=width, replace_whitespace=False))
-        _s += line + "\n\n"
+            if len(sub_block) == 1:
+                _s += line + "\n\n"
+            else:
+                _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
 # %% ../nbs/Mkdocs.ipynb 45
