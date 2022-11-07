@@ -304,7 +304,6 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
         [
             generate_api_doc_for_submodule(root_path=root_path, submodule=x)
             for x in submodules
-            if x.split(".")[1] != "cli"
         ]
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
@@ -314,22 +313,30 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     module_name = cmd.split("=")[0]
     app_name = cmd.split("=")[1].split(":")[0]
+    method_name = cmd.split("=")[1].split(":")[1]
 
     subpath = f"CLI/{module_name}.md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
 
-    app = typer.Typer()
-    app.command()(generate_cli_doc)
-    runner = CliRunner()
-    result = runner.invoke(app, [app_name])
-
-    if result.exit_code == 0:
+    m = importlib.import_module(app_name)
+    if isinstance(getattr(m, method_name), typer.Typer):
+        app = typer.Typer()
+        app.command()(generate_cli_doc)
+        runner = CliRunner()
+        result = runner.invoke(app, [app_name])
         cli_doc = str(result.stdout)
     else:
-        cli_doc = subprocess.run([cmd, "--help"], stdout=subprocess.PIPE).stdout.decode(
-            "utf-8"
-        )
+        cmd = f"{module_name} --help"
+        print(f"Not a typer command. Documenting: {cmd=}")
+
+        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        cli_doc = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
+            cmd,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        ).stdout.decode("utf-8")
 
     with open(path, "w") as f:
         f.write(f"{cli_doc}")
