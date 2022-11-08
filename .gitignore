@@ -6,6 +6,9 @@ token
 .local_reinstall
 .secret.baseline
 
+# nbs related
+nbs/.last_checked
+
 # Docs related
 mkdocs/docs/
 mkdocs/site/
