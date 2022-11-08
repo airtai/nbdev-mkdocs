@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install nbdev
+      - run: pip install 'nbdev[dev]'
       - run: make
       - run: cd mkdocs; mkdocs gh-deploy --force
 
