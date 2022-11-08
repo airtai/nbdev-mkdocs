@@ -7,7 +7,9 @@ token
 .secret.baseline
 
 # Docs related
-mkdocs/
+mkdocs/docs/
+mkdocs/site/
+mkdocs/summary_template.txt
 
 _publish.yml
 _quarto.yml
