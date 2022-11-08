@@ -13,6 +13,7 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install 'nbdev[dev]'
+      - run: nbdev_install_quarto
       - run: make
       - run: cd mkdocs; mkdocs gh-deploy --force
 
