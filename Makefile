@@ -39,17 +39,17 @@ test: install
 	nbdev_test
     
 .PHONY: mypy
-mypy: nbdev_mkdocs
+mypy: install
 	mypy nbdev_mkdocs --ignore-missing-imports
     
 .PHONY: sast
 sast: .sast_bandit .sast_semgrep
 
-.sast_bandit: nbdev_mkdocs
+.sast_bandit: install
 	bandit -r nbdev_mkdocs
 	touch .sast_bandit
     
-.sast_semgrep: nbdev_mkdocs
+.sast_semgrep: install
 	semgrep --config auto --error nbdev_mkdocs
 	touch .sast_semgrep
 
