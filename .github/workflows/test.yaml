@@ -2,6 +2,16 @@ name: CI
 on:  [workflow_dispatch, pull_request, push]
 
 jobs:
+  check_all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install 'nbdev[dev]'
+      - run: nbdev_install_quarto
+      - run: make check_all
   test:
     runs-on: ubuntu-latest
     steps: [uses: fastai/workflows/nbdev-ci@master]
