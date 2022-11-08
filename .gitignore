@@ -6,6 +6,11 @@ token
 .local_reinstall
 .secret.baseline
 
+# Docs related
+mkdocs/docs/
+mkdocs/site/
+mkdocs/summary_template.txt
+
 _publish.yml
 _quarto.yml
 _proc/
