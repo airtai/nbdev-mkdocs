@@ -2,14 +2,6 @@
 
 <!-- do not remove -->
 
-## 0.0.1rc2
-
-### New Features
-
-- Generate cli docs ([#14](https://github.com/airtai/nbdev-mkdocs/pull/14)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
-  - Closes #4
-
-
 ## 0.0.1rc1
 
 ### New Features
@@ -18,7 +10,5 @@
   - Closes #8
 
 
+
 ## 0.0.1rc0
-
-
-
