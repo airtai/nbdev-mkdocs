@@ -38,12 +38,14 @@ from ._package_data import get_root_data_path
 from ._helpers.cli_doc import generate_cli_doc
 
 # %% ../nbs/Mkdocs.ipynb 4
-def _get_value_from_config(root_path: str, config_name: str):
+def _get_value_from_config(root_path: str, config_name: str) -> str:
     """Get the value from settings.ini file"""
 
     settings_path = Path(root_path) / "settings.ini"
     config = ConfigParser()
     config.read(settings_path)
+    if not config.has_option("DEFAULT", config_name):
+        return ""
     return config["DEFAULT"][config_name]
 
 # %% ../nbs/Mkdocs.ipynb 8
@@ -192,7 +194,7 @@ _summary_template = """- [Home](index.md)
 {guides}
 {api}
 {cli}
-- [Releases](CHANGELOG.md)
+{changelog}
 """
 
 
@@ -411,18 +413,33 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
     shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "CLI", ignore_errors=True)
-    console_scripts = _get_value_from_config(root_path, "console_scripts").split("\n")
+    console_scripts = _get_value_from_config(root_path, "console_scripts")
+
+    if not console_scripts:
+        return ""
 
     submodule_summary = "\n".join(
         [
             generate_cli_doc_for_submodule(root_path=root_path, cmd=cmd)
-            for cmd in console_scripts
+            for cmd in console_scripts.split("\n")
         ]
     )
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 50
+# %% ../nbs/Mkdocs.ipynb 49
+def _copy_change_log_if_exists(
+    root_path: Union[Path, str], docs_path: Union[Path, str]
+) -> str:
+    changelog = ""
+    source_change_log_path = Path(root_path) / "CHANGELOG.md"
+    dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
+    if source_change_log_path.exists():
+        shutil.copy(source_change_log_path, dst_change_log_path)
+        changelog = "- [Releases](CHANGELOG.md)"
+    return changelog
+
+# %% ../nbs/Mkdocs.ipynb 52
 def build_summary(
     root_path: str,
     module: str,
@@ -446,14 +463,16 @@ def build_summary(
     # generate CLI
     cli = generate_cli_docs_for_module(root_path, module)
 
-    # copy CHANGELOG.md as CHANGELOG.md
-    shutil.copy(Path(root_path) / "CHANGELOG.md", docs_path / "CHANGELOG.md")
+    # copy CHANGELOG.md as CHANGELOG.md is exists
+    changelog = _copy_change_log_if_exists(root_path, docs_path)
 
     # read summary template from file
     with open(Path(root_path) / "mkdocs" / "summary_template.txt") as f:
         summary_template = f.read()
 
-    summary = summary_template.format(guides=guides, api=api, cli=cli)
+    summary = summary_template.format(
+        guides=guides, api=api, cli=cli, changelog=changelog
+    )
     summary = "\n".join(
         [l for l in [l.rstrip() for l in summary.split("\n")] if l != ""]
     )
@@ -461,7 +480,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 53
+# %% ../nbs/Mkdocs.ipynb 55
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -476,7 +495,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 56
+# %% ../nbs/Mkdocs.ipynb 58
 def prepare(root_path: str):
     """Prepares mkdocs for serving
 
@@ -518,7 +537,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 59
+# %% ../nbs/Mkdocs.ipynb 61
 import shlex
 
 
