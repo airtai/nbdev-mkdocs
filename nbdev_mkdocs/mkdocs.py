@@ -85,7 +85,7 @@ def _add_requirements_to_settings(root_path: str):
 
     try:
         if "requirements" not in updater["DEFAULT"]:
-            updater["DEFAULT"]["requirements"] = ""
+            updater["DEFAULT"].last_block.add_after.space(2).comment("### Optional ###").option("requirements", "")  # type: ignore
 
         old_req: str = updater["DEFAULT"]["requirements"].value  # type: ignore
 
