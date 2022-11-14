@@ -316,6 +316,19 @@ def _get_title_from_notebook(nb_name: str) -> str:
     return nbp.nb.frontmatter_["title"]
 
 # %% ../nbs/Mkdocs.ipynb 39
+def _update_guide_images_relative_path(mds: List[Path]):
+    """Update the relative path of the guide images in the markdown files
+
+    Args:
+        mds: List of guide markdown files to update the path
+    """
+    for md in mds:
+        with open(Path(md), "r") as f:
+            _new_text = f.read().replace("../../mkdocs/docs/images/", "../../images/")
+        with open(Path(md), "w") as f:
+            f.write(_new_text)
+
+# %% ../nbs/Mkdocs.ipynb 41
 def _generate_summary_for_guides(root_path: str) -> str:
     doc_path = Path(root_path) / "mkdocs" / "docs"
     mds = sorted(
@@ -324,6 +337,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
 
     i = len(doc_path.parts)
     if len(mds) > 0:
+        _update_guide_images_relative_path(mds)
         return "- Guides\n    - " + "    - ".join(
             [
                 f"[{_get_title_from_notebook(md.stem)}]({'/'.join(md.parts[i:])})\n"
@@ -333,7 +347,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     else:
         return ""
 
-# %% ../nbs/Mkdocs.ipynb 43
+# %% ../nbs/Mkdocs.ipynb 45
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -348,7 +362,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 45
+# %% ../nbs/Mkdocs.ipynb 47
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -373,7 +387,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 47
+# %% ../nbs/Mkdocs.ipynb 49
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -397,7 +411,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 49
+# %% ../nbs/Mkdocs.ipynb 51
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -453,7 +467,7 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 51
+# %% ../nbs/Mkdocs.ipynb 53
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
@@ -465,7 +479,7 @@ def _copy_change_log_if_exists(
         changelog = "- [Releases](CHANGELOG.md)"
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 54
+# %% ../nbs/Mkdocs.ipynb 56
 def build_summary(
     root_path: str,
     module: str,
@@ -506,7 +520,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 57
+# %% ../nbs/Mkdocs.ipynb 59
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -521,7 +535,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 60
+# %% ../nbs/Mkdocs.ipynb 61
 def prepare(root_path: str):
     """Prepares mkdocs for serving
 
@@ -563,7 +577,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 63
+# %% ../nbs/Mkdocs.ipynb 64
 import shlex
 
 
