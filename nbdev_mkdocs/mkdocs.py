@@ -224,14 +224,14 @@ def _create_summary_template(root_path: str):
         raise typer.Exit(code=3)
 
 # %% ../nbs/Mkdocs.ipynb 25
-def _update_deploy_workflow(root_path: str):
-    """Update the default deploy workflow file from nbdev
+def _update_gh_pages_deploy_workflow(root_path: str):
+    """Update the default gh-pages deploy workflow file from nbdev
 
     Args:
         root_path: Project's root path
     """
 
-    deploy_yaml_template_path = get_root_data_path() / "deploy.yaml"
+    deploy_yaml_template_path = get_root_data_path() / "gh_pages_deploy_template.yaml"
     if not deploy_yaml_template_path.exists():
         typer.secho(
             f"Unexpected error: path {deploy_yaml_template_path.resolve()} does not exists!",
@@ -261,7 +261,9 @@ def new(root_path: str):
     _create_mkdocs_dir(root_path)
     _create_mkdocs_yaml(root_path)
     _create_summary_template(root_path)
-    _update_deploy_workflow(root_path)
+
+
+#     _update_gh_pages_deploy_workflow(root_path)
 
 
 @call_parse

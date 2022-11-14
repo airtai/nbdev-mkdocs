@@ -1,30 +1,19 @@
 name: Deploy nbdev-mkdocs generated documentation to GitHub Pages
 on:
   push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+    branches:
+      - master 
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -U --pre nbdev
-          pip install nbdev_mkdocs
-          pip install -e ".[dev]"
-      - run: nbdev_mkdocs prepare
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force_orphan: true
-          publish_dir: ./mkdocs/site
-          # The following lines assign commit authorship to the official
-          # GH-Actions bot for deploys to `gh-pages` branch.
-          # You can swap them out with your own user credentials.
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          python-version: 3.x
+      - run: pip install 'nbdev[dev]'
+      - run: nbdev_install_quarto
+      - run: make
+      - run: cd mkdocs; mkdocs gh-deploy --force
 
