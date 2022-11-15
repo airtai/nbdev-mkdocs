@@ -297,7 +297,7 @@ def _replace_all(text: str, image_prefixes: Set[str], dir_prefix: str) -> str:
         _match = f"]({img_prefix}"
         if _match in text:
             _replace = (
-                f"../../images/nbs/{dir_prefix}/{img_prefix}"
+                f"../images/nbs/{dir_prefix}/{img_prefix}"
                 if len(dir_prefix) > 0
                 else f"./images/nbs/{img_prefix}"
             )
