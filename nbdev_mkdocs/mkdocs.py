@@ -38,12 +38,14 @@ from ._package_data import get_root_data_path
 from ._helpers.cli_doc import generate_cli_doc
 
 # %% ../nbs/Mkdocs.ipynb 4
-def _get_value_from_config(root_path: str, config_name: str):
+def _get_value_from_config(root_path: str, config_name: str) -> str:
     """Get the value from settings.ini file"""
 
     settings_path = Path(root_path) / "settings.ini"
     config = ConfigParser()
     config.read(settings_path)
+    if not config.has_option("DEFAULT", config_name):
+        return ""
     return config["DEFAULT"][config_name]
 
 # %% ../nbs/Mkdocs.ipynb 8
@@ -192,7 +194,7 @@ _summary_template = """- [Home](index.md)
 {guides}
 {api}
 {cli}
-- [Releases](CHANGELOG.md)
+{changelog}
 """
 
 
@@ -249,12 +251,21 @@ def new_cli(root_path: str):
     new(root_path)
 
 # %% ../nbs/Mkdocs.ipynb 32
+def _get_nbs_for_markdown_conversion(cache: Path):
+    """Get a list of notebooks that needs to be converted to markdown.
+
+    Args:
+        cache: Path to the nbs cache folder
+    """
+    return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
+
+# %% ../nbs/Mkdocs.ipynb 34
 def _generate_markdown_from_nbs(root_path: str):
     doc_path = Path(root_path) / "mkdocs" / "docs"
     doc_path.mkdir(exist_ok=True, parents=True)
 
     cache = proc_nbs()
-    notebooks = list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
+    notebooks = _get_nbs_for_markdown_conversion(cache)
     print(f"{cache=}")
     print(f"{notebooks=}")
 
@@ -270,7 +281,91 @@ def _generate_markdown_from_nbs(root_path: str):
             )
             f.write(body)
 
-# %% ../nbs/Mkdocs.ipynb 35
+# %% ../nbs/Mkdocs.ipynb 36
+def _replace_all(text: str, image_prefixes: Set[str], dir_prefix: str) -> str:
+    """Replace the images relative path in the markdown text
+
+    Args:
+        text: String to replace
+        image_prefixes: Image prefixes to search for in the text
+        dir_prefix: Sub directory prefix to append to the image's relative path
+
+    Returns:
+        Updated relative path for all images as text
+    """
+    for img_prefix in image_prefixes:
+        _match = f"]({img_prefix}"
+        if _match in text:
+            _replace = (
+                f"../images/nbs/{dir_prefix}/{img_prefix}"
+                if len(dir_prefix) > 0
+                else f"./images/nbs/{img_prefix}"
+            )
+            text = text.replace(_match, f"]({_replace}")
+    return text
+
+# %% ../nbs/Mkdocs.ipynb 38
+def _update_path_in_markdown(nbs_images_path: List[Path], cache: Path, doc_path: Path):
+    """Update guide images relative path in the markdown files
+
+    Args:
+        nbs_images_path: Path to the images referred to in the notebooks in the cache directory
+        cache: Path to the nbs cache folder
+        doc_path: docs directory path
+    """
+
+    image_prefixes = set([f"{str(p.parts[-2])}/" for p in nbs_images_path])
+    notebooks = _get_nbs_for_markdown_conversion(cache)
+
+    for nb in notebooks:
+        dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
+        md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
+
+        with open(Path(md), "r") as f:
+            _new_text = f.read()
+            _new_text = _replace_all(_new_text, image_prefixes, dir_prefix)
+        with open(Path(md), "w") as f:
+            f.write(_new_text)
+
+
+def _copy_guide_images_to_docs_dir(root_path: str):
+    """Copy guide images to the docs directory
+
+    Args:
+        root_path: path under which mkdocs directory will be created
+    """
+    # Reference: https://github.com/quarto-dev/quarto-cli/blob/main/src/core/image.ts#L38
+    image_extensions = [
+        ".apng",
+        ".avif",
+        ".gif",
+        ".jpg",
+        ".jpeg",
+        ".jfif",
+        ".pjpeg",
+        ".pjp",
+        ".png",
+        ".svg",
+        ".webp",
+    ]
+
+    cache = proc_nbs()
+    nbs_images_path = [
+        p for p in Path(cache).glob(r"**/*") if p.suffix in image_extensions
+    ]
+
+    if len(nbs_images_path) > 0:
+        doc_path = Path(root_path) / "mkdocs" / "docs"
+        img_path = Path(doc_path) / "images" / "nbs"
+        for src_path in nbs_images_path:
+            dir_prefix = str(src_path.parent)[len(str(cache)) + 1 :]
+            dst_path = Path(img_path) / f"{dir_prefix}"
+            dst_path.mkdir(exist_ok=True, parents=True)
+            shutil.copy(src_path, dst_path)
+
+        _update_path_in_markdown(nbs_images_path, cache, doc_path)
+
+# %% ../nbs/Mkdocs.ipynb 41
 def _get_title_from_notebook(nb_name: str) -> str:
     cache = proc_nbs()
     nb_path = Path(cache) / "guides" / f"{nb_name}.ipynb"
@@ -287,7 +382,7 @@ def _get_title_from_notebook(nb_name: str) -> str:
     nbp.process()
     return nbp.nb.frontmatter_["title"]
 
-# %% ../nbs/Mkdocs.ipynb 37
+# %% ../nbs/Mkdocs.ipynb 43
 def _generate_summary_for_guides(root_path: str) -> str:
     doc_path = Path(root_path) / "mkdocs" / "docs"
     mds = sorted(
@@ -305,7 +400,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     else:
         return ""
 
-# %% ../nbs/Mkdocs.ipynb 41
+# %% ../nbs/Mkdocs.ipynb 47
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -320,7 +415,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 43
+# %% ../nbs/Mkdocs.ipynb 49
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -345,7 +440,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 45
+# %% ../nbs/Mkdocs.ipynb 51
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -369,7 +464,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 47
+# %% ../nbs/Mkdocs.ipynb 53
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -411,18 +506,33 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
     shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "CLI", ignore_errors=True)
-    console_scripts = _get_value_from_config(root_path, "console_scripts").split("\n")
+    console_scripts = _get_value_from_config(root_path, "console_scripts")
+
+    if not console_scripts:
+        return ""
 
     submodule_summary = "\n".join(
         [
             generate_cli_doc_for_submodule(root_path=root_path, cmd=cmd)
-            for cmd in console_scripts
+            for cmd in console_scripts.split("\n")
         ]
     )
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 50
+# %% ../nbs/Mkdocs.ipynb 55
+def _copy_change_log_if_exists(
+    root_path: Union[Path, str], docs_path: Union[Path, str]
+) -> str:
+    changelog = ""
+    source_change_log_path = Path(root_path) / "CHANGELOG.md"
+    dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
+    if source_change_log_path.exists():
+        shutil.copy(source_change_log_path, dst_change_log_path)
+        changelog = "- [Releases](CHANGELOG.md)"
+    return changelog
+
+# %% ../nbs/Mkdocs.ipynb 58
 def build_summary(
     root_path: str,
     module: str,
@@ -437,6 +547,9 @@ def build_summary(
     # generate markdown files
     _generate_markdown_from_nbs(root_path)
 
+    # copy guide images to docs dir and update path in generated markdown files
+    _copy_guide_images_to_docs_dir(root_path)
+
     # generates guides
     guides = _generate_summary_for_guides(root_path)
 
@@ -446,14 +559,16 @@ def build_summary(
     # generate CLI
     cli = generate_cli_docs_for_module(root_path, module)
 
-    # copy CHANGELOG.md as CHANGELOG.md
-    shutil.copy(Path(root_path) / "CHANGELOG.md", docs_path / "CHANGELOG.md")
+    # copy CHANGELOG.md as CHANGELOG.md is exists
+    changelog = _copy_change_log_if_exists(root_path, docs_path)
 
     # read summary template from file
     with open(Path(root_path) / "mkdocs" / "summary_template.txt") as f:
         summary_template = f.read()
 
-    summary = summary_template.format(guides=guides, api=api, cli=cli)
+    summary = summary_template.format(
+        guides=guides, api=api, cli=cli, changelog=changelog
+    )
     summary = "\n".join(
         [l for l in [l.rstrip() for l in summary.split("\n")] if l != ""]
     )
@@ -461,7 +576,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 53
+# %% ../nbs/Mkdocs.ipynb 61
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -476,7 +591,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 56
+# %% ../nbs/Mkdocs.ipynb 63
 def prepare(root_path: str):
     """Prepares mkdocs for serving
 
@@ -518,7 +633,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 59
+# %% ../nbs/Mkdocs.ipynb 66
 import shlex
 
 
