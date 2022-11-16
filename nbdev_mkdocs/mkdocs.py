@@ -266,20 +266,32 @@ def _generate_markdown_from_nbs(root_path: str):
 
     cache = proc_nbs()
     notebooks = _get_nbs_for_markdown_conversion(cache)
-    print(f"{cache=}")
-    print(f"{notebooks=}")
 
-    converter = nbconvert.MarkdownExporter()
     for nb in notebooks:
-        body, _ = converter.from_filename(nb)
         dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
         md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
         md.parent.mkdir(parents=True, exist_ok=True)
-        with open(md, mode="w") as f:
+
+        cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
+        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
+            cmd,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        print(sp.stdout)
+        if sp.returncode != 0:
             typer.secho(
-                f"File '{md.resolve()}' created.",
+                f"Command '{cmd}' failed!",
+                err=True,
+                fg=typer.colors.RED,
             )
-            f.write(body)
+            raise typer.Exit(5)
+
+        _md_cache = cache / "_docs" / f"{nb.stem}.md"
+        shutil.move(_md_cache, md)
 
 # %% ../nbs/Mkdocs.ipynb 36
 def _replace_all(text: str, dir_prefix: str) -> str:
