@@ -8,6 +8,7 @@ __all__ = ['new', 'new_cli', 'get_submodules', 'generate_api_doc_for_submodule',
 # %% ../nbs/Mkdocs.ipynb 1
 from typing import *
 
+import logging
 import os
 import re
 import collections
@@ -273,7 +274,7 @@ def _generate_markdown_from_nbs(root_path: str):
         md.parent.mkdir(parents=True, exist_ok=True)
 
         cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
-        print(f"from _generate_markdown_from_nbs: {cmd=}")
+        logging.info(f"from _generate_markdown_from_nbs: {cmd=}")
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
             cmd,
