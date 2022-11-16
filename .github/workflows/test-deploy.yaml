@@ -11,6 +11,10 @@ jobs:
           python-version: 3.x
       - name: Install Dependencies
         run: |
+          echo "------------------------------"
+          echo "${{ github.repository_owner }}"
+          echo "${{ github.ref_name }}"
+          echo "------------------------------"
           python -m pip install --upgrade pip
           pip install -Uq nbdev
           nbdev_install_quarto
