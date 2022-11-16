@@ -223,7 +223,30 @@ def _create_summary_template(root_path: str):
         )
         raise typer.Exit(code=3)
 
-# %% ../nbs/Mkdocs.ipynb 26
+# %% ../nbs/Mkdocs.ipynb 25
+def _replace_ghp_deploy_action(root_path: str):
+    """Replace the default gh-pages deploy action file with the custom action template file
+
+    Args:
+        root_path: Project's root path
+    """
+
+    src_path = get_root_data_path() / "ghp_deploy_action_template.yml"
+    if not src_path.exists():
+        typer.secho(
+            f"Unexpected error: path {src_path.resolve()} does not exists!",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=4)
+
+    workflows_path = Path(root_path) / ".github" / "workflows"
+    workflows_path.mkdir(exist_ok=True, parents=True)
+
+    dst_path = Path(workflows_path) / "deploy.yaml"
+    shutil.copyfile(src_path, dst_path)
+
+# %% ../nbs/Mkdocs.ipynb 28
 def new(root_path: str):
     """Initialize mkdocs project files
 
@@ -238,6 +261,7 @@ def new(root_path: str):
     _create_mkdocs_dir(root_path)
     _create_mkdocs_yaml(root_path)
     _create_summary_template(root_path)
+    _replace_ghp_deploy_action(root_path)
 
 
 @call_parse
@@ -250,7 +274,7 @@ def new_cli(root_path: str):
     """
     new(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 32
+# %% ../nbs/Mkdocs.ipynb 34
 def _get_nbs_for_markdown_conversion(cache: Path):
     """Get a list of notebooks that needs to be converted to markdown.
 
@@ -259,15 +283,13 @@ def _get_nbs_for_markdown_conversion(cache: Path):
     """
     return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
 
-# %% ../nbs/Mkdocs.ipynb 34
+# %% ../nbs/Mkdocs.ipynb 36
 def _generate_markdown_from_nbs(root_path: str):
     doc_path = Path(root_path) / "mkdocs" / "docs"
     doc_path.mkdir(exist_ok=True, parents=True)
 
     cache = proc_nbs()
     notebooks = _get_nbs_for_markdown_conversion(cache)
-    print(f"{cache=}")
-    print(f"{notebooks=}")
 
     converter = nbconvert.MarkdownExporter()
     for nb in notebooks:
@@ -281,7 +303,7 @@ def _generate_markdown_from_nbs(root_path: str):
             )
             f.write(body)
 
-# %% ../nbs/Mkdocs.ipynb 36
+# %% ../nbs/Mkdocs.ipynb 38
 def _replace_all(text: str, image_prefixes: Set[str], dir_prefix: str) -> str:
     """Replace the images relative path in the markdown text
 
@@ -304,7 +326,7 @@ def _replace_all(text: str, image_prefixes: Set[str], dir_prefix: str) -> str:
             text = text.replace(_match, f"]({_replace}")
     return text
 
-# %% ../nbs/Mkdocs.ipynb 38
+# %% ../nbs/Mkdocs.ipynb 40
 def _update_path_in_markdown(nbs_images_path: List[Path], cache: Path, doc_path: Path):
     """Update guide images relative path in the markdown files
 
@@ -365,7 +387,7 @@ def _copy_guide_images_to_docs_dir(root_path: str):
 
         _update_path_in_markdown(nbs_images_path, cache, doc_path)
 
-# %% ../nbs/Mkdocs.ipynb 41
+# %% ../nbs/Mkdocs.ipynb 43
 def _get_title_from_notebook(nb_name: str) -> str:
     cache = proc_nbs()
     nb_path = Path(cache) / "guides" / f"{nb_name}.ipynb"
@@ -382,7 +404,7 @@ def _get_title_from_notebook(nb_name: str) -> str:
     nbp.process()
     return nbp.nb.frontmatter_["title"]
 
-# %% ../nbs/Mkdocs.ipynb 43
+# %% ../nbs/Mkdocs.ipynb 45
 def _generate_summary_for_guides(root_path: str) -> str:
     doc_path = Path(root_path) / "mkdocs" / "docs"
     mds = sorted(
@@ -400,7 +422,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     else:
         return ""
 
-# %% ../nbs/Mkdocs.ipynb 47
+# %% ../nbs/Mkdocs.ipynb 49
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -415,7 +437,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 49
+# %% ../nbs/Mkdocs.ipynb 51
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -440,7 +462,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 51
+# %% ../nbs/Mkdocs.ipynb 53
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -464,7 +486,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 53
+# %% ../nbs/Mkdocs.ipynb 55
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -520,7 +542,7 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 55
+# %% ../nbs/Mkdocs.ipynb 57
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
@@ -532,7 +554,7 @@ def _copy_change_log_if_exists(
         changelog = "- [Releases](CHANGELOG.md)"
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 58
+# %% ../nbs/Mkdocs.ipynb 60
 def build_summary(
     root_path: str,
     module: str,
@@ -576,7 +598,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 61
+# %% ../nbs/Mkdocs.ipynb 63
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -591,7 +613,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 63
+# %% ../nbs/Mkdocs.ipynb 65
 def prepare(root_path: str):
     """Prepares mkdocs for serving
 
@@ -633,7 +655,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 66
+# %% ../nbs/Mkdocs.ipynb 68
 import shlex
 
 
