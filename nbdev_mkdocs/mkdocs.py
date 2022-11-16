@@ -273,6 +273,7 @@ def _generate_markdown_from_nbs(root_path: str):
         md.parent.mkdir(parents=True, exist_ok=True)
 
         cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
+        print(f"from _generate_markdown_from_nbs: {cmd=}")
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
             cmd,
