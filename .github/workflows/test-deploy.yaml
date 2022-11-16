@@ -11,20 +11,17 @@ jobs:
           python-version: 3.x
       - name: Install Dependencies
         run: |
-          echo "------------------------------"
-          echo "${{ github.repository_owner }}"
-          echo "${{ github.ref_name }}"
-          echo "------------------------------"
           python -m pip install --upgrade pip
           pip install -Uq nbdev
           nbdev_install_quarto
-          if [ ${{ github.repository_owner }} == "airt" ]
+          if [ ${{ github.repository_owner }} == "airtai" ]
           then
             echo "Installing nbdev_mkdocs from branch: ${{ github.ref_name }}"
             pip install -Uq git+https://github.com/airtai/nbdev-mkdocs.git@${{ github.ref_name }}
+            make
           else
             pip install nbdev_mkdocs
+            pip install -e ".[dev]"
           fi
-          pip install -e ".[dev]"
       - run: nbdev_mkdocs prepare
 
