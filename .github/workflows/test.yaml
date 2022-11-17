@@ -16,6 +16,7 @@ jobs:
           wget -q https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.251/quarto-1.1.251-linux-amd64.deb
           sudo dpkg -i quarto*.deb
           quarto --help
+          nbdev_readme
           ls -la
       - run: make check_all
 
