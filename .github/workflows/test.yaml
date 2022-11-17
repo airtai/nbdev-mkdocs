@@ -11,5 +11,6 @@ jobs:
           python-version: 3.x
       - run: pip install 'nbdev[dev]'
       - run: nbdev_install_quarto
-      - run: make
+      - run: quarto --help
+      - run: make check_all
 
