@@ -282,9 +282,12 @@ def _generate_markdown_from_nbs(root_path: str):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
+                check=True,
             )
         except subprocess.CalledProcessError as exc:
             raise ValueError(f"CMD Failed Returned {exc.returncode=}\n{exc=}\n{cmd=}")
+        except Exception as exc:
+            raise ValueError(f"CMD Failed Returned {exc=}\n{cmd=}")
         #         print(sp.stdout)
         #         if sp.returncode != 0:
         #             logging.exception(f"Command '{cmd}' failed!, {cmd=}")
