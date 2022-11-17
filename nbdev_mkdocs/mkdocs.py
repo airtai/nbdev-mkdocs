@@ -273,9 +273,8 @@ def _generate_markdown_from_nbs(root_path: str):
         md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
         md.parent.mkdir(parents=True, exist_ok=True)
 
-        #         cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
+        cmd = f"quarto render --help && quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
         try:
-            cmd = f"quarto render --help"
             # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
             sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
                 cmd,
@@ -285,17 +284,6 @@ def _generate_markdown_from_nbs(root_path: str):
                 text=True,
                 check=True,
             )
-
-        #             cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
-        #             # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-        #             sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
-        #                 cmd,
-        #                 shell=True,
-        #                 stdout=subprocess.PIPE,
-        #                 stderr=subprocess.STDOUT,
-        #                 text=True,
-        #                 check=True,
-        #             )
         except subprocess.CalledProcessError as exc:
             raise ValueError(
                 f"CMD Failed Returned {exc.returncode=}\n{exc.output=}\n{exc.stderr=}\n{exc=}\n{cmd=}"
