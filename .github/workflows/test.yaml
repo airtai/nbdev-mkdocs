@@ -17,5 +17,5 @@ jobs:
           sudo dpkg -i quarto*.deb
           quarto --help
           quarto pandoc -v
-      - run: make check_all
+      - run: make
 
