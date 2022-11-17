@@ -286,7 +286,8 @@ def _generate_markdown_from_nbs(root_path: str):
         md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
         md.parent.mkdir(parents=True, exist_ok=True)
 
-        cmd = f"cd {cache} && quarto render {nb} --output-dir _docs -o {nb.stem}.md -t gfm --no-execute"
+        cmd = f"cd {cache} && quarto render {nb} -o {nb.stem}.md -t gfm --no-execute"
+        _sprun("quarto --version")
         _sprun(cmd)
 
         _md_cache = cache / "_docs" / f"{nb.stem}.md"
