@@ -274,7 +274,6 @@ def _generate_markdown_from_nbs(root_path: str):
         md.parent.mkdir(parents=True, exist_ok=True)
 
         cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
-        logging.info(f"from _generate_markdown_from_nbs: {cmd=}")
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
             cmd,
@@ -285,12 +284,13 @@ def _generate_markdown_from_nbs(root_path: str):
         )
         print(sp.stdout)
         if sp.returncode != 0:
-            typer.secho(
-                f"Command '{cmd}' failed!",
-                err=True,
-                fg=typer.colors.RED,
-            )
-            raise typer.Exit(5)
+            logging.exception(f"Command '{cmd}' failed!, {cmd=}")
+        #             typer.secho(
+        #                 f"Command '{cmd}' failed!",
+        #                 err=True,
+        #                 fg=typer.colors.RED,
+        #             )
+        #             raise typer.Exit(5)
 
         _md_cache = cache / "_docs" / f"{nb.stem}.md"
         shutil.move(_md_cache, md)
