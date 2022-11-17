@@ -19,6 +19,8 @@ import types
 import pkgutil
 import importlib
 import subprocess  # nosec: B404
+import shlex
+import sys
 
 import typer
 from typer.testing import CliRunner
@@ -261,6 +263,18 @@ def _get_nbs_for_markdown_conversion(cache: Path):
     return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
 
 # %% ../nbs/Mkdocs.ipynb 34
+def _sprun(cmd):
+    try:
+        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        subprocess.check_output(
+            cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
+        )
+    except subprocess.CalledProcessError as cpe:
+        sys.exit(
+            f"CMD Failed: {cpe=}\n{cpe.returncode=}\n{cpe.output=}\n{cpe.stderr=}\n{cmd=}"
+        )
+
+
 def _generate_markdown_from_nbs(root_path: str):
     doc_path = Path(root_path) / "mkdocs" / "docs"
     doc_path.mkdir(exist_ok=True, parents=True)
@@ -273,30 +287,8 @@ def _generate_markdown_from_nbs(root_path: str):
         md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
         md.parent.mkdir(parents=True, exist_ok=True)
 
-        cmd = f"quarto render {nb} -o {cache / f'{nb.stem}.md'} -t gfm --no-execute"
-        try:
-            # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-            sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
-                cmd,
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                check=True,
-            )
-        except subprocess.CalledProcessError as exc:
-            raise ValueError(
-                f"CMD Failed Returned {exc.returncode=}\n{exc.output=}\n{exc.stderr=}\n{exc=}\n{cmd=}"
-            )
-        #         print(sp.stdout)
-        #         if sp.returncode != 0:
-        #             logging.exception(f"Command '{cmd}' failed!, {cmd=}")
-        #             typer.secho(
-        #                 f"Command '{cmd}' failed!",
-        #                 err=True,
-        #                 fg=typer.colors.RED,
-        #             )
-        #             raise typer.Exit(5)
+        cmd = f"cd {cache} && quarto render {nb} -o {nb.stem}.md -t gfm --no-execute"
+        _sprun(cmd)
 
         _md_cache = cache / "_docs" / f"{nb.stem}.md"
         shutil.move(_md_cache, md)
@@ -630,24 +622,7 @@ def prepare(root_path: str):
     build_summary(root_path, lib_path)
 
     cmd = f"mkdocs build -f {root_path}/mkdocs/mkdocs.yml"
-
-    # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-    sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
-        cmd,
-        shell=True,
-        #         check=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-    print(sp.stdout)
-    if sp.returncode != 0:
-        typer.secho(
-            f"Command '{cmd}' failed!",
-            err=True,
-            fg=typer.colors.RED,
-        )
-        raise typer.Exit(5)
+    _sprun(cmd)
 
 
 @call_parse
@@ -656,9 +631,6 @@ def prepare_cli(root_path: str):
     prepare(root_path)
 
 # %% ../nbs/Mkdocs.ipynb 67
-import shlex
-
-
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
