@@ -18,6 +18,8 @@ import types
 import pkgutil
 import importlib
 import subprocess  # nosec: B404
+import shlex
+import sys
 
 import typer
 from typer.testing import CliRunner
@@ -284,6 +286,18 @@ def _get_nbs_for_markdown_conversion(cache: Path):
     return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
 
 # %% ../nbs/Mkdocs.ipynb 34
+def _sprun(cmd):
+    try:
+        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        subprocess.check_output(
+            cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
+        )
+    except subprocess.CalledProcessError as e:
+        sys.exit(
+            f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
+        )
+
+
 def _generate_markdown_from_nbs(root_path: str):
     doc_path = Path(root_path) / "mkdocs" / "docs"
     doc_path.mkdir(exist_ok=True, parents=True)
@@ -291,17 +305,16 @@ def _generate_markdown_from_nbs(root_path: str):
     cache = proc_nbs()
     notebooks = _get_nbs_for_markdown_conversion(cache)
 
-    converter = nbconvert.MarkdownExporter()
     for nb in notebooks:
-        body, _ = converter.from_filename(nb)
         dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
-        md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
-        md.parent.mkdir(parents=True, exist_ok=True)
-        with open(md, mode="w") as f:
-            typer.secho(
-                f"File '{md.resolve()}' created.",
-            )
-            f.write(body)
+        dst_md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
+        dst_md.parent.mkdir(parents=True, exist_ok=True)
+
+        cmd = f"cd {cache} && quarto render {nb} -o {nb.stem}.md -t gfm --no-execute"
+        _sprun(cmd)
+
+        src_md = cache / f"{nb.stem}.md"
+        shutil.move(src_md, dst_md)
 
 # %% ../nbs/Mkdocs.ipynb 36
 def _replace_all(text: str, dir_prefix: str) -> str:
@@ -632,24 +645,7 @@ def prepare(root_path: str):
     build_summary(root_path, lib_path)
 
     cmd = f"mkdocs build -f {root_path}/mkdocs/mkdocs.yml"
-
-    # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-    sp = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
-        cmd,
-        shell=True,
-        #         check=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-    print(sp.stdout)
-    if sp.returncode != 0:
-        typer.secho(
-            f"Command cmd='{cmd}' failed!",
-            err=True,
-            fg=typer.colors.RED,
-        )
-        raise typer.Exit(5)
+    _sprun(cmd)
 
 
 @call_parse
@@ -658,9 +654,6 @@ def prepare_cli(root_path: str):
     prepare(root_path)
 
 # %% ../nbs/Mkdocs.ipynb 67
-import shlex
-
-
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 

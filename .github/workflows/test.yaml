@@ -5,12 +5,11 @@ jobs:
   static_check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - run: pip install -U nbdev black
-      - run: nbdev_install_quarto
       - run: make static_check
   test:
     strategy:
@@ -21,7 +20,27 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
 
     steps: 
+      - name: Install quarto
+        run: |
+          if [ ${{ matrix.os }} == 'ubuntu' ]; then
+            wget -q https://www.quarto.org/download/latest/quarto-linux-amd64.deb
+            sudo dpkg -i quarto-linux-amd64.deb
+          else
+            wget -q https://www.quarto.org/download/latest/quarto-macos.pkg
+            sudo installer -pkg quarto-macos.pkg -target /
+          fi
       - uses: fastai/workflows/nbdev-ci@master
         with:
           version: ${{ matrix.version }}
+      - name: test build docs
+        run: |
+          make prepare
+          if [ -f "mkdocs/site/index.html" ]; then
+            echo "docs built successfully."
+          else
+            echo "index page not found in rendered docs."
+            ls -la
+            ls -la mkdocs/site/
+            exit 1
+          fi
 
