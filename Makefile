@@ -52,8 +52,11 @@ sast: .sast_bandit .sast_semgrep
 	semgrep --config auto --error nbdev_mkdocs
 	touch .sast_semgrep
 
+.PHONY: static_check
+static_check: mypy sast
+
 .PHONY: check_all
-check_all: mypy sast test
+check_all: static_check test
 
 .PHONY: new
 new: dist
