@@ -9,9 +9,16 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install -U nbdev
+      - run: pip install -U nbdev black
       - run: nbdev_install_quarto
       - run: make static_check
   test:
-    runs-on: ubuntu-latest
-    steps: [uses: fastai/workflows/nbdev-ci@master]
+    strategy:
+      fail-fast: true
+      matrix:
+        os:  [ubuntu, macos]
+        version: ["3.7", "3.8", "3.9", "3.10"]
+    runs-on: ${{ matrix.os }}-latest
+
+    steps: 
+      - uses: fastai/workflows/nbdev-ci@master
