@@ -292,9 +292,9 @@ def _sprun(cmd):
         subprocess.check_output(
             cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
         )
-    except subprocess.CalledProcessError as cpe:
+    except subprocess.CalledProcessError as e:
         sys.exit(
-            f"CMD Failed: {cpe=}\n{cpe.returncode=}\n{cpe.output=}\n{cpe.stderr=}\n{cmd=}"
+            f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
         )
 
 
