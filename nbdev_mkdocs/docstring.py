@@ -77,19 +77,19 @@ def _extract_examples_from_docstring(o: Any) -> List[str]:
 
     return examples
 
-# %% ../nbs/Docstring.ipynb 17
+# %% ../nbs/Docstring.ipynb 15
 def _get_keywords(examples: List[str]) -> List[str]:
     keywords: List[str] = sum(
         [
             [x[9:-1] for x in re.findall("{fill in \w+}", example)]
             for example in examples
         ],
-        start=[],
+        [],
     )
 
     return keywords
 
-# %% ../nbs/Docstring.ipynb 19
+# %% ../nbs/Docstring.ipynb 17
 def _replace_keywords(examples: List[str], **kwargs) -> List[str]:
     keywords = _get_keywords(examples)
 
@@ -104,7 +104,7 @@ def _replace_keywords(examples: List[str], **kwargs) -> List[str]:
 
     return examples
 
-# %% ../nbs/Docstring.ipynb 21
+# %% ../nbs/Docstring.ipynb 19
 def _format_output(
     s: str,
     *,
@@ -125,7 +125,7 @@ def _format_output(
 
 #         return Panel(s, title=title, width=width)
 
-# %% ../nbs/Docstring.ipynb 23
+# %% ../nbs/Docstring.ipynb 21
 def run_examples_from_docstring(
     o: Any,
     *,
