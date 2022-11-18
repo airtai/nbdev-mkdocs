@@ -2,20 +2,26 @@ name: CI
 on:  [workflow_dispatch, pull_request, push]
 
 jobs:
-  check_all:
+  static_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install 'nbdev[dev]==2.3.7'
-      - name: Install Quarto
-        shell: bash
-        run: |
-          wget -q https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.251/quarto-1.1.251-linux-amd64.deb
-          sudo dpkg -i quarto*.deb
-          quarto --help
-          quarto pandoc -v
-      - run: make check_all
+      - run: pip install -U nbdev black
+      - run: nbdev_install_quarto
+      - run: make static_check
+  test:
+    strategy:
+      fail-fast: true
+      matrix:
+        os:  [ubuntu, macos]
+        version: ["3.7", "3.8", "3.9", "3.10"]
+    runs-on: ${{ matrix.os }}-latest
+
+    steps: 
+      - uses: fastai/workflows/nbdev-ci@master
+        with:
+          version: ${{ matrix.version }}
 
