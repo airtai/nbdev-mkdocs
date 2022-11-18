@@ -509,7 +509,7 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
         cli_doc = str(result.stdout)
     else:
         cmd = f"{cli_app_name} --help"
-        print(f"Not a typer command. Documenting: {cmd=}")
+        print(f"Not a typer command. Documenting: cmd={cmd}")
 
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         cli_doc = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
@@ -645,7 +645,7 @@ def prepare(root_path: str):
     print(sp.stdout)
     if sp.returncode != 0:
         typer.secho(
-            f"Command '{cmd}' failed!",
+            f"Command cmd='{cmd}' failed!",
             err=True,
             fg=typer.colors.RED,
         )
@@ -684,7 +684,7 @@ def preview(root_path: str, port: Optional[int] = None):
 
     if p.returncode != 0:
         typer.secho(
-            f"Command '{cmd}' failed!",
+            f"Command cmd='{cmd}' failed!",
             err=True,
             fg=typer.colors.RED,
         )
