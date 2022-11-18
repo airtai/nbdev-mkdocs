@@ -22,3 +22,6 @@ jobs:
 
     steps: 
       - uses: fastai/workflows/nbdev-ci@master
+        with:
+          version: ${{ matrix.version }}
+
