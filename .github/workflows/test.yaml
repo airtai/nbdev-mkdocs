@@ -24,7 +24,7 @@ jobs:
         run: |
           set -ux
           if [ ${{ matrix.os == 'ubuntu' }} ]; then
-            wget -q $(curl https://www.quarto.org/download/latest/quarto-linux-amd64.deb)
+            wget -q $(curl https://latest.fast.ai/pre/quarto-dev/quarto-cli/linux-amd64.deb)
             sudo dpkg -i quarto*.deb
           else
             wget -q $(curl https://www.quarto.org/download/latest/quarto-macos.pkg)
