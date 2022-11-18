@@ -9,6 +9,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
+      - run: pip install -U nbdev black
       - run: make static_check
   test:
     strategy:
@@ -20,7 +21,14 @@ jobs:
 
     steps: 
       - name: Install quarto
-        run: wget -q $(curl https://latest.fast.ai/latest/quarto-dev/quarto-cli/linux-amd64.deb) && sudo dpkg -i quarto*.deb
+        run: |
+          if [ ${{ matrix.os == 'ubuntu' }} ]; then
+            wget -q $(curl https://www.quarto.org/download/latest/quarto-linux-amd64.deb)
+            sudo dpkg -i quarto-linux-amd64.deb && rm quarto-linux-amd64.deb
+          else
+            wget -q $(curl https://www.quarto.org/download/latest/quarto-macos.pkg)
+            sudo installer -pkg quarto-macos.pkg -target / && rm quarto-macos.pkg
+          fi
       - uses: fastai/workflows/nbdev-ci@master
         with:
           version: ${{ matrix.version }}
