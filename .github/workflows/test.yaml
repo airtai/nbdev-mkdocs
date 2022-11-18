@@ -15,14 +15,14 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os:  [ubuntu]
+        os:  [ubuntu, macos]
         version: ["3.7", "3.8", "3.9", "3.10"]
     runs-on: ${{ matrix.os }}-latest
 
     steps: 
       - name: Install quarto
         run: |
-          if [ ${{ matrix.os == 'ubuntu' }} ]; then
+          if [ ${{ matrix.os }} == 'ubuntu' ]; then
             wget -q https://www.quarto.org/download/latest/quarto-linux-amd64.deb
             sudo dpkg -i quarto-linux-amd64.deb
           else
