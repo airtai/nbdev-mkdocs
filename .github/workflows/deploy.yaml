@@ -15,7 +15,8 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ ${{ github.repository_owner }} == "airtai" ]
+          cfg_file=.ghp-config
+          if [[ -f "$cfg_file"  ]] && grep -q "USE_PRE=true" "$cfg_file"
           then
             pip install 'nbdev[dev]'
             nbdev_install_quarto
