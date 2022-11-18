@@ -16,12 +16,12 @@ pip install nbdev_mkdocs
 
 ```` python
 def f(s: str, i: int):
-    """ A simple function
-    
+    """A simple function
+
     Params:
         s: a name
         i: a number
-        
+
     Example:
         ```python
         s = "Hello World! "
@@ -30,7 +30,7 @@ def f(s: str, i: int):
         print(s * i)
         ```
     """
-    print((s + " ")*i)
+    print((s + " ") * i)
 ````
 
 You can use the following code to run example from the function’s
