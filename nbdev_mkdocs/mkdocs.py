@@ -223,7 +223,30 @@ def _create_summary_template(root_path: str):
         )
         raise typer.Exit(code=3)
 
-# %% ../nbs/Mkdocs.ipynb 26
+# %% ../nbs/Mkdocs.ipynb 25
+def _replace_ghp_deploy_action(root_path: str):
+    """Replace the default gh-pages deploy action file with the custom action template file
+
+    Args:
+        root_path: Project's root path
+    """
+
+    src_path = get_root_data_path() / "ghp_deploy_action_template.yml"
+    if not src_path.exists():
+        typer.secho(
+            f"Unexpected error: path {src_path.resolve()} does not exists!",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=4)
+
+    workflows_path = Path(root_path) / ".github" / "workflows"
+    workflows_path.mkdir(exist_ok=True, parents=True)
+
+    dst_path = Path(workflows_path) / "deploy.yaml"
+    shutil.copyfile(src_path, dst_path)
+
+# %% ../nbs/Mkdocs.ipynb 28
 def new(root_path: str):
     """Initialize mkdocs project files
 
@@ -238,6 +261,7 @@ def new(root_path: str):
     _create_mkdocs_dir(root_path)
     _create_mkdocs_yaml(root_path)
     _create_summary_template(root_path)
+    _replace_ghp_deploy_action(root_path)
 
 
 @call_parse
@@ -266,8 +290,6 @@ def _generate_markdown_from_nbs(root_path: str):
 
     cache = proc_nbs()
     notebooks = _get_nbs_for_markdown_conversion(cache)
-    print(f"{cache=}")
-    print(f"{notebooks=}")
 
     converter = nbconvert.MarkdownExporter()
     for nb in notebooks:
@@ -487,7 +509,7 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
         cli_doc = str(result.stdout)
     else:
         cmd = f"{cli_app_name} --help"
-        print(f"Not a typer command. Documenting: {cmd=}")
+        print(f"Not a typer command. Documenting: cmd={cmd}")
 
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         cli_doc = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
@@ -623,7 +645,7 @@ def prepare(root_path: str):
     print(sp.stdout)
     if sp.returncode != 0:
         typer.secho(
-            f"Command '{cmd}' failed!",
+            f"Command cmd='{cmd}' failed!",
             err=True,
             fg=typer.colors.RED,
         )
@@ -662,7 +684,7 @@ def preview(root_path: str, port: Optional[int] = None):
 
     if p.returncode != 0:
         typer.secho(
-            f"Command '{cmd}' failed!",
+            f"Command cmd='{cmd}' failed!",
             err=True,
             fg=typer.colors.RED,
         )
