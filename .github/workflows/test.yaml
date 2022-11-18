@@ -19,10 +19,8 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
 
     steps: 
-      - name: install quarto
-        run: |
-       	  wget -q $(curl https://latest.fast.ai/latest/quarto-dev/quarto-cli/linux-amd64.deb)
-	  sudo dpkg -i quarto*.deb
+      - name: Install quarto
+        run: wget -q $(curl https://latest.fast.ai/latest/quarto-dev/quarto-cli/linux-amd64.deb) && sudo dpkg -i quarto*.deb
       - uses: fastai/workflows/nbdev-ci@master
         with:
           version: ${{ matrix.version }}
