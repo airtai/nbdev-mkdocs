@@ -33,6 +33,7 @@ from fastcore.script import call_parse
 from nbdev.serve import proc_nbs
 from nbdev.process import NBProcessor
 from nbdev.frontmatter import FrontmatterProc
+from nbdev.quarto import refresh_quarto_yml
 
 import nbconvert
 
@@ -305,6 +306,8 @@ def _generate_markdown_from_nbs(root_path: str):
     cache = proc_nbs()
     notebooks = _get_nbs_for_markdown_conversion(cache)
 
+    refresh_quarto_yml()
+
     for nb in notebooks:
         dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
         dst_md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
@@ -313,7 +316,7 @@ def _generate_markdown_from_nbs(root_path: str):
         cmd = f"cd {cache} && quarto render {nb} -o {nb.stem}.md -t gfm --no-execute"
         _sprun(cmd)
 
-        src_md = cache / f"{nb.stem}.md"
+        src_md = cache / "_docs" / f"{nb.stem}.md"
         shutil.move(src_md, dst_md)
 
 # %% ../nbs/Mkdocs.ipynb 36
