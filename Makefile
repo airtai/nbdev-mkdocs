@@ -25,6 +25,11 @@ install: .local_install .local_reinstall
 
 README.md: .local_install .local_reinstall
 	nbdev_readme
+	# nbdev_readme is supposed to move index.md from _proc to the root dir. Currently, it is not bcz
+	# of bug in the code (underlying quarto api changed)
+	# Until the issue is fixed, we need to manually copy the file to the root dir.
+	# Once the bug is fixed in nbdev, the below line will fail, saying "No such file or directory."
+	cp _proc/README.md .
 
 # the difference between install and dist target is that dist has the latest README.md installed
 dist: README.md
@@ -52,8 +57,11 @@ sast: .sast_bandit .sast_semgrep
 	semgrep --config auto --error nbdev_mkdocs
 	touch .sast_semgrep
 
+.PHONY: static_check
+static_check: mypy sast
+
 .PHONY: check_all
-check_all: mypy sast test
+check_all: static_check test
 
 .PHONY: new
 new: dist
