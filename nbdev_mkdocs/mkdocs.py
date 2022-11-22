@@ -306,8 +306,6 @@ def _generate_markdown_from_nbs(root_path: str):
     cache = proc_nbs()
     notebooks = _get_nbs_for_markdown_conversion(cache)
 
-    refresh_quarto_yml()
-
     for nb in notebooks:
         dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
         dst_md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
@@ -638,6 +636,9 @@ def prepare(root_path: str):
     Params:
         root_path: path under which mkdocs directory will be created
     """
+    # Set the quarto output path
+    refresh_quarto_yml()
+
     # copy cname if it exists
     copy_cname_if_needed(root_path)
 
