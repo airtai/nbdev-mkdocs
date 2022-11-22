@@ -58,8 +58,8 @@ nbdev_mkdocs --help
 
 ### Workflow
 
-Here’s a quick comparison of the documentation generation workflows of
-Quarto and Material for MkDocs (nbdev_mkdocs):
+Here’s a quick comparison of Quarto and Material for MkDocs
+(nbdev_mkdocs) development workflow:
 
 | **Quarto workflow**                                                                                                                        | **Material for MkDocs workflow**                                                                                                                                 |
 |--------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
