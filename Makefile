@@ -5,74 +5,36 @@ all: prepare
 
 nbdev_mkdocs: $(SRC) $(PACKAGE_DATA) settings.ini Makefile
 	nbdev_export
+	pip install -e '.[dev]'
 	rm -rf nbdev_mkdocs/package_data; cp -r package_data nbdev_mkdocs/
 	touch nbdev_mkdocs
 
-.PHONY: install
-install: .local_install .local_reinstall 
-
-# install wheel locally, but don't reinstall dependancies
-.local_install: nbdev_mkdocs MANIFEST.in setup.py
-	python setup.py sdist bdist_wheel
-	pip uninstall -y dist/nbdev_mkdocs-*-py3-none-any.whl
-	pip install `ls dist/nbdev_mkdocs-*-py3-none-any.whl`\[dev\]
-	touch .local_install
-
-# install wheel locally together with its dependancies
-.local_reinstall: settings.ini
-	pip install --force-reinstall `ls dist/nbdev_mkdocs-*-py3-none-any.whl`\[dev\]
-	touch .local_reinstall
-
-README.md: .local_install .local_reinstall
-	nbdev_readme
-
-# the difference between install and dist target is that dist has the latest README.md installed
-dist: README.md
-	python setup.py sdist bdist_wheel
-	pip uninstall -y dist/nbdev_mkdocs-*-py3-none-any.whl
-	pip install `ls dist/nbdev_mkdocs-*-py3-none-any.whl`\[dev\]
-	touch dist
-
-.PHONY: test
-test: install
-	nbdev_test
-    
 .PHONY: mypy
-mypy: install
+mypy: nbdev_mkdocs
 	mypy nbdev_mkdocs --ignore-missing-imports
-    
+
 .PHONY: sast
 sast: .sast_bandit .sast_semgrep
 
-.sast_bandit: install
+.sast_bandit: nbdev_mkdocs
 	bandit -r nbdev_mkdocs
 	touch .sast_bandit
-    
-.sast_semgrep: install
+
+.sast_semgrep: nbdev_mkdocs
 	semgrep --config auto --error nbdev_mkdocs
 	touch .sast_semgrep
 
 .PHONY: static_check
 static_check: mypy sast
 
-.PHONY: check_all
-check_all: static_check test
-
-.PHONY: new
-new: dist
-	nbdev_mkdocs new
-    
-mkdocs/site: dist new
-	nbdev_mkdocs prepare
-	touch mkdocs/site
-    
-.PHONY: preview
-preview: mkdocs/site
-	nbdev_mkdocs preview
-
 .PHONY: prepare
-prepare: dist mkdocs/site check_all
-	nbdev_clean
+prepare: static_check
+	nbdev_mkdocs new
+	nbdev_mkdocs prepare
+
+.PHONY: preview
+preview: prepare
+	nbdev_mkdocs preview
 
 .PHONY: clean
 clean:
