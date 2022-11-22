@@ -329,7 +329,7 @@ def _replace_all(text: str, dir_prefix: str) -> str:
         The text with the updated images relative path
     """
     _replace = {}
-    _pattern = re.compile(r"!\[[^\]]*\]\((.*?)\s*(\"(?:.*[^\"])\")?\s*\)")
+    _pattern = re.compile(r"!\[[^\]]*\]\(([^https?:\/\/].*?)\s*(\"(?:.*[^\"])\")?\s*\)")
     _matches = [match.groups()[0] for match in _pattern.finditer(text)]
 
     if len(_matches) > 0:
