@@ -9,10 +9,10 @@ documentation for nbdev projects.
 
 ## Workflow
 
-A typical development workflow for making changes to an existing nbdev
-project looks like:
+A typical development workflow in a nbdev project looks like:
 
-1.  Developer makes changes and then run `nbdev_prepare`.
+1.  Developer makes changes and then runs `nbdev_prepare` to build
+    Python module and run tests.
 2.  Runs `nbdev_preview` to see a local preview of the documentation.
 3.  Reviews the changes, then git add, git commit, and git push.
 
@@ -25,7 +25,8 @@ look like:
 
 1.  Runs `nbdev_mkdocs new` (only once during setup) to bootstrap
     Material for MkDocs documentation.
-2.  Developer makes changes and then run `nbdev_prepare`.
+2.  Makes changes as needed, then runs `nbdev_prepare` to build the
+    Python module and run tests.
 3.  Runs `nbdev_mkdocs prepare` to prepare the Material for MkDocs
     documentation.
 4.  Runs `nbdev_mkdocs preview` to see a local preview of the Material
@@ -46,6 +47,13 @@ the required libraries.
 For detailed installation instructions, configuration options, and an
 End-To-End Walkthrough, please see the
 [documentation](https://nbdev-mkdocs.airt.ai/guides/Guide_01_End_To_End_Walkthrough/).
+
+If you haven’t already, please run the following command from the
+project’s root directory to install your project package locally:
+
+``` shell
+pip install '.[dev]'
+```
 
 nbdev_mkdocs is published as a Python package and can be installed with
 pip:
