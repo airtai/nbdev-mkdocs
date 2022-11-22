@@ -7,36 +7,6 @@ Getting Started
 for MkDocs](https://squidfunk.github.io/mkdocs-material/) to generate
 documentation for nbdev projects.
 
-## Workflow
-
-A typical development workflow in a nbdev project looks like:
-
-1.  Developer makes changes and then runs `nbdev_prepare` to build
-    Python module and run tests.
-2.  Runs `nbdev_preview` to see a local preview of the documentation.
-3.  Reviews the changes, then git add, git commit, and git push.
-
-| nbdev workflow:                       |
-|---------------------------------------|
-| **nbdev_prepare** → **nbdev_preview** |
-
-For nbdev projects configured with nbdev_mkdocs, the same workflow would
-look like:
-
-1.  Runs `nbdev_mkdocs new` (only once during setup) to bootstrap
-    Material for MkDocs documentation.
-2.  Makes changes as needed, then runs `nbdev_prepare` to build the
-    Python module and run tests.
-3.  Runs `nbdev_mkdocs prepare` to prepare the Material for MkDocs
-    documentation.
-4.  Runs `nbdev_mkdocs preview` to see a local preview of the Material
-    for MkDocs documentation.
-5.  Reviews the changes, then git add, git commit, and git push.
-
-| nbdev with nbdev_mkdocs workflow:                                                                                  |
-|--------------------------------------------------------------------------------------------------------------------|
-| **nbdev_mkdocs new** (once during setup) → **nbdev_prepare** → **nbdev_mkdocs prepare** → **nbdev_mkdocs preview** |
-
 ## Quick start
 
 The following quick start guide will walk you through installing and
@@ -48,12 +18,7 @@ For detailed installation instructions, configuration options, and an
 End-To-End Walkthrough, please see the
 [documentation](https://nbdev-mkdocs.airt.ai/guides/Guide_01_End_To_End_Walkthrough/).
 
-If you haven’t already, please run the following command from the
-project’s root directory to install your project package locally:
-
-``` shell
-pip install '.[dev]'
-```
+### Install
 
 nbdev_mkdocs is published as a Python package and can be installed with
 pip:
@@ -62,8 +27,8 @@ pip:
 pip install nbdev_mkdocs
 ```
 
-Note that `nbdev_mkdocs` must be installed into the same Python
-environment that you used to install nbdev.
+Note that `nbdev_mkdocs` must be installed in the same Python
+environment as nbdev.
 
 If the installation was successful, you should now have the
 **nbdev_mkdocs** installed on your system. Run the below command from
@@ -91,7 +56,18 @@ nbdev_mkdocs --help
     │          command on them                                                     │
     ╰──────────────────────────────────────────────────────────────────────────────╯
 
-### Setup
+### Workflow
+
+Here’s a quick comparison of the documentation generation workflows of
+Quarto and Material for MkDocs (nbdev_mkdocs):
+
+| **Quarto workflow**                                                                                                                        | **Material for MkDocs workflow**                                                                                                                                 |
+|--------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Install:<br>\$ pip install nbdev<br>\$ nbdev_install_quarto                                                                                | Install:<br>\$ pip install nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev_mkdocs**                                                                   |
+| Setup:<br>\$ nbdev_new                                                                                                                     | Setup:<br>\$ nbdev_new<br>**\$ nbdev_mkdocs new**                                                                                                                |
+| Workflow:<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’<br>\$ nbdev_prepare<br>\$ nbdev_preview<br>\$ git commit -am “Commit message” | Workflow:<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’<br>**\$ nbdev_mkdocs prepare**<br>**\$ nbdev_mkdocs preview**<br>\$ git commit -am “Commit message” |
+
+#### Setup
 
 After installing nbdev_mkdocs, bootstrap your project documentation by
 executing the following command from the project’s root directory:
@@ -108,13 +84,13 @@ Note: You should only run the **nbdev_mkdocs new** command once for the
 project to initialise the files required for building Material for
 MkDocs documentation.
 
-### Prepare
+#### Build and prepare
 
-Execute the following command to build the Python modules, run tests,
-and clean the Jupyter notebooks:
+Execute the following command to build the Python modules and install
+the library locally:
 
 ``` shell
-nbdev_prepare
+nbdev_export && pip install -e '.[dev]'
 ```
 
 Then execute the following command to generate the Material for MkDocs
@@ -131,7 +107,7 @@ Running the above command will:
 - Builds the documentation from the generated markdown files and saves
   the resulting files to the **mkdocs/site** directory.
 
-### Preview
+#### Preview
 
 After the documentation has been successfully built, execute the
 following command to start a local server and preview the documentation.
