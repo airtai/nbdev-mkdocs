@@ -33,6 +33,7 @@ from fastcore.script import call_parse
 from nbdev.serve import proc_nbs
 from nbdev.process import NBProcessor
 from nbdev.frontmatter import FrontmatterProc
+from nbdev.quarto import refresh_quarto_yml
 
 import nbconvert
 
@@ -313,7 +314,7 @@ def _generate_markdown_from_nbs(root_path: str):
         cmd = f"cd {cache} && quarto render {nb} -o {nb.stem}.md -t gfm --no-execute"
         _sprun(cmd)
 
-        src_md = cache / f"{nb.stem}.md"
+        src_md = cache / "_docs" / f"{nb.stem}.md"
         shutil.move(src_md, dst_md)
 
 # %% ../nbs/Mkdocs.ipynb 36
@@ -328,7 +329,7 @@ def _replace_all(text: str, dir_prefix: str) -> str:
         The text with the updated images relative path
     """
     _replace = {}
-    _pattern = re.compile(r"!\[[^\]]*\]\((.*?)\s*(\"(?:.*[^\"])\")?\s*\)")
+    _pattern = re.compile(r"!\[[^\]]*\]\(([^https?:\/\/].*?)\s*(\"(?:.*[^\"])\")?\s*\)")
     _matches = [match.groups()[0] for match in _pattern.finditer(text)]
 
     if len(_matches) > 0:
@@ -635,6 +636,9 @@ def prepare(root_path: str):
     Params:
         root_path: path under which mkdocs directory will be created
     """
+    # Set the quarto output path
+    refresh_quarto_yml()
+
     # copy cname if it exists
     copy_cname_if_needed(root_path)
 
