@@ -9,10 +9,10 @@ generate documentation for nbdev projects.
 
 ## Workflow
 
-Here’s a quick comparison of Quarto and Material for MkDocs
-(nbdev-mkdocs) development workflows:
+Here’s a quick comparison of Quarto and Material for nbdev development
+workflows:
 
-| **Quarto workflow**                                                                                                                        | **Material for MkDocs workflow**                                                                                                                                 |
+| **Quarto workflow**                                                                                                                        | **Material for nbdev workflow**                                                                                                                                  |
 |--------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Install:<br>\$ pip install nbdev<br>\$ nbdev_install_quarto                                                                                | Install:<br>\$ pip install nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev-mkdocs**                                                                   |
 | Setup:<br>\$ nbdev_new <br>\$ vi settings.ini                                                                                              | Setup:<br>\$ nbdev_new<br>\$ vi settings.ini**<br>\$ nbdev_mkdocs new** <br> **\$ vi mkdocs/mkdocs.yml**                                                         |
