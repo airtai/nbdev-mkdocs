@@ -34,6 +34,7 @@ jobs:
           version: ${{ matrix.version }}
       - name: test build docs
         run: |
+          nbdev_mkdocs new
           make prepare
           if [ -f "mkdocs/site/index.html" ]; then
             echo "docs built successfully."
