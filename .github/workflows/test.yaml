@@ -34,8 +34,9 @@ jobs:
           version: ${{ matrix.version }}
       - name: test build docs
         run: |
+          pip install -e '.[dev]'
           nbdev_mkdocs new
-          make prepare
+          nbdev_mkdocs prepare
           if [ -f "mkdocs/site/index.html" ]; then
             echo "docs built successfully."
           else
