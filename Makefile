@@ -29,7 +29,6 @@ static_check: mypy sast
 
 .PHONY: prepare
 prepare: static_check
-	nbdev_mkdocs new
 	nbdev_mkdocs prepare
 
 .PHONY: preview

@@ -9,7 +9,7 @@ repo_name: nbdev-mkdocs
 repo_url: https://github.com/airtai/nbdev-mkdocs
 edit_uri: ""
 
-copyright: 2022 onwards, airt
+copyright: Copyright © 2022 onwards airt technologies ltd.
 
 docs_dir: docs
 site_dir: site
