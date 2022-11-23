@@ -33,6 +33,7 @@ from fastcore.script import call_parse
 from nbdev.serve import proc_nbs
 from nbdev.process import NBProcessor
 from nbdev.frontmatter import FrontmatterProc
+from nbdev.quarto import prepare as nbdev_prepare
 
 import nbconvert
 
@@ -635,6 +636,8 @@ def prepare(root_path: str):
     Params:
         root_path: path under which mkdocs directory will be created
     """
+    nbdev_prepare.__wrapped__()
+
     # copy cname if it exists
     copy_cname_if_needed(root_path)
 
@@ -651,10 +654,6 @@ def prepare(root_path: str):
 @call_parse
 def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
-    from nbdev.quarto import prepare as nbdev_prepare
-
-    nbdev_prepare.__wrapped__()
-
     prepare(root_path)
 
 # %% ../nbs/Mkdocs.ipynb 67

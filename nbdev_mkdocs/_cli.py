@@ -34,10 +34,6 @@ def new(root_path: str = typer.Option(".", help="")):
 def prepare(root_path: str = typer.Option(".", help="")):
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
-        from nbdev.quarto import prepare as nbdev_prepare
-
-        nbdev_prepare.__wrapped__()
-
         nbdev_mkdocs.mkdocs.prepare(root_path=root_path)
     except Exception as e:
         typer.secho("Unexpected internal error :/", err=True, fg=typer.colors.RED)
