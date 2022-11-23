@@ -33,7 +33,7 @@ from fastcore.script import call_parse
 from nbdev.serve import proc_nbs
 from nbdev.process import NBProcessor
 from nbdev.frontmatter import FrontmatterProc
-from nbdev.quarto import refresh_quarto_yml
+from nbdev.quarto import prepare as nbdev_prepare
 
 import nbconvert
 
@@ -636,8 +636,7 @@ def prepare(root_path: str):
     Params:
         root_path: path under which mkdocs directory will be created
     """
-    # Set the quarto output path
-    refresh_quarto_yml()
+    nbdev_prepare.__wrapped__()
 
     # copy cname if it exists
     copy_cname_if_needed(root_path)
