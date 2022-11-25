@@ -10,8 +10,3 @@ website:
       - section: guides
         contents:
           - guides/Guide_01_End_To_End_Walkthrough.ipynb
-      - section: nbs
-        contents:
-          - section: guides
-            contents:
-              - nbs/guides/Guide_01_End_To_End_Walkthrough.ipynb
