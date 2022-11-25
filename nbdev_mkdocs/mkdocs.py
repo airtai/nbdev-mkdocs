@@ -687,7 +687,8 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
 
         build_summary(root_path, lib_path)
 
-        cmd = f"mkdocs build -f {root_path}/mkdocs/mkdocs.yml"
+        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
+        print(f"Running cmd={cmd}")
         _sprun(cmd)
 
 
