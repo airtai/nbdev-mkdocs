@@ -684,7 +684,7 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
             import nbdev.test, nbdev.clean
 
             nbdev_export.__wrapped__()
-            # nbdev.test.nbdev_test.__wrapped__()
+            nbdev.test.nbdev_test.__wrapped__()
             nbdev.clean.nbdev_clean.__wrapped__()
             refresh_quarto_yml()
             nbdev_readme.__wrapped__(chk_time=True)
