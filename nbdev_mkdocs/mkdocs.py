@@ -775,12 +775,11 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
         lib_name = _get_value_from_config(root_path, "lib_name")
         lib_path = _get_value_from_config(root_path, "lib_path")
 
-        build_summary(root_path, lib_path)
 
-        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-        print(f"Running cmd={cmd}")
+#         build_summary(root_path, lib_path)
 
-
+#         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
+#         print(f"Running cmd={cmd}")
 #         _sprun(cmd)
 
 
