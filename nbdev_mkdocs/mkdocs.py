@@ -680,14 +680,10 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
             refresh_quarto_yml()
             nbdev_readme.__wrapped__(chk_time=True)
         else:
-            #             nbdev_prepare.__wrapped__()
-            import nbdev.test, nbdev.clean
-
-            nbdev_export.__wrapped__()
-            nbdev.test.nbdev_test.__wrapped__()
-            nbdev.clean.nbdev_clean.__wrapped__()
-            refresh_quarto_yml()
-            nbdev_readme.__wrapped__(chk_time=True)
+            try:
+                nbdev_prepare.__wrapped__()
+            except BaseException as e:
+                raise ValueError(f"nbdev_prepare failed:{e}")
 
         n_workers = multiprocessing.cpu_count()
         nbs_path = _get_value_from_config(root_path, "nbs_path")
