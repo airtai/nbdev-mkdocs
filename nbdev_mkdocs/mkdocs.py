@@ -317,7 +317,7 @@ def _get_nbs_for_markdown_conversion(cache: Path):
     return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
 
 # %% ../nbs/Mkdocs.ipynb 37
-def _sprun(cmd):
+def _sprun_1(cmd):
     try:
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         subprocess.check_output(
@@ -347,9 +347,9 @@ def _generate_markdown_from_nbs(root_path: str):
             dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
             dst_md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
             dst_md.parent.mkdir(parents=True, exist_ok=True)
-            cachee = "random_folder_path"
-            cmd = f'cd "{cachee}" && quarto render "{nb}" -o "{nb.stem}.md" -t gfm --no-execute'
-            _sprun(cmd)
+
+            cmd = f'cd "{cache}" && quarto render "{nb}" -o "{nb.stem}.md" -t gfm --no-execute'
+            _sprun_1(cmd)
 
             src_md = cache / "_docs" / f"{nb.stem}.md"
             shutil.move(src_md, dst_md)
@@ -667,6 +667,26 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 66
+from nbdev.quarto import _sprun
+
+
+def _patched_sprun(cmd):
+    try:
+        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        subprocess.check_output(
+            cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
+        )
+    except subprocess.CalledProcessError as e:
+        sys.exit(
+            f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
+        )
+
+
+_sprun = _patched_sprun
+
+##
+
+
 @delegates(_nbglob_docs)
 def prepare(root_path: str, no_test: bool = False, **kwargs):
     """Prepares mkdocs for serving
@@ -698,7 +718,7 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
 
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
         print(f"Running cmd={cmd}")
-        _sprun(cmd)
+        _sprun_1(cmd)
 
 
 @call_parse
