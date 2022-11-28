@@ -29,6 +29,8 @@ jobs:
             wget -q https://www.quarto.org/download/latest/quarto-macos.pkg
             sudo installer -pkg quarto-macos.pkg -target /
           fi
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
       - name: Test with nbdev
         run: |
           set -ux
