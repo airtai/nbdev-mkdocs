@@ -29,9 +29,13 @@ jobs:
             wget -q https://www.quarto.org/download/latest/quarto-macos.pkg
             sudo installer -pkg quarto-macos.pkg -target /
           fi
-      - uses: fastai/workflows/nbdev-ci@master
-        with:
-          version: ${{ matrix.version }}
+      - name: Test with nbdev
+        run: |
+          set -ux
+          python -m pip install --upgrade pip
+          pip install -U nbdev
+          nbdev_export
+          custom_nbdev_test
       - name: test build docs
         run: |
           pip install -e '.[dev]'
