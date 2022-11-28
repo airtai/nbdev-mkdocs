@@ -717,6 +717,7 @@ def _nbdev_readme(
 
     try:
         cache = proc_nbs(path)
+        print(f"===============>cache={cache}")
         idx_cache = cache / cfg.readme_nb
         _sprun(
             f'cd "{cache}" && quarto render "{idx_cache}" -o README.md -t gfm --no-execute'
@@ -778,7 +779,9 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
 
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
         print(f"Running cmd={cmd}")
-        _sprun(cmd)
+
+
+#         _sprun(cmd)
 
 
 @call_parse
