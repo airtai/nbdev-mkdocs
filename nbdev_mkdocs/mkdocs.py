@@ -672,6 +672,9 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 66
+import logging
+
+
 @delegates(_nbglob_docs)
 def prepare(root_path: str, no_test: bool = False, **kwargs):
     """Prepares mkdocs for serving
@@ -688,22 +691,24 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
             nbdev_prepare.__wrapped__()
 
         n_workers = multiprocessing.cpu_count()
-        #     nbs_path = _get_value_from_config(root_path, "nbs_path")
+        nbs_path = _get_value_from_config(root_path, "nbs_path")
 
         cache, cfg, path = _pre_docs(n_workers=n_workers, **kwargs)
 
-    # copy cname if it exists
-    copy_cname_if_needed(root_path)
+        # copy cname if it exists
+        copy_cname_if_needed(root_path)
 
-    # get lib name from settings.ini
-    lib_name = _get_value_from_config(root_path, "lib_name")
-    lib_path = _get_value_from_config(root_path, "lib_path")
+        # get lib name from settings.ini
+        lib_name = _get_value_from_config(root_path, "lib_name")
+        lib_path = _get_value_from_config(root_path, "lib_path")
 
-    build_summary(root_path, lib_path)
+        build_summary(root_path, lib_path)
+        logging.debug("=====build_summary passed=====")
 
-    cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-    print(f"Running cmd={cmd}")
-    _sprun(cmd)
+        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
+        logging.debug(f"Running cmd={cmd}")
+        print(f"Running cmd={cmd}")
+        _sprun(cmd)
 
 
 @call_parse
