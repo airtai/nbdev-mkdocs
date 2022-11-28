@@ -429,7 +429,7 @@ def custom_nbdev_test(
         _fence = "=" * 50
         failed = "\n\t".join(f.name for p, f in zip(passed, files) if not p)
         sys.stderr.write(
-            f"\n From custom nbdevtest:\n{_fence}\n\tresults={results}\n{_fence}\n\tpassed={passed}"
+            f"\n From custom nbdevtest:\n{_fence}\n\tresults={results}\n{_fence}\n\tpassed={passed}\n\nfiles={files}"
         )
         sys.exit(1)
     if timing:
