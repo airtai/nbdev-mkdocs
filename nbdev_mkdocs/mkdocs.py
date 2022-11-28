@@ -667,80 +667,6 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 66
-# from nbdev.quarto import _sprun
-
-# def _patched_sprun(cmd):
-#     try:
-#         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-#         subprocess.check_output(
-#             cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
-#         )
-#     except subprocess.CalledProcessError as e:
-#         sys.exit(
-#             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
-#         )
-
-# _sprun = _patched_sprun
-
-##
-
-from fastcore.shutil import copytree
-
-
-def _nbdev_readme(
-    path: str = None,  # type: ignore
-    chk_time: bool = False,  # type: ignore
-):  # Only build if out of date
-
-    nbdev.config.get_config.cache_clear()
-    cfg = nbdev.config.get_config()
-    cfg_path = cfg.config_path
-    path = Path(path) if path else cfg.nbs_path
-    idx_path = path / cfg.readme_nb
-
-    if not idx_path.exists():
-        return print(f"Could not find {idx_path}")
-    readme_path = cfg_path / "README.md"
-    if (
-        chk_time
-        and readme_path.exists()
-        and readme_path.stat().st_mtime >= idx_path.stat().st_mtime
-    ):
-        return
-
-    yml_path = path / "sidebar.yml"  # type: ignore
-    moved = False
-    if yml_path.exists():
-        # move out of the way to avoid rendering whole website
-        yml_path.rename(path / "sidebar.yml.bak")  # type: ignore
-        moved = True
-
-    try:
-        cache = proc_nbs(path)
-        print(f"===============>cache={cache}")
-        idx_cache = cache / cfg.readme_nb
-        _sprun(
-            f'cd "{cache}" && quarto render "{idx_cache}" -o README.md -t gfm --no-execute'
-        )
-    finally:
-        if moved:
-            (path / "sidebar.yml.bak").rename(yml_path)  # type: ignore
-    tmp_doc_path = cache / cfg.doc_path.name
-    readme = tmp_doc_path / "README.md"
-    if readme.exists():
-        _rdmi = tmp_doc_path / (idx_cache.stem + "_files")
-        if readme_path.exists():
-            readme_path.unlink()  # py37 doesn't have `missing_ok`
-        move(readme, cfg_path)
-        if _rdmi.exists():
-            copytree(
-                _rdmi, cfg_path / _rdmi.name, dirs_exist_ok=True
-            )  # Move Supporting files for README
-
-
-####
-
-
 @delegates(_nbglob_docs)
 def prepare(root_path: str, no_test: bool = False, **kwargs):
     """Prepares mkdocs for serving
@@ -752,29 +678,22 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
         if no_test:
             nbdev_export.__wrapped__()
             refresh_quarto_yml()
-            #             nbdev_readme.__wrapped__(chk_time=True)
-            _nbdev_readme(chk_time=True)
+            nbdev_readme.__wrapped__(chk_time=True)
         else:
-            import nbdev.test, nbdev.clean
-
-            nbdev_export.__wrapped__()
-            nbdev.test.nbdev_test.__wrapped__()
-            nbdev.clean.nbdev_clean.__wrapped__()
-            refresh_quarto_yml()
-            _nbdev_readme(chk_time=True)
+            nbdev_prepare.__wrapped__()
 
         n_workers = multiprocessing.cpu_count()
         nbs_path = _get_value_from_config(root_path, "nbs_path")
 
         cache, cfg, path = _pre_docs(n_workers=n_workers, **kwargs)
 
-        # copy cname if it exists
-        copy_cname_if_needed(root_path)
 
-        # get lib name from settings.ini
-        lib_name = _get_value_from_config(root_path, "lib_name")
-        lib_path = _get_value_from_config(root_path, "lib_path")
+#         # copy cname if it exists
+#         copy_cname_if_needed(root_path)
 
+#         # get lib name from settings.ini
+#         lib_name = _get_value_from_config(root_path, "lib_name")
+#         lib_path = _get_value_from_config(root_path, "lib_path")
 
 #         build_summary(root_path, lib_path)
 
