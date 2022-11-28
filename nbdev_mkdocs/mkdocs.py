@@ -324,14 +324,9 @@ def _sprun(cmd):
             cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
         )
     except subprocess.CalledProcessError as e:
-        raise ValueError(
+        sys.exit(
             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
         )
-
-
-#         sys.exit(
-#             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
-#         )
 
 
 def _generate_markdown_from_nbs(root_path: str):
@@ -352,8 +347,8 @@ def _generate_markdown_from_nbs(root_path: str):
             dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
             dst_md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
             dst_md.parent.mkdir(parents=True, exist_ok=True)
-
-            cmd = f'cd "{cache}" && quarto render "{nb}" -o "{nb.stem}.md" -t gfm --no-execute'
+            cachee = "random_folder_path"
+            cmd = f'cd "{cachee}" && quarto render "{nb}" -o "{nb.stem}.md" -t gfm --no-execute'
             _sprun(cmd)
 
             src_md = cache / "_docs" / f"{nb.stem}.md"
@@ -672,9 +667,6 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 66
-import logging
-
-
 @delegates(_nbglob_docs)
 def prepare(root_path: str, no_test: bool = False, **kwargs):
     """Prepares mkdocs for serving
@@ -682,7 +674,6 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
     Params:
         root_path: path under which mkdocs directory will be created
     """
-    logging.debug("=====Calling prepare=====")
     with set_cwd(root_path):
         if no_test:
             nbdev_export.__wrapped__()
@@ -704,10 +695,8 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
         lib_path = _get_value_from_config(root_path, "lib_path")
 
         build_summary(root_path, lib_path)
-        logging.debug("=====build_summary passed=====")
 
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-        logging.debug(f"Running cmd={cmd}")
         print(f"Running cmd={cmd}")
         _sprun(cmd)
 
