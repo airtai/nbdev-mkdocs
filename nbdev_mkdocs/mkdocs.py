@@ -682,6 +682,7 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
     Params:
         root_path: path under which mkdocs directory will be created
     """
+    logging.debug("=====Calling prepare=====")
     with set_cwd(root_path):
         if no_test:
             nbdev_export.__wrapped__()
