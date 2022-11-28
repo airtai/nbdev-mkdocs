@@ -689,25 +689,23 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
             refresh_quarto_yml()
             nbdev_readme.__wrapped__(chk_time=True)
 
+        n_workers = multiprocessing.cpu_count()
+        nbs_path = _get_value_from_config(root_path, "nbs_path")
 
-#         n_workers = multiprocessing.cpu_count()
-#         nbs_path = _get_value_from_config(root_path, "nbs_path")
+        cache, cfg, path = _pre_docs(n_workers=n_workers, **kwargs)
 
-#         cache,cfg,path = _pre_docs(n_workers=n_workers, **kwargs)
+        # copy cname if it exists
+        copy_cname_if_needed(root_path)
 
+        # get lib name from settings.ini
+        lib_name = _get_value_from_config(root_path, "lib_name")
+        lib_path = _get_value_from_config(root_path, "lib_path")
 
-#         # copy cname if it exists
-#         copy_cname_if_needed(root_path)
+        build_summary(root_path, lib_path)
 
-#         # get lib name from settings.ini
-#         lib_name = _get_value_from_config(root_path, "lib_name")
-#         lib_path = _get_value_from_config(root_path, "lib_path")
-
-#         build_summary(root_path, lib_path)
-
-#         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-#         print(f"Running cmd={cmd}")
-#         _sprun(cmd)
+        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
+        print(f"Running cmd={cmd}")
+        _sprun(cmd)
 
 
 @call_parse
