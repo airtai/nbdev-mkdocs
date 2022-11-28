@@ -324,9 +324,14 @@ def _sprun(cmd):
             cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
         )
     except subprocess.CalledProcessError as e:
-        sys.exit(
+        raise ValueError(
             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
         )
+
+
+#         sys.exit(
+#             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
+#         )
 
 
 def _generate_markdown_from_nbs(root_path: str):
