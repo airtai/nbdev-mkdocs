@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['set_cwd', 'new', 'new_cli', 'get_submodules', 'generate_api_doc_for_submodule', 'generate_api_docs_for_module',
            'generate_cli_doc_for_submodule', 'generate_cli_docs_for_module', 'build_summary', 'copy_cname_if_needed',
-           'nbdev_mkdocs_internal_prepare', 'prepare', 'prepare_cli', 'preview', 'preview_cli']
+           'prepare', 'prepare_cli', 'preview', 'preview_cli']
 
 # %% ../nbs/Mkdocs.ipynb 1
 from typing import *
@@ -307,7 +307,22 @@ def new_cli(root_path: str):
     """
     new(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 35
+# %% ../nbs/Mkdocs.ipynb 31
+def _sprun(cmd):
+    try:
+        #         print(cmd)
+        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        subprocess.check_output(
+            cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
+        )
+    #         print(f"stdout:{_spout.decode('utf-8')}")
+
+    except subprocess.CalledProcessError as e:
+        sys.exit(
+            f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
+        )
+
+# %% ../nbs/Mkdocs.ipynb 36
 def _get_nbs_for_markdown_conversion(cache: Path):
     """Get a list of notebooks that needs to be converted to markdown.
 
@@ -316,21 +331,7 @@ def _get_nbs_for_markdown_conversion(cache: Path):
     """
     return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
 
-# %% ../nbs/Mkdocs.ipynb 37
-def _sprun(cmd):
-    try:
-        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-        _spout = subprocess.check_output(
-            cmd, shell=True  # nosec: B602:subprocess_popen_with_shell_equals_true
-        )
-        sys.stdout.write(f"_spout={_spout}")
-
-    except subprocess.CalledProcessError as e:
-        sys.exit(
-            f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
-        )
-
-
+# %% ../nbs/Mkdocs.ipynb 38
 def _generate_markdown_from_nbs(root_path: str):
 
     doc_path = Path(root_path) / "mkdocs" / "docs"
@@ -356,7 +357,7 @@ def _generate_markdown_from_nbs(root_path: str):
             src_md = cache / "_docs" / f"{nb.stem}.md"
             shutil.move(src_md, dst_md)
 
-# %% ../nbs/Mkdocs.ipynb 39
+# %% ../nbs/Mkdocs.ipynb 40
 def _replace_all(text: str, dir_prefix: str) -> str:
     """Replace the images relative path in the markdown text
 
@@ -384,7 +385,7 @@ def _replace_all(text: str, dir_prefix: str) -> str:
 
     return text
 
-# %% ../nbs/Mkdocs.ipynb 41
+# %% ../nbs/Mkdocs.ipynb 42
 def _update_path_in_markdown(cache: Path, doc_path: Path):
     """Update guide images relative path in the markdown files
 
@@ -442,7 +443,7 @@ def _copy_guide_images_to_docs_dir(root_path: str):
 
         _update_path_in_markdown(cache, doc_path)
 
-# %% ../nbs/Mkdocs.ipynb 45
+# %% ../nbs/Mkdocs.ipynb 46
 def _get_title_from_notebook(nb_name: str) -> str:
     cache = proc_nbs()
     nb_path = Path(cache) / "guides" / f"{nb_name}.ipynb"
@@ -459,7 +460,7 @@ def _get_title_from_notebook(nb_name: str) -> str:
     nbp.process()
     return nbp.nb.frontmatter_["title"]
 
-# %% ../nbs/Mkdocs.ipynb 47
+# %% ../nbs/Mkdocs.ipynb 48
 def _generate_summary_for_guides(root_path: str) -> str:
     doc_path = Path(root_path) / "mkdocs" / "docs"
     mds = sorted(
@@ -477,7 +478,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     else:
         return ""
 
-# %% ../nbs/Mkdocs.ipynb 50
+# %% ../nbs/Mkdocs.ipynb 51
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -492,7 +493,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 52
+# %% ../nbs/Mkdocs.ipynb 53
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -517,7 +518,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 54
+# %% ../nbs/Mkdocs.ipynb 55
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -541,7 +542,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 56
+# %% ../nbs/Mkdocs.ipynb 57
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -597,7 +598,7 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 58
+# %% ../nbs/Mkdocs.ipynb 59
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
@@ -609,7 +610,7 @@ def _copy_change_log_if_exists(
         changelog = "- [Releases](CHANGELOG.md)"
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 61
+# %% ../nbs/Mkdocs.ipynb 62
 def build_summary(
     root_path: str,
     module: str,
@@ -653,7 +654,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 64
+# %% ../nbs/Mkdocs.ipynb 65
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -668,21 +669,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 66
-import nbdev.test
-import nbdev.clean
-
-
-@call_parse
-def nbdev_mkdocs_internal_prepare(no_test: bool = False):
-    nbdev_export.__wrapped__()
-    if not no_test:
-        nbdev.test.nbdev_test.__wrapped__()
-        nbdev.clean.nbdev_clean.__wrapped__()
-    refresh_quarto_yml()
-    nbdev_readme.__wrapped__(chk_time=True)
-
-
+# %% ../nbs/Mkdocs.ipynb 67
 @delegates(_nbglob_docs)
 def prepare(root_path: str, no_test: bool = False, **kwargs):
     """Prepares mkdocs for serving
@@ -692,9 +679,14 @@ def prepare(root_path: str, no_test: bool = False, **kwargs):
     """
     with set_cwd(root_path):
 
-        cmd = "nbdev_mkdocs_internal_prepare" + " --no_test" if no_test else ""
-        print(f"Running cmd={cmd}")
-        _sprun(cmd)
+        if no_test:
+            nbdev_export.__wrapped__()
+            refresh_quarto_yml()
+            nbdev_readme.__wrapped__(chk_time=True)
+        else:
+            cmd = "nbdev_prepare"
+            print(f"Running cmd={cmd}")
+            _sprun(cmd)
 
         n_workers = multiprocessing.cpu_count()
         nbs_path = _get_value_from_config(root_path, "nbs_path")
@@ -720,7 +712,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 69
+# %% ../nbs/Mkdocs.ipynb 70
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
