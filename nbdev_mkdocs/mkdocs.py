@@ -666,18 +666,20 @@ def copy_cname_if_needed(root_path: str):
 @call_parse
 def nbdev_mkdocs_docs(root_path: str):
     """Create Material for Mkdocs"""
-    # copy cname if it exists
-    copy_cname_if_needed(root_path)
 
-    # get lib name from settings.ini
-    lib_name = _get_value_from_config(root_path, "lib_name")
-    lib_path = _get_value_from_config(root_path, "lib_path")
+    with set_cwd(root_path):
+        # copy cname if it exists
+        copy_cname_if_needed(root_path)
 
-    build_summary(root_path, lib_path)
+        # get lib name from settings.ini
+        lib_name = _get_value_from_config(root_path, "lib_name")
+        lib_path = _get_value_from_config(root_path, "lib_path")
 
-    cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-    print(f"Running cmd={cmd}")
-    _sprun(cmd)
+        build_summary(root_path, lib_path)
+
+        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
+        print(f"Running cmd={cmd}")
+        _sprun(cmd)
 
 
 def prepare(root_path: str, no_test: bool = False):
@@ -697,9 +699,7 @@ def prepare(root_path: str, no_test: bool = False):
             print(f"Running cmd={cmd}")
             _sprun(cmd)
 
-        cmd = f"nbdev_mkdocs_docs {root_path}"
-        print(f"Running cmd={cmd}")
-        _sprun(cmd)
+    nbdev_mkdocs_docs.__wrapped__(root_path)
 
 
 @call_parse
