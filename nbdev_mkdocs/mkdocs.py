@@ -36,18 +36,14 @@ from nbdev.serve import proc_nbs
 from nbdev.process import NBProcessor
 from nbdev.frontmatter import FrontmatterProc
 from nbdev.quarto import prepare as nbdev_prepare
-from fastcore.meta import delegates
+
+# from fastcore.meta import delegates
 from nbdev.quarto import (
     refresh_quarto_yml,
-    _nbglob_docs,
-    _pre_docs,
     nbdev_readme,
-)  # , _sprun, nbdev_docs
+)  # , _sprun, nbdev_docs, _nbglob_docs, _pre_docs
 from nbdev.doclinks import nbdev_export
 from fastcore.shutil import move
-
-
-import nbconvert
 
 from ._package_data import get_root_data_path
 from ._helpers.cli_doc import generate_cli_doc
