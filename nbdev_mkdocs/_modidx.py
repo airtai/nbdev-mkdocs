@@ -75,4 +75,5 @@ d = { 'settings': { 'branch': 'main',
                                      'nbdev_mkdocs.mkdocs.prepare': ('mkdocs.html#prepare', 'nbdev_mkdocs/mkdocs.py'),
                                      'nbdev_mkdocs.mkdocs.prepare_cli': ('mkdocs.html#prepare_cli', 'nbdev_mkdocs/mkdocs.py'),
                                      'nbdev_mkdocs.mkdocs.preview': ('mkdocs.html#preview', 'nbdev_mkdocs/mkdocs.py'),
-                                     'nbdev_mkdocs.mkdocs.preview_cli': ('mkdocs.html#preview_cli', 'nbdev_mkdocs/mkdocs.py')}}}
+                                     'nbdev_mkdocs.mkdocs.preview_cli': ('mkdocs.html#preview_cli', 'nbdev_mkdocs/mkdocs.py'),
+                                     'nbdev_mkdocs.mkdocs.set_cwd': ('mkdocs.html#set_cwd', 'nbdev_mkdocs/mkdocs.py')}}}

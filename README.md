@@ -9,14 +9,15 @@ generate documentation for nbdev projects.
 
 ## Workflow
 
-Here’s a quick comparison of Quarto and Material for MkDocs
-(nbdev-mkdocs) development workflows:
+Here’s a quick comparison of Quarto and Material for nbdev development
+workflows:
 
-| **Quarto workflow**                                                                                                                        | **Material for MkDocs workflow**                                                                                                                                 |
-|--------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Install:<br>\$ pip install nbdev<br>\$ nbdev_install_quarto                                                                                | Install:<br>\$ pip install nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev-mkdocs**                                                                   |
-| Setup:<br>\$ nbdev_new <br>\$ vi settings.ini                                                                                              | Setup:<br>\$ nbdev_new<br>\$ vi settings.ini**<br>\$ nbdev_mkdocs new** <br> **\$ vi mkdocs/mkdocs.yml**                                                         |
-| Workflow:<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’<br>\$ nbdev_prepare<br>\$ nbdev_preview<br>\$ git commit -am “Commit message” | Workflow:<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’<br>**\$ nbdev_mkdocs prepare**<br>**\$ nbdev_mkdocs preview**<br>\$ git commit -am “Commit message” |
+| **Quarto workflow**                                                                                                       | **Material for nbdev workflow**                                                                                                                                                     |
+|---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto                                                      | Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev-mkdocs**                                                                             |
+| Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’ | Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’<br>**\$ nbdev_mkdocs new**<br>**\$ vi mkdocs/mkdocs.yml** |
+| Development:<br>\# Edit files<br>\$ nbdev_preview                                                                         | Development:<br>\# Edit files<br>**\$ nbdev_mkdocs preview**<br>                                                                                                                    |
+| Commit changes:<br>\$ nbdev_prepare<br>\$ git commit -am “Commit message”<br>\$ git push                                  | Commit changes:<br>**\$ nbdev_mkdocs prepare**<br>\$ git commit -am “Commit message”<br>\$ git push                                                                                 |
 
 ## Quick start
 

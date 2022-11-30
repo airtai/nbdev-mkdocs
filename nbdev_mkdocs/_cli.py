@@ -24,7 +24,7 @@ def new(root_path: str = typer.Option(".", help="")):
     try:
         nbdev_mkdocs.mkdocs.new(root_path=root_path)
     except Exception as e:
-        typer.secho("Unexpected internal error :/", err=True, fg=typer.colors.RED)
+        typer.secho(f"Unexpected internal error: {e}", err=True, fg=typer.colors.RED)
         raise typer.Exit(1)
 
 
@@ -36,7 +36,7 @@ def prepare(root_path: str = typer.Option(".", help="")):
     try:
         nbdev_mkdocs.mkdocs.prepare(root_path=root_path)
     except Exception as e:
-        typer.secho("Unexpected internal error :/", err=True, fg=typer.colors.RED)
+        typer.secho(f"Unexpected internal error: {e}", err=True, fg=typer.colors.RED)
         raise typer.Exit(1)
 
 
@@ -53,5 +53,5 @@ def preview(
     try:
         nbdev_mkdocs.mkdocs.preview(root_path=root_path, port=port)
     except Exception as e:
-        typer.secho("Unexpected internal error :/", err=True, fg=typer.colors.RED)
+        typer.secho(f"Unexpected internal error: {e}", err=True, fg=typer.colors.RED)
         raise typer.Exit(1)

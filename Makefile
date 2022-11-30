@@ -32,7 +32,7 @@ prepare: static_check
 	nbdev_mkdocs prepare
 
 .PHONY: preview
-preview: prepare
+preview: nbdev_mkdocs
 	nbdev_mkdocs preview
 
 .PHONY: clean
@@ -47,3 +47,4 @@ clean:
 	# rm -rf mkdocs/docs
 	rm -rf mkdocs/summary_template.txt
 	pip uninstall -y nbdev_mkdocs
+	touch nbs/*.ipynb
