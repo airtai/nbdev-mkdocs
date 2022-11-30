@@ -34,7 +34,7 @@ jobs:
           version: ${{ matrix.version }}
       - name: test build docs
         run: |
-          pip install -e '.[dev]'
+          test -f setup.py && pip install -e ".[dev]"
           nbdev_mkdocs_docs --refresh_quarto_settings .
           if [ -f "mkdocs/site/index.html" ]; then
             echo "docs built successfully."
