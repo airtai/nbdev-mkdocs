@@ -35,8 +35,7 @@ jobs:
       - name: test build docs
         run: |
           pip install -e '.[dev]'
-          nbdev_mkdocs new
-          nbdev_mkdocs prepare
+          nbdev_mkdocs_docs .
           if [ -f "mkdocs/site/index.html" ]; then
             echo "docs built successfully."
           else
