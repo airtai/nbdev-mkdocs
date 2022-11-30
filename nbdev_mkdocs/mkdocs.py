@@ -664,14 +664,16 @@ def copy_cname_if_needed(root_path: str):
 
 # %% ../nbs/Mkdocs.ipynb 67
 @call_parse
-def nbdev_mkdocs_docs(root_path: str):
-    """Create Material for Mkdocs"""
+def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
+    """Create documentation"""
 
     with set_cwd(root_path):
-        # copy cname if it exists
+
+        if refresh_quarto_settings:
+            refresh_quarto_yml()
+
         copy_cname_if_needed(root_path)
 
-        # get lib name from settings.ini
         lib_name = _get_value_from_config(root_path, "lib_name")
         lib_path = _get_value_from_config(root_path, "lib_path")
 
