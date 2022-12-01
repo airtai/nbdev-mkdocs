@@ -29,10 +29,10 @@ def new(root_path: str = typer.Option(".", help="")):
 
 
 @_app.command(
-    help="Prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
+    help="Runs tests and prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
 def prepare(root_path: str = typer.Option(".", help="")):
-    """CLI command for creating files for nbdev_mkdocs command"""
+    """CLI command for running tests and creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.prepare(root_path=root_path)
     except Exception as e:
@@ -58,7 +58,7 @@ def preview(
 
 
 @_app.command(
-    help="CLI command to prepare mkdocs documentation",
+    help="Prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
 def docs(
     root_path: str = typer.Option(".", help="Project's root path."),
@@ -67,7 +67,7 @@ def docs(
         help="Flag to refresh quarto yml file. This flag should be set to `True` if this command is executed without calling nbdev_mkdocs prepare command.",
     ),
 ):
-    """CLI command to prepare mkdocs documentation"""
+    """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs(
             root_path=root_path, refresh_quarto_settings=refresh_quarto_settings
