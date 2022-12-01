@@ -1,4 +1,4 @@
-name: Test deploy nbdev-mkdocs generated documentation to GitHub Pages
+name: Deploy nbdev-mkdocs generated documentation to GitHub Pages
 
 on:
   push:

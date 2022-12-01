@@ -28,11 +28,6 @@ sast: .sast_bandit .sast_semgrep
 static_check: mypy sast
 
 .PHONY: prepare
-prepare_with_new: static_check
-	nbdev_mkdocs new
-	nbdev_mkdocs prepare
-
-.PHONY: prepare
 prepare: static_check
 	nbdev_mkdocs prepare
 
