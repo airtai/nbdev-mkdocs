@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['set_cwd', 'new', 'new_cli', 'get_submodules', 'generate_api_doc_for_submodule', 'generate_api_docs_for_module',
            'generate_cli_doc_for_submodule', 'generate_cli_docs_for_module', 'build_summary', 'copy_cname_if_needed',
-           'prepare', 'prepare_cli', 'preview', 'preview_cli']
+           'nbdev_mkdocs_docs', 'nbdev_mkdocs_docs_cli', 'prepare', 'prepare_cli', 'preview', 'preview_cli']
 
 # %% ../nbs/Mkdocs.ipynb 1
 from typing import *
@@ -58,7 +58,7 @@ def _get_value_from_config(root_path: str, config_name: str) -> str:
 def _add_requirements_to_settings(root_path: str):
     """Adds requirments needed for mkdocs to settings.ini
 
-    Params:
+    Args:
         root_path: path to where the settings.ini file is located
 
     """
@@ -277,7 +277,7 @@ def new(root_path: str):
     it with initial values. You should edit mkdocs.yml file to customize it if
     needed.
 
-    Params:
+    Args:
         root_path: path under which mkdocs directory will be created
     """
     _add_requirements_to_settings(root_path)
@@ -663,11 +663,42 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 67
-def prepare(root_path: str, no_test: bool = False):
+def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
+    """Prepares mkdocs documentation
 
+    Args:
+        root_path: Project's root path.
+        refresh_quarto_settings: Flag to refresh quarto yml file. This flag should be set to `True`
+            if this function is called directly without calling prepare.
+    """
+
+    with set_cwd(root_path):
+
+        if refresh_quarto_settings:
+            refresh_quarto_yml()
+
+        copy_cname_if_needed(root_path)
+
+        lib_name = _get_value_from_config(root_path, "lib_name")
+        lib_path = _get_value_from_config(root_path, "lib_path")
+
+        build_summary(root_path, lib_path)
+
+        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
+        print(f"Running cmd={cmd}")
+        _sprun(cmd)
+
+
+@call_parse
+def nbdev_mkdocs_docs_cli(root_path: str):
+    """Prepares mkdocs documentation"""
+    nbdev_mkdocs_docs(root_path, refresh_quarto_settings=True)
+
+
+def prepare(root_path: str, no_test: bool = False):
     """Prepares mkdocs for serving
 
-    Params:
+    Args:
         root_path: path under which mkdocs directory will be created
     """
     with set_cwd(root_path):
@@ -681,18 +712,7 @@ def prepare(root_path: str, no_test: bool = False):
             print(f"Running cmd={cmd}")
             _sprun(cmd)
 
-        # copy cname if it exists
-        copy_cname_if_needed(root_path)
-
-        # get lib name from settings.ini
-        lib_name = _get_value_from_config(root_path, "lib_name")
-        lib_path = _get_value_from_config(root_path, "lib_path")
-
-        build_summary(root_path, lib_path)
-
-        cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-        print(f"Running cmd={cmd}")
-        _sprun(cmd)
+    nbdev_mkdocs_docs(root_path)
 
 
 @call_parse
@@ -704,7 +724,7 @@ def prepare_cli(root_path: str):
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
-    Params:
+    Args:
         root_path: path under which mkdocs directory will be created
         port: port to use
     """
