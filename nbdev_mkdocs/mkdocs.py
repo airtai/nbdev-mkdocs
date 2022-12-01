@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['set_cwd', 'new', 'new_cli', 'get_submodules', 'generate_api_doc_for_submodule', 'generate_api_docs_for_module',
            'generate_cli_doc_for_submodule', 'generate_cli_docs_for_module', 'build_summary', 'copy_cname_if_needed',
-           'nbdev_mkdocs_docs', 'prepare', 'prepare_cli', 'preview', 'preview_cli']
+           'nbdev_mkdocs_docs', 'nbdev_mkdocs_docs_cli', 'prepare', 'prepare_cli', 'preview', 'preview_cli']
 
 # %% ../nbs/Mkdocs.ipynb 1
 from typing import *
@@ -663,9 +663,14 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 67
-@call_parse
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
-    """Create documentation"""
+    """Prepares mkdocs documentation
+
+    Args:
+        root_path: Project's root path.
+        refresh_quarto_settings: Flag to refresh quarto yml file. This flag should be set to `True`
+            if this function is called directly without calling prepare.
+    """
 
     with set_cwd(root_path):
 
@@ -682,6 +687,12 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
         print(f"Running cmd={cmd}")
         _sprun(cmd)
+
+
+@call_parse
+def nbdev_mkdocs_docs_cli(root_path: str):
+    """Prepares mkdocs documentation"""
+    nbdev_mkdocs_docs(root_path, refresh_quarto_settings=True)
 
 
 def prepare(root_path: str, no_test: bool = False):
@@ -701,7 +712,7 @@ def prepare(root_path: str, no_test: bool = False):
             print(f"Running cmd={cmd}")
             _sprun(cmd)
 
-    nbdev_mkdocs_docs.__wrapped__(root_path)
+    nbdev_mkdocs_docs(root_path)
 
 
 @call_parse
