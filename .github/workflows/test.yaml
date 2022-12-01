@@ -35,7 +35,7 @@ jobs:
       - name: test build docs
         run: |
           test -f setup.py && pip install -e ".[dev]"
-          nbdev_mkdocs docs --root-path . --refresh-quarto-settings
+          nbdev_mkdocs docs
           if [ -f "mkdocs/site/index.html" ]; then
             echo "docs built successfully."
           else

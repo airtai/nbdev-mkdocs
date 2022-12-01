@@ -60,17 +60,11 @@ def preview(
 @_app.command(
     help="Prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
-def docs(
-    root_path: str = typer.Option(".", help="Project's root path."),
-    refresh_quarto_settings: bool = typer.Option(
-        False,
-        help="Flag to refresh quarto yml file. This flag should be set to `True` if this command is executed without calling nbdev_mkdocs prepare command.",
-    ),
-):
+def docs(root_path: str = typer.Option(".", help="Project's root path.")):
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs(
-            root_path=root_path, refresh_quarto_settings=refresh_quarto_settings
+            root_path=root_path, refresh_quarto_settings=True
         )
     except Exception as e:
         typer.secho(f"Unexpected internal error: {e}", err=True, fg=typer.colors.RED)

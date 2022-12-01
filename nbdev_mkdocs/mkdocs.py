@@ -690,9 +690,9 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
 
 
 @call_parse
-def nbdev_mkdocs_docs_cli(root_path: str, refresh_quarto_settings: bool = False):
+def nbdev_mkdocs_docs_cli(root_path: str):
     """Prepares mkdocs documentation"""
-    nbdev_mkdocs_docs(root_path, refresh_quarto_settings)
+    nbdev_mkdocs_docs(root_path, refresh_quarto_settings=True)
 
 
 def prepare(root_path: str, no_test: bool = False):

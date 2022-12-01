@@ -26,7 +26,7 @@ jobs:
             pip install nbdev-mkdocs
           fi
           test -f setup.py && pip install -e ".[dev]"
-          nbdev_mkdocs docs --root-path . --refresh-quarto-settings
+          nbdev_mkdocs docs
       - name: Enable GitHub Pages
         shell: python
         run: |
