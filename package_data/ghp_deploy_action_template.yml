@@ -12,3 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: airtai/workflows/nbdev-mkdocs-ghp@ghp-deploy-action
+        with: {pre: 1}
