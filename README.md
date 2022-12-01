@@ -12,12 +12,12 @@ generate documentation for nbdev projects.
 Here’s a quick comparison of Quarto and Material for nbdev development
 workflows:
 
-| **Quarto workflow**                                                                                                       | **Material for nbdev workflow**                                                                                                                                                     |
-|---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto                                                      | Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev-mkdocs**                                                                             |
-| Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’ | Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ nbdev_export<br>\$ pip install -e ‘.\[dev\]’<br>**\$ nbdev_mkdocs new**<br>**\$ vi mkdocs/mkdocs.yml** |
-| Development:<br>\# Edit files<br>\$ nbdev_preview                                                                         | Development:<br>\# Edit files<br>**\$ nbdev_mkdocs preview**<br>                                                                                                                    |
-| Commit changes:<br>\$ nbdev_prepare<br>\$ git commit -am “Commit message”<br>\$ git push                                  | Commit changes:<br>**\$ nbdev_mkdocs prepare**<br>\$ git commit -am “Commit message”<br>\$ git push                                                                                 |
+| **Quarto workflow**                                                                                    | **Material for nbdev workflow**                                                                                                                                  |
+|--------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto                                   | Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev-mkdocs**                                                          |
+| Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ pip install -e ‘.\[dev\]’ | Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ pip install -e ‘.\[dev\]’<br>**\$ nbdev_mkdocs new**<br>**\$ vi mkdocs/mkdocs.yml** |
+| Development:<br>\# Edit files<br>\$ nbdev_preview                                                      | Development:<br>\# Edit files<br>**\$ nbdev_mkdocs preview**<br>                                                                                                 |
+| Commit changes:<br>\$ nbdev_prepare<br>\$ git commit -am “Commit message”<br>\$ git push               | Commit changes:<br>**\$ nbdev_mkdocs prepare**<br>\$ git commit -am “Commit message”<br>\$ git push                                                              |
 
 ## Quick start
 
@@ -60,10 +60,12 @@ nbdev_mkdocs --help
     │ --help                        Show this message and exit.                    │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Commands ───────────────────────────────────────────────────────────────────╮
+    │ docs     Prepares files in **mkdocs/docs** and then runs **mkdocs build**    │
+    │          command on them                                                     │
     │ new      Creates files in **mkdocs** subdirectory needed for other           │
     │          **nbdev_mkdocs** subcommands                                        │
-    │ prepare  Prepares files in **mkdocs/docs** and then runs **mkdocs build**    │
-    │          command on them                                                     │
+    │ prepare  Runs tests and prepares files in **mkdocs/docs** and then runs      │
+    │          **mkdocs build** command on them                                    │
     │ preview  Prepares files in **mkdocs/docs** and then runs **mkdocs serve**    │
     │          command on them                                                     │
     ╰──────────────────────────────────────────────────────────────────────────────╯
@@ -85,36 +87,37 @@ Note: You should only run the **nbdev_mkdocs new** command once for the
 project to initialise the files required for building Material for
 MkDocs documentation.
 
-### Build and prepare
+### Preview changes
 
-Execute the following command to build the Python modules and install
-the library locally:
+nbdev_mkdocs lets you preview your changes as you write your
+documentation. Execute the following command from the project root
+directory to start a local server, and preview your documentation:
+
+**Note**: If you haven’t already installed your library locally, run
+`pip install -e '.[dev]'` command before running the
+`nbdev_mkdocs prepare` command.
 
 ``` shell
-nbdev_export && pip install -e '.[dev]'
+nbdev_mkdocs preview
 ```
 
-Then execute the following command to generate the Material for MkDocs
-documentation.
+### Prepare changes
+
+We recommend running the `nbdev_mkdocs prepare` command in the terminal
+before committing to Git, which exports the library, tests and cleans
+notebooks, and generates the README file if necessary.
 
 ``` shell
 nbdev_mkdocs prepare
 ```
 
-Running the above command will:
+Finally, double-check your settings.ini file to ensure that it has all
+of the correct information. Then commit and push your additions to
+GitHub:
 
-- Generate the markdown files from the notebooks and saves them to the
-  **mkdocs/docs/** directory.
-- Builds the documentation from the generated markdown files and saves
-  the resulting files to the **mkdocs/site** directory.
-
-### Preview
-
-After the documentation has been successfully built, execute the
-following command to start a local server and preview the documentation.
-
-``` python
-nbdev_mkdocs preview
+``` shell
+git commit -am'Commit Message'
+git push
 ```
 
 ## Copyright

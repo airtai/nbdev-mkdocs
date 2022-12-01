@@ -556,7 +556,6 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
         cli_doc = str(result.stdout)
     else:
         cmd = f"{cli_app_name} --help"
-        print(f"Not a typer command. Documenting: cmd={cmd}")
 
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
         cli_doc = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
@@ -685,7 +684,6 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
         build_summary(root_path, lib_path)
 
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
-        print(f"Running cmd={cmd}")
         _sprun(cmd)
 
 
@@ -709,7 +707,6 @@ def prepare(root_path: str, no_test: bool = False):
             nbdev_readme.__wrapped__(chk_time=True)
         else:
             cmd = "nbdev_prepare"
-            print(f"Running cmd={cmd}")
             _sprun(cmd)
 
     nbdev_mkdocs_docs(root_path)
