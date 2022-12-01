@@ -1,15 +1,11 @@
 name: Test deploy nbdev-mkdocs generated documentation to GitHub Pages
-# name: Deploy nbdev-mkdocs generated documentation to GitHub Pages
 
-on:  [workflow_dispatch, pull_request, push]
-
-# on:
-#   push:
-#     branches: [ "main", "master" ]
-#   workflow_dispatch:
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: airtai/workflows/nbdev-mkdocs-ghp@ghp-deploy-action
-        with: {pre: 1}
+      - uses: airtai/workflows/nbdev-mkdocs-ghp@main
