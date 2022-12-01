@@ -22,10 +22,10 @@ workflows:
 
 | **Quarto workflow**                                                                                    | **Material for nbdev workflow**                                                                                                                                  |
 |--------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto                                   | Install:<br>\$ pip install notebook nbdev<br>\$ nbdev_install_quarto<br>**\$ pip install nbdev-mkdocs**                                                          |
-| Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ pip install -e ‘.\[dev\]’ | Setup:<br>\$ nbdev_new<br>\$ nbdev_install_hooks<br>\$ vi settings.ini<br>\$ pip install -e ‘.\[dev\]’<br>**\$ nbdev_mkdocs new**<br>**\$ vi mkdocs/mkdocs.yml** |
-| Development:<br>\# Edit files<br>\$ nbdev_preview                                                      | Development:<br>\# Edit files<br>**\$ nbdev_mkdocs preview**<br>                                                                                                 |
-| Commit changes:<br>\$ nbdev_prepare<br>\$ git commit -am “Commit message”<br>\$ git push               | Commit changes:<br>**\$ nbdev_mkdocs prepare**<br>\$ git commit -am “Commit message”<br>\$ git push                                                              |
+| Install:<br>\> pip install notebook nbdev<br>\> nbdev_install_quarto                                   | Install:<br>\> pip install notebook nbdev<br>\> nbdev_install_quarto<br>**\> pip install nbdev-mkdocs**                                                          |
+| Setup:<br>\> nbdev_new<br>\> nbdev_install_hooks<br>\> vi settings.ini<br>\> pip install -e ‘.\[dev\]’ | Setup:<br>\> nbdev_new<br>\> nbdev_install_hooks<br>\> vi settings.ini<br>\> pip install -e ‘.\[dev\]’<br>**\> nbdev_mkdocs new**<br>**\> vi mkdocs/mkdocs.yml** |
+| Development:<br>\# Edit files<br>\> nbdev_preview                                                      | Development:<br>\# Edit files<br>**\> nbdev_mkdocs preview**<br>                                                                                                 |
+| Commit changes:<br>\> nbdev_prepare<br>\> git commit -am “Commit message”<br>\> git push               | Commit changes:<br>**\> nbdev_mkdocs prepare**<br>\> git commit -am “Commit message”<br>\> git push                                                              |
 
 ## Quick start
 
