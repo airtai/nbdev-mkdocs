@@ -1,0 +1,9 @@
+h1#getting-started + p > img {
+    display: none;
+}
+
+h1#getting-started + p + hr {
+    display: none;
+}
+
+

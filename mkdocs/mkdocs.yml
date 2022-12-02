@@ -85,3 +85,5 @@ theme:
     logo: material/compass-outline
 #     admonition:
 #         <type>: <icon> 
+extra_css:
+  - stylesheets/extra.css

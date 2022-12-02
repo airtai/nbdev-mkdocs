@@ -44,7 +44,7 @@ clean:
 	rm -rf _docs
 	rm -rf nbdev_mkdocs.egg-info
 	rm -rf mkdocs/site
-	rm -rf mkdocs/docs
+	find mkdocs/docs -maxdepth 1 -mindepth 1 ! -name 'stylesheets' -prune -exec rm -rf {} +
 	# rm -rf mkdocs/summary_template.txt
 	pip uninstall -y nbdev_mkdocs
 	touch nbs/*.ipynb
