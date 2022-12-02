@@ -11,9 +11,8 @@ nbs/.last_checked
 CHANGELOG.bak
 
 # Docs related
-mkdocs/docs/*
+mkdocs/docs/
 mkdocs/site/
-mkdocs/summary_template.txt
 
 _publish.yml
 _quarto.yml
