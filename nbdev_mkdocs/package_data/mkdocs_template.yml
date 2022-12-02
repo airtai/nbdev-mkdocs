@@ -53,7 +53,7 @@ markdown_extensions:
     
 theme:
   name: material
-  custom_dir: overrides
+  custom_dir: site_overrides
   features:
     - navigation.instant
 #     - navigation.tabs
@@ -85,3 +85,9 @@ theme:
     logo: material/compass-outline
 #     admonition:
 #         <type>: <icon> 
+  favicon: overrides/images/compass-outline.png
+extra_css:
+  - overrides/css/extra.css
+
+extra_javascript:
+  - overrides/js/extra.js
