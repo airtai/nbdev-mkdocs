@@ -5,5 +5,3 @@ h1#getting-started + p > img {
 h1#getting-started + p + hr {
     display: none;
 }
-
-

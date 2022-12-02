@@ -12,7 +12,6 @@ CHANGELOG.bak
 
 # Docs related
 mkdocs/docs/*
-!mkdocs/docs/stylesheets/
 mkdocs/site/
 mkdocs/summary_template.txt
 

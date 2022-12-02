@@ -662,6 +662,26 @@ def copy_cname_if_needed(root_path: str):
         )
 
 # %% ../nbs/Mkdocs.ipynb 67
+def _copy_docs_overrides(root_path: str):
+    """Copy lib assets inside mkodcs/docs directory
+
+    Args:
+        root_path: Project's root path.
+    """
+    src_path = Path(root_path) / "mkdocs" / "docs_overrides"
+    dst_path = Path(root_path) / "mkdocs" / "docs" / "overrides"
+
+    if not src_path.exists():
+        typer.secho(
+            f"Unexpected error: path {src_path.resolve()} does not exists!",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=1)
+
+    shutil.copytree(src_path, dst_path, dirs_exist_ok=True)
+
+# %% ../nbs/Mkdocs.ipynb 69
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -677,6 +697,8 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
             refresh_quarto_yml()
 
         copy_cname_if_needed(root_path)
+
+        _copy_docs_overrides(root_path)
 
         lib_name = _get_value_from_config(root_path, "lib_name")
         lib_path = _get_value_from_config(root_path, "lib_path")
@@ -717,7 +739,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 70
+# %% ../nbs/Mkdocs.ipynb 72
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
