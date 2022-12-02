@@ -2,6 +2,12 @@
 
 <!-- do not remove -->
 
+## 0.0.1rc3
+
+### New Features
+
+- Add stuff to gitignore when you run nbdev_new ([#59](https://github.com/airtai/nbdev-mkdocs/issues/59))
+
 ## 0.0.1rc2
 
 ### New Features
