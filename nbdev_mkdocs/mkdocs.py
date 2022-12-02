@@ -705,7 +705,8 @@ def _copy_docs_overrides(root_path: str):
         )
         raise typer.Exit(code=1)
 
-    shutil.copytree(src_path, dst_path, dirs_exist_ok=True)
+    shutil.rmtree(dst_path, ignore_errors=True)
+    shutil.copytree(src_path, dst_path)
 
 # %% ../nbs/Mkdocs.ipynb 71
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
