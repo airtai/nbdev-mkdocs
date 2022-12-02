@@ -11,9 +11,11 @@ Version](https://img.shields.io/pypi/pyversions/nbdev-mkdocs.png)
 
 ------------------------------------------------------------------------
 
-**Material for nbdev** is a nbdev extension that allows you to use
-[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) to
-generate documentation for nbdev projects.
+**Material for nbdev** is a
+<a href="https://nbdev.fast.ai/" target="_blank">nbdev</a> extension
+that allows you to use
+<a href="https://squidfunk.github.io/mkdocs-material/" target="_blank">Material
+for MkDocs</a> to generate documentation for nbdev projects.
 
 ## Workflow
 
@@ -145,9 +147,10 @@ configuring nbdev-mkdocs for an existing nbdev project. It also assumes
 you’ve already initialized your project with nbdev and installed all of
 the required libraries.
 
-For detailed installation instructions, configuration options, and an
-End-To-End Walkthrough, please see the
-[documentation](https://nbdev-mkdocs.airt.ai/guides/Guide_01_End_To_End_Walkthrough/).
+For detailed installation instructions and configuration options, please
+see the
+<a href="https://nbdev-mkdocs.airt.ai/guides/Guide_01_End_To_End_Walkthrough/">End-To-End
+Walkthrough</a>.
 
 ### Install
 
