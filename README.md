@@ -5,9 +5,12 @@ Getting Started
 
 ![GitHub Workflow
 Status](https://img.shields.io/github/workflow/status/airtai/nbdev-mkdocs/CI?logo=GitHub.png)
+[![Downloads](https://pepy.tech/badge/nbdev-mkdocs.png)](https://pepy.tech/project/nbdev-mkdocs)
 ![PyPI - Python
 Version](https://img.shields.io/pypi/pyversions/nbdev-mkdocs.png)
-![PyPI](https://img.shields.io/pypi/v/nbdev-mkdocs.png)
+![PyPI](https://img.shields.io/pypi/v/nbdev-mkdocs.png) [![Twitter
+URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fnbdev-mkdocs.airt.ai)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fnbdev-mkdocs.airt.ai)
+![GitHub](https://img.shields.io/github/license/airtai/nbdev-mkdocs.png)
 
 ------------------------------------------------------------------------
 

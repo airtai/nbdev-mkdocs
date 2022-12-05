@@ -8,4 +8,4 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: airtai/workflows/nbdev-mkdocs-ghp@main
+      - uses: airtai/workflows/nbdev-mkdocs-ghp@fix-deploy-action
