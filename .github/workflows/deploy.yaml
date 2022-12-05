@@ -1,9 +1,9 @@
 name: Deploy nbdev-mkdocs generated documentation to GitHub Pages
 
 on:
- push:
-   branches: [ "main", "master" ]
- workflow_dispatch:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest
