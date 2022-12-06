@@ -6,7 +6,7 @@ env:
 
 on:
   push:
-    branches: ["main", "dev", "nbdev-mkdocs-dev-image"]
+    branches: ["main", "dev"]
 
 jobs:
   docker_build_deploy:
@@ -36,5 +36,5 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Push only if branch name is main or dev
-      if: github.ref_name == 'main' || github.ref_name == 'dev' || github.ref_name == 'nbdev-mkdocs-dev-image' 
+      if: github.ref_name == 'main' || github.ref_name == 'dev'
       run: docker push ghcr.io/$GITHUB_REPOSITORY --all-tags
