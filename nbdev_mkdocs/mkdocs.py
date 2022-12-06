@@ -298,7 +298,7 @@ def _update_gitignore_file(root_path: str):
 
 # %% ../nbs/Mkdocs.ipynb 32
 def _generate_default_social_image(root_path: str):
-    """Generating default social sharing image for the repo
+    """Generating default social sharing image for the project
 
     Args:
         root_path: Project's root path
@@ -313,6 +313,7 @@ def _generate_default_social_image(root_path: str):
 
         dst_path = Path(root_path) / "mkdocs" / "docs_overrides" / "images"
 
+        # nosemgrep: python.lang.security.audit.dynamic-urllib-use-detected.dynamic-urllib-use-detected
         urllib.request.urlretrieve(  # nosec: B310:Audit url open for permitted schemes
             img_url, (dst_path / "social-image.png")
         )
