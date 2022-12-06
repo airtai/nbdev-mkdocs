@@ -14,11 +14,14 @@ jobs:
     permissions:
       contents: read
       packages: write
+    defaults:
+      run:
+        working-directory: ./docker
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
     - name: Run build script
-      run: ./docker/build_docker.sh
+      run: ./build_docker.sh
     - name: Log in to the Container registry
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
