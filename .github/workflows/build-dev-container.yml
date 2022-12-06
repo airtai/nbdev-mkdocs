@@ -16,7 +16,7 @@ jobs:
       packages: write
     defaults:
       run:
-        working-directory: ./docker
+        working-directory: docker
     steps:
     - name: Setup trivy
       run: |
