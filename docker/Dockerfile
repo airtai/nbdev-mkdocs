@@ -1,5 +1,9 @@
 FROM ubuntu:latest
+LABEL org.opencontainers.image.source https://github.com/airtai/nbdev-mkdocs
+
 RUN apt update
+
+
 
 # Add software-properties-common for add-apt-repository
 RUN apt install -y software-properties-common
