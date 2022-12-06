@@ -91,3 +91,6 @@ extra_css:
 
 extra_javascript:
   - overrides/js/extra.js
+  
+extra:
+  social_image: overrides/images/social-image.png

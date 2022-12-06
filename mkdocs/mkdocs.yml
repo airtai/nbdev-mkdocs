@@ -87,6 +87,7 @@ theme:
 #         <type>: <icon> 
   favicon: overrides/images/compass-outline.png
 
+
 extra_css:
   - overrides/css/extra.css
 
@@ -97,3 +98,4 @@ extra:
   analytics:
     provider: google
     property: G-0DTVVPJ60K
+  social_image: overrides/images/social-image.png

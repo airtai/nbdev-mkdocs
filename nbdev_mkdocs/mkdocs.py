@@ -21,6 +21,8 @@ import subprocess  # nosec: B404
 import shlex
 import sys
 import multiprocessing
+import datetime
+import urllib.request
 
 import typer
 from typer.testing import CliRunner
@@ -294,7 +296,28 @@ def _update_gitignore_file(root_path: str):
     with open(gitignore_path, "a") as f:
         f.write(_new_paths_to_ignore)
 
-# %% ../nbs/Mkdocs.ipynb 33
+# %% ../nbs/Mkdocs.ipynb 32
+def _generate_default_social_image(root_path: str):
+    """Generating default social sharing image for the repo
+
+    Args:
+        root_path: Project's root path
+    """
+
+    with set_cwd(root_path):
+        repo = _get_value_from_config(root_path, "repo")
+        user = _get_value_from_config(root_path, "user")
+        timestamp = datetime.datetime.now().timestamp()
+
+        img_url = f"https://opengraph.githubassets.com/{timestamp}/{user}/{repo}"
+
+        dst_path = Path(root_path) / "mkdocs" / "docs_overrides" / "images"
+
+        urllib.request.urlretrieve(  # nosec: B310:Audit url open for permitted schemes
+            img_url, (dst_path / "social-image.png")
+        )
+
+# %% ../nbs/Mkdocs.ipynb 35
 def new(root_path: str):
     """Initialize mkdocs project files
 
@@ -311,6 +334,7 @@ def new(root_path: str):
     _create_summary_template(root_path)
     _replace_ghp_deploy_action(root_path)
     _update_gitignore_file(root_path)
+    _generate_default_social_image(root_path)
 
 
 @call_parse
@@ -323,7 +347,7 @@ def new_cli(root_path: str):
     """
     new(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 37
+# %% ../nbs/Mkdocs.ipynb 39
 def _get_nbs_for_markdown_conversion(cache: Path):
     """Get a list of notebooks that needs to be converted to markdown.
 
@@ -332,7 +356,7 @@ def _get_nbs_for_markdown_conversion(cache: Path):
     """
     return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
 
-# %% ../nbs/Mkdocs.ipynb 39
+# %% ../nbs/Mkdocs.ipynb 41
 def _sprun(cmd):
     try:
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
@@ -345,7 +369,7 @@ def _sprun(cmd):
             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
         )
 
-# %% ../nbs/Mkdocs.ipynb 40
+# %% ../nbs/Mkdocs.ipynb 42
 def _generate_markdown_from_nbs(root_path: str):
 
     doc_path = Path(root_path) / "mkdocs" / "docs"
@@ -371,7 +395,7 @@ def _generate_markdown_from_nbs(root_path: str):
             src_md = cache / "_docs" / f"{nb.stem}.md"
             shutil.move(src_md, dst_md)
 
-# %% ../nbs/Mkdocs.ipynb 42
+# %% ../nbs/Mkdocs.ipynb 44
 def _replace_all(text: str, dir_prefix: str) -> str:
     """Replace the images relative path in the markdown text
 
@@ -399,7 +423,7 @@ def _replace_all(text: str, dir_prefix: str) -> str:
 
     return text
 
-# %% ../nbs/Mkdocs.ipynb 44
+# %% ../nbs/Mkdocs.ipynb 46
 def _update_path_in_markdown(cache: Path, doc_path: Path):
     """Update guide images relative path in the markdown files
 
@@ -457,7 +481,7 @@ def _copy_guide_images_to_docs_dir(root_path: str):
 
         _update_path_in_markdown(cache, doc_path)
 
-# %% ../nbs/Mkdocs.ipynb 48
+# %% ../nbs/Mkdocs.ipynb 50
 def _get_title_from_notebook(nb_name: str) -> str:
     cache = proc_nbs()
     nb_path = Path(cache) / "guides" / f"{nb_name}.ipynb"
@@ -474,7 +498,7 @@ def _get_title_from_notebook(nb_name: str) -> str:
     nbp.process()
     return nbp.nb.frontmatter_["title"]
 
-# %% ../nbs/Mkdocs.ipynb 50
+# %% ../nbs/Mkdocs.ipynb 52
 def _generate_summary_for_guides(root_path: str) -> str:
     doc_path = Path(root_path) / "mkdocs" / "docs"
     mds = sorted(
@@ -492,7 +516,7 @@ def _generate_summary_for_guides(root_path: str) -> str:
     else:
         return ""
 
-# %% ../nbs/Mkdocs.ipynb 53
+# %% ../nbs/Mkdocs.ipynb 55
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -507,7 +531,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 55
+# %% ../nbs/Mkdocs.ipynb 57
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -537,7 +561,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 57
+# %% ../nbs/Mkdocs.ipynb 59
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -561,7 +585,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 59
+# %% ../nbs/Mkdocs.ipynb 61
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -616,7 +640,7 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 61
+# %% ../nbs/Mkdocs.ipynb 63
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
@@ -628,7 +652,7 @@ def _copy_change_log_if_exists(
         changelog = "- [Releases](CHANGELOG.md)"
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 64
+# %% ../nbs/Mkdocs.ipynb 66
 def build_summary(
     root_path: str,
     module: str,
@@ -672,7 +696,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 67
+# %% ../nbs/Mkdocs.ipynb 69
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -687,7 +711,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 69
+# %% ../nbs/Mkdocs.ipynb 71
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -708,7 +732,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 71
+# %% ../nbs/Mkdocs.ipynb 73
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -725,6 +749,7 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
 
         copy_cname_if_needed(root_path)
 
+        _generate_default_social_image(root_path)
         _copy_docs_overrides(root_path)
 
         lib_name = _get_value_from_config(root_path, "lib_name")
@@ -766,7 +791,7 @@ def prepare_cli(root_path: str):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 74
+# %% ../nbs/Mkdocs.ipynb 76
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
