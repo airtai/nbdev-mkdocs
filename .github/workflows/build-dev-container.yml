@@ -29,5 +29,5 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Push only if branch name is main or dev
-      if: github.ref_name == 'main' || github.ref_name == 'dev'
+      if: github.ref_name == 'main' || github.ref_name == 'dev' || github.ref_name == 'nbdev-mkdocs-dev-image' 
       run: docker push ghcr.io/$GITHUB_REPOSITORY --all-tags
