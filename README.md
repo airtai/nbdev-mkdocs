@@ -16,14 +16,6 @@ Review](https://github.com/airtai/nbdev-mkdocs/actions/workflows/dependency-revi
 
 ![GitHub](https://img.shields.io/github/license/airtai/nbdev-mkdocs.png)
 
-<div>
-
-[![](https://img.shields.io/twitter/url?url=https%3A%2F%2Fnbdev-mkdocs.airt.ai)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fnbdev-mkdocs.airt.ai)
-
-Twitter URL
-
-</div>
-
 ------------------------------------------------------------------------
 
 **Material for nbdev** is a
