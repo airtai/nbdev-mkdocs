@@ -18,6 +18,8 @@ jobs:
       run:
         working-directory: docker
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
     - name: Setup trivy
       run: |
         apt-get install wget apt-transport-https gnupg lsb-release
@@ -25,8 +27,6 @@ jobs:
         echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
         apt-get update
         apt-get install trivy
-    - name: Checkout repository
-      uses: actions/checkout@v3
     - name: Run build script
       run: ./build_docker.sh
     - name: Log in to the Container registry
