@@ -3,7 +3,17 @@ LABEL org.opencontainers.image.source https://github.com/airtai/nbdev-mkdocs
 
 RUN apt update
 
-
+# install security updates
+RUN apt update --fix-missing --yes
+RUN apt update -y && apt install --assume-yes unattended-upgrades
+# Enable unattended-upgrades
+RUN dpkg-reconfigure --priority=low unattended-upgrades
+# The above command will create a config file in /etc/apt/apt.conf.d/20auto-upgrades.
+# Printing the contents of the configuration file. 
+# If the configuration for Unattended-Upgrade is "1" then the unattended upgrade will run every 1 day. If the number is "0" then unattended upgrades are disabled.
+RUN cat /etc/apt/apt.conf.d/20auto-upgrades
+# The below command will check and run upgrade only once while building
+RUN unattended-upgrade --debug
 
 # Add software-properties-common for add-apt-repository
 RUN apt install -y software-properties-common
