@@ -92,3 +92,8 @@ extra_css:
 
 extra_javascript:
   - overrides/js/extra.js
+
+extra:
+  analytics:
+    provider: google
+    property: G-0DTVVPJ60K
