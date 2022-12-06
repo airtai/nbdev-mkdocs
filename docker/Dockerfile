@@ -5,7 +5,7 @@ RUN apt update
 
 # install security updates
 RUN apt update --fix-missing --yes
-RUN apt update -y && apt install --assume-yes unattended-upgrades git zip curl sudo wget \
+RUN apt update -y && apt install --assume-yes unattended-upgrades git zip curl sudo wget vim \
   software-properties-common \
   && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
