@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH=$(git branch --show-current)
-AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs:$BRANCH
+AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs:latest
 
 if test -z "$AIRT_JUPYTER_PORT"
 then
