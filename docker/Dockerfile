@@ -5,21 +5,20 @@ RUN apt update
 
 # install security updates
 RUN apt update --fix-missing --yes
-RUN apt update -y && apt install --assume-yes unattended-upgrades
+RUN apt update -y && apt install --assume-yes unattended-upgrades git zip curl sudo wget vim \
+  software-properties-common \
+  && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
+
 # Enable unattended-upgrades
 RUN dpkg-reconfigure --priority=low unattended-upgrades
 # The above command will create a config file in /etc/apt/apt.conf.d/20auto-upgrades.
 # Printing the contents of the configuration file. 
 # If the configuration for Unattended-Upgrade is "1" then the unattended upgrade will run every 1 day. If the number is "0" then unattended upgrades are disabled.
 RUN cat /etc/apt/apt.conf.d/20auto-upgrades
-# The below command will check and run upgrade only once while building
-RUN unattended-upgrade --debug
 
-# Add software-properties-common for add-apt-repository
-RUN apt install -y software-properties-common
-
-# Install git
-RUN apt install git -y
+# Install node and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs \
+    && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
 # Install and configure Python
 ## Install all necessary Python versions
@@ -38,26 +37,39 @@ RUN apt install -y pip
 COPY top_level_requirements.txt .
 RUN python3 -m pip install --no-cache-dir -r top_level_requirements.txt && rm top_level_requirements.txt
 
+RUN nbdev_install_quarto
+
 # Install and configure jupyter notebook
 RUN python3 -m pip install notebook
 RUN python3 -m pip install jupyter_contrib_nbextensions
-RUN mkdir /notebooks
-EXPOSE 8888
+
 ## Install and enable black python formatter for notebooks
 RUN jupyter nbextension install https://github.com/drillan/jupyter-black/archive/master.zip \
     && jupyter nbextension enable jupyter-black-master/jupyter-black
 ## Install jupyter theme with airt theme
 RUN python3 -m pip install --no-cache-dir git+https://github.com/airtai/jupyter-themes.git
+EXPOSE 8888
+
 ## Customize your jupyter notebook
 COPY airt-neg-trans-small.png /root
 COPY airt_favicons /root/airt_favicons
 RUN jt -t airtd -cellw 90% -N -T --logo /root/airt-neg-trans-small.png --fav_icon_dir /root/airt_favicons
 RUN rm -rf /root/airt-neg-trans-small.png /root/airt_favicons
+
 ## Set default shell and home for jupyter notebook
 ENV SHELL /usr/bin/bash
+
+# needed for non-root users
+# RUN mkdir -p /root/.local/bin && chmod 777 /root/.local/bin && chmod 777 /root/.local
+
+RUN mkdir /work
 ENV HOME /root
-WORKDIR /notebooks
+WORKDIR /work
 
 # Configure entrypoint and serve jupyter notebook
 ENTRYPOINT []
-CMD ["/usr/bin/bash", "-c", "jupyter notebook --notebook-dir=/notebooks --ip 0.0.0.0 --no-browser --allow-root"]
+CMD ["/usr/bin/bash", "-c", "jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
+
+# The below command will check and run upgrade only once while building
+RUN unattended-upgrade --debug
+
