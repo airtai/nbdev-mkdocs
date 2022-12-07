@@ -1,4 +1,3 @@
-run_docker.sh
 token
 
 .sast_bandit
@@ -7,6 +6,14 @@ token
 .local_install
 .local_reinstall
 .secret.baseline
+
+# nbs related
+nbs/.last_checked
+CHANGELOG.bak
+
+# Docs related
+mkdocs/docs/
+mkdocs/site/
 
 _publish.yml
 _quarto.yml

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AIRT_DOCKER=registry.gitlab.com/airt.ai/airt-docker-dask-tf2
+AIRT_DOCKER=ghcr.io/airtai/airt-docker-dask-tf2
 
 BRANCH=$(git branch --show-current)
 if [ "$BRANCH" == "main" ]

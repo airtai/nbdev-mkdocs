@@ -1,0 +1,12 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - CLI.ipynb
+      - CLI_Doc_Helper.ipynb
+      - Docstring.ipynb
+      - Mkdocs.ipynb
+      - PackageData.ipynb
+      - section: guides
+        contents:
+          - guides/Guide_01_End_To_End_Walkthrough.ipynb
