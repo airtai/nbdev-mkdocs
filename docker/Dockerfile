@@ -68,9 +68,9 @@ WORKDIR /work
 
 # Configure entrypoint and serve jupyter notebook
 ENTRYPOINT []
-#CMD ["/usr/bin/bash", "-c", "chown -R davor /home/davor && sudo -u davor jt -t airtd -cellw 90% -N -T  --logo /tmp/airt-neg-trans-small.png --fav_icon_dir /tmp/airt_favicons && sudo -u $USER jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
-#CMD ["/usr/bin/bash", "-c", "mkdir /home/$USER && chown $USER /home/$USER && sudo -u $USER jt -t airtd -cellw 90% -N -T  --logo /tmp/airt-neg-trans-small.png --fav_icon_dir /tmp/airt_favicons && sudo -u $USER jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
-CMD ["/usr/bin/bash", "-c", "chown -R $USER /home/$USER && sudo -u $USER jt -t airtd -cellw 90% -N -T  --logo /tmp/airt-neg-trans-small.png --fav_icon_dir /tmp/airt_favicons && sudo -u $USER jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
+COPY user_startup.sh /var
+RUN chmod 777 /var/user_startup.sh
+CMD ["/usr/bin/bash", "-c", "chown -R $USER /home/$USER && sudo -u $USER /var/user_startup.sh && sudo --preserve-env=\"$PRESERVE_ENVS\" -u $USER jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
 
 COPY set_bob_the_fish.sh /bin
 RUN chmod 755 /bin/set_bob_the_fish.sh
