@@ -15,14 +15,14 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os:  [ubuntu-latest, macos-11]
+        os:  [ubuntu, macos]
         version: ["3.7", "3.8", "3.9", "3.10"]
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
 
     steps: 
       - name: Install quarto
         run: |
-          if [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
+          if [ ${{ matrix.os }} == 'ubuntu' ]; then
             wget -q https://www.quarto.org/download/latest/quarto-linux-amd64.deb
             sudo dpkg -i quarto-linux-amd64.deb
           else
@@ -31,10 +31,6 @@ jobs:
           fi
       - name: Install playwright
         run: |
-          if [ ${{ matrix.os }} == 'macos-11' ]; then
-            sw_vers
-          fi
-          python3 --version
           pip3 install playwright==1.28.0
           playwright install
       - uses: fastai/workflows/nbdev-ci@master
