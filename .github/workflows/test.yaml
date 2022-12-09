@@ -31,6 +31,9 @@ jobs:
           fi
       - name: Install playwright
         run: |
+          if [ ${{ matrix.os }} == 'macos-11' ]; then
+            sw_vers
+          fi
           pip install playwright
           playwright install
       - uses: fastai/workflows/nbdev-ci@master
