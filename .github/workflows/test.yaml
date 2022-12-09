@@ -31,7 +31,7 @@ jobs:
           fi
       - name: Install chromium browser for playwright
         run: |
-          pip install "playwright>=1.28.0"
+          pip install playwright
           playwright install chrome
       - uses: fastai/workflows/nbdev-ci@master
         with:
