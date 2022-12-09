@@ -14,9 +14,7 @@ if [[ $CI_COMMIT_REF_NAME == "main" ]]; then TAG=latest ; else TAG=$CI_COMMIT_RE
 
 
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
-docker build -t $CI_REGISTRY_IMAGE:`date -u +%Y.%m.%d-%H.%M.%S` -t $CI_REGISTRY_IMAGE:$TAG .
-
-trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m -s CRITICAL,HIGH $CI_REGISTRY_IMAGE:$TAG
-# this one will fail if needed
-trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m --exit-code 1 --ignore-unfixed $CI_REGISTRY_IMAGE:$TAG
+docker build -t $CI_REGISTRY_IMAGE:`date -u +%Y.%m.%d-%H.%M.%S` -t $CI_REGISTRY_IMAGE:$TAG . \
+    && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m -s CRITICAL,HIGH $CI_REGISTRY_IMAGE:$TAG \
+    && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m --exit-code 1 --ignore-unfixed $CI_REGISTRY_IMAGE:$TAG
 

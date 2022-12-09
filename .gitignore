@@ -2,6 +2,7 @@ token
 
 .sast_bandit
 .sast_semgrep
+.semgrepignore
 .local_install
 .local_reinstall
 .secret.baseline

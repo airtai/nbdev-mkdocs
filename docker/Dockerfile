@@ -5,7 +5,7 @@ RUN apt update
 
 # install security updates
 RUN apt update --fix-missing --yes
-RUN apt update -y && apt install --assume-yes unattended-upgrades git zip curl sudo wget vim \
+RUN apt update -y && apt install --assume-yes unattended-upgrades git zip curl sudo wget vim fish \
   software-properties-common \
   && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
@@ -51,24 +51,29 @@ RUN python3 -m pip install --no-cache-dir git+https://github.com/airtai/jupyter-
 EXPOSE 8888
 
 ## Customize your jupyter notebook
-COPY airt-neg-trans-small.png /root
-COPY airt_favicons /root/airt_favicons
-RUN jt -t airtd -cellw 90% -N -T --logo /root/airt-neg-trans-small.png --fav_icon_dir /root/airt_favicons
-RUN rm -rf /root/airt-neg-trans-small.png /root/airt_favicons
+COPY airt-neg-trans-small.png /tmp
+RUN chmod 644 /tmp/airt-neg-trans-small.png
+COPY airt_favicons /tmp/airt_favicons
+RUN chmod -R 755 /tmp/airt_favicons
+# RUN jt -t airtd -cellw 90% -N -T --logo /root/airt-neg-trans-small.png --fav_icon_dir /root/airt_favicons
+# RUN rm -rf /root/airt-neg-trans-small.png /root/airt_favicons
 
 ## Set default shell and home for jupyter notebook
 ENV SHELL /usr/bin/bash
 
-# needed for non-root users
-# RUN mkdir -p /root/.local/bin && chmod 777 /root/.local/bin && chmod 777 /root/.local
-
-RUN mkdir /work
-ENV HOME /root
+#RUN mkdir /work && mkdir /work/.config && chmod 777 /work && chmod 777 /work/.config
+RUN mkdir /work && chmod 777 /work
+# ENV HOME /work
 WORKDIR /work
 
 # Configure entrypoint and serve jupyter notebook
 ENTRYPOINT []
-CMD ["/usr/bin/bash", "-c", "jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
+COPY user_startup.sh /var
+RUN chmod 777 /var/user_startup.sh
+CMD ["/usr/bin/bash", "-c", "chown -R $USER /home/$USER && sudo -u $USER /var/user_startup.sh && sudo --preserve-env=\"$PRESERVE_ENVS\" -u $USER jupyter notebook --notebook-dir=/work --ip 0.0.0.0 --no-browser --allow-root"]
+
+COPY set_bob_the_fish.sh /bin
+RUN chmod 755 /bin/set_bob_the_fish.sh
 
 # The below command will check and run upgrade only once while building
 RUN unattended-upgrade --debug
