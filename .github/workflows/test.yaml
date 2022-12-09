@@ -31,6 +31,9 @@ jobs:
           fi
       - name: Install playwright
         run: |
+          if [ ${{ matrix.os }} == 'macos' ]; then
+            sw_vers
+          fi
           python3 --version
           python -m pip install --upgrade pip
           pip install playwright
