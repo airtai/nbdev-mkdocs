@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os:  [ubuntu, macos]
+        os:  [ubuntu]
         version: ["3.7", "3.8", "3.9", "3.10"]
     runs-on: ${{ matrix.os }}-latest
 
@@ -29,9 +29,9 @@ jobs:
             wget -q https://www.quarto.org/download/latest/quarto-macos.pkg
             sudo installer -pkg quarto-macos.pkg -target /
           fi
-      - name: Install chromium browser for playwright
+      - name: Install playwright
         run: |
-          pip install pytest-playwright
+          pip install playwright
           playwright install
       - uses: fastai/workflows/nbdev-ci@master
         with:
