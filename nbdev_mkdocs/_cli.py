@@ -77,7 +77,7 @@ def docs(root_path: str = typer.Option(".", help="Project's root path.")):
 )
 def generate_social_image(
     root_path: str = typer.Option(".", help="Project's root path."),
-    generator: nbdev_mkdocs.social_image_generator.IMG_Generator = typer.Option(
+    generator: nbdev_mkdocs.social_image_generator._IMG_Generator = typer.Option(
         "file",
         help="Generator to use to create the social image. Valid options are: 'file' and 'dall_e'. Choose 'file' if you want to use an existing image from your local machine in the social share image.",
     ),
