@@ -31,6 +31,7 @@ jobs:
           fi
       - name: Install playwright
         run: |
+          python3 --version
           python -m pip install --upgrade pip
           pip install playwright
           playwright install
