@@ -306,7 +306,7 @@ def new(root_path: str):
 
 
 @call_parse
-def new_cli(root_path: str):
+def new_cli(root_path: str = "."):
     """Initialize mkdocs project files
 
     Creates **mkdocs** directory in the **root_path** directory and populates
@@ -730,7 +730,7 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
 
 
 @call_parse
-def nbdev_mkdocs_docs_cli(root_path: str):
+def nbdev_mkdocs_docs_cli(root_path: str = "."):
     """Prepares mkdocs documentation"""
     nbdev_mkdocs_docs(root_path, refresh_quarto_settings=True)
 
@@ -755,7 +755,7 @@ def prepare(root_path: str, no_test: bool = False):
 
 
 @call_parse
-def prepare_cli(root_path: str):
+def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
@@ -794,6 +794,6 @@ def preview(root_path: str, port: Optional[int] = None):
 
 
 @call_parse
-def preview_cli(root_path: str, port: Optional[int] = None):
+def preview_cli(root_path: str = ".", port: Optional[int] = None):
     """Previes mkdocs documentation"""
     preview(root_path, port)
