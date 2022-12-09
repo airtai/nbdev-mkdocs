@@ -60,13 +60,16 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
         image_url = Path(image_url).name if is_local_path(image_url) else image_url
 
         d = dict(
-            author_name=author_name,
-            project_name=project_name,
-            project_description=project_description,
-            image_url=image_url,
+            fill_in_author_name=author_name,
+            fill_in_project_name=project_name,
+            fill_in_project_description=project_description,
+            fill_in_image_url=image_url,
         )
 
-        return _html_template.format(**d)
+        for k, v in d.items():
+            _html_template = _html_template.replace(k, v)
+
+        return _html_template
 
 # %% ../nbs/Social_Image_Generator.ipynb 8
 async def _capture_and_save_screenshot(src_path: str, dst_path: str):
@@ -89,7 +92,7 @@ async def _capture_and_save_screenshot(src_path: str, dst_path: str):
         output_path = (
             Path(dst_path) / "mkdocs" / "docs_overrides" / "images" / "social_image.png"
         )
-        await page.screenshot(path=str(output_path.resolve()))
+        await page.locator("#container").screenshot(path=str(output_path.resolve()))
 
         typer.echo(f"Social share image generated and saved at: '{output_path}'")
 
