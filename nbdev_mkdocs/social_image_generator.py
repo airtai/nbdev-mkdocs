@@ -8,7 +8,8 @@ from typing import *
 from pathlib import Path
 import re
 import asyncio
-import os
+import shutil
+from tempfile import TemporaryDirectory
 
 import openai
 import typer
@@ -16,8 +17,9 @@ from playwright.async_api import async_playwright
 from ruamel.yaml import YAML
 
 from ._helpers.utils import set_cwd, get_value_from_config
+from ._package_data import get_root_data_path
 
-# %% ../nbs/Social_Image_Generator.ipynb 3
+# %% ../nbs/Social_Image_Generator.ipynb 2
 def _generate_ai_image(prompt: str, n: int = 1, size: str = "512x512") -> str:
     """Generate an image for social card using the OpenAI Image API.
 
@@ -29,28 +31,21 @@ def _generate_ai_image(prompt: str, n: int = 1, size: str = "512x512") -> str:
     Returns:
         The URL of the generated image.
     """
-    response = openai.Image.create(prompt=prompt, n=n, size=size)
-    image_url = response["data"][0]["url"]
+    try:
+        response = openai.Image.create(prompt=prompt, n=n, size=size)
+        image_url = response["data"][0]["url"]
+
+    except Exception as e:
+        typer.echo(f"Request to OpenAI failed: {e}")
+        typer.echo("Using the default social image.")
+
+        image_url = "default_social_logo.png"
+
     return image_url
 
-# %% ../nbs/Social_Image_Generator.ipynb 5
-_html_template = """<!DOCTYPE html>
-<html><head>
-</head>
-<body style="margin: 0px;">
-<div style="width: 512px;float:left;height: 512px;">
-    <h1 style="padding-top: 30px;padding-left: 40px;font-size: 55px;">{author_name}/{project_name}</h1>
-    <p style="margin-top: 100px;padding-left: 40px;font-size: 30px;">{project_description}</p>
-</div>
-<div style="width: 512px;float:left;height: 512px;">
-    <img src="{image_url}">
-</div>
-</body></html>
-"""
-
-
-def _generate_html(root_path: str, image_url: str):
-    """Generate html for social card
+# %% ../nbs/Social_Image_Generator.ipynb 4
+def _generate_html_str(root_path: str, image_url: str) -> str:
+    """Generate html string for the social card
 
     Args:
         root_path: The root path of the project.
@@ -58,6 +53,13 @@ def _generate_html(root_path: str, image_url: str):
     """
 
     with set_cwd(root_path):
+
+        _custom_social_image_template_path = (
+            get_root_data_path() / "custom-social-image-template.html"
+        )
+
+        with open(_custom_social_image_template_path, "r") as f:
+            _html_template = f.read()
 
         author_name = get_value_from_config(root_path, "author")
         project_name = get_value_from_config(root_path, "repo")
@@ -70,42 +72,59 @@ def _generate_html(root_path: str, image_url: str):
             image_url=image_url,
         )
 
-        html_path = Path(root_path) / "mkdocs" / "social_image.html"
-        with open(html_path, "w") as f:
-            f.write(_html_template.format(**d))
+        return _html_template.format(**d)
 
-# %% ../nbs/Social_Image_Generator.ipynb 7
-async def _generate_png_from_html(root_path: str):
-    """Generate PNG image from an HTML file
+# %% ../nbs/Social_Image_Generator.ipynb 6
+async def _capture_and_save_screenshot(src_path: str, dst_path: str):
+    """Capture screenshot of an HTML file from source directory and save the
+    output in destination directory
+
+    Args:
+        src_path: The source path of the HTML file that will be used to generate the PNG image.
+        dst_path: The destination path where the generated screenshot image will be saved.
+    """
+    playwright = await async_playwright().start()
+    browser = await playwright.chromium.launch()
+    page = await browser.new_page()
+
+    html_path = Path(src_path) / "social_image.html"
+    await page.goto(f"file://{str(html_path.resolve())}")
+
+    png_path = (
+        Path(dst_path) / "mkdocs" / "docs_overrides" / "images" / "social_image.png"
+    )
+    await page.screenshot(path=str(png_path.resolve()))
+    await browser.close()
+
+# %% ../nbs/Social_Image_Generator.ipynb 8
+async def _create_social_image(root_path: str, image_url: str):
+    """Create social image for the project
 
     Args:
         root_path: The root path of the project.
+        image_url: The image URL to be included in the social image.
     """
+    html_str = _generate_html_str(root_path, image_url)
 
-    with set_cwd(root_path):
+    with TemporaryDirectory() as d:
 
-        html_path = Path(root_path) / "mkdocs" / "social_image.html"
-        if not html_path.exists():
-            typer.secho(
-                f"Unexpected error: path {html_path.resolve()} does not exists!",
-                err=True,
-                fg=typer.colors.RED,
+        html_path = Path(d) / "social_image.html"
+        with open(html_path, "w") as f:
+            f.write(html_str)
+
+        if image_url == "default_social_logo.png":
+            shutil.copyfile(
+                Path(root_path)
+                / "mkdocs"
+                / "docs_overrides"
+                / "images"
+                / "default_social_logo.png",
+                Path(d) / "default_social_logo.png",
             )
-            raise typer.Exit(code=1)
 
-        playwright = await async_playwright().start()
-        browser = await playwright.chromium.launch()
-        page = await browser.new_page()
+        await _capture_and_save_screenshot(d, root_path)
 
-        await page.goto(f"file://{str(html_path.resolve())}")
-
-        png_path = Path(root_path) / "mkdocs" / "docs_overrides" / "images"
-        await page.screenshot(path=f"{str(png_path)}/social_image.png")
-        await browser.close()
-
-        html_path.unlink()
-
-# %% ../nbs/Social_Image_Generator.ipynb 9
+# %% ../nbs/Social_Image_Generator.ipynb 10
 def _update_social_image_in_mkdocs_yml(root_path: str, image_url: Optional[str] = None):
     """Update social image link in mkdocs yml file
 
@@ -139,7 +158,7 @@ def _update_social_image_in_mkdocs_yml(root_path: str, image_url: Optional[str] 
     config["extra"]["social_image"] = image_url
     yaml.dump(config, mkdocs_yml_path)
 
-# %% ../nbs/Social_Image_Generator.ipynb 11
+# %% ../nbs/Social_Image_Generator.ipynb 12
 def _update_social_image_in_site_overrides(root_path: str):
     """Update social image link in site_overrides HTML template
 
@@ -169,7 +188,7 @@ def _update_social_image_in_site_overrides(root_path: str):
         with open(site_overrides_path, "w") as f:
             f.write(_new_text)
 
-# %% ../nbs/Social_Image_Generator.ipynb 13
+# %% ../nbs/Social_Image_Generator.ipynb 14
 async def generate_custom_social_image(root_path: str, prompt: str):
     """Generate a custom image for social card using the OpenAI Image API.
 
@@ -178,14 +197,9 @@ async def generate_custom_social_image(root_path: str, prompt: str):
         prompt: The prompt to use for generating the image.
     """
 
-    #     image_url = _generate_ai_image(prompt=prompt)
-    image_url = (
-        "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly-icon.jpg"
-    )
+    image_url = _generate_ai_image(prompt=prompt)
 
-    _generate_html(root_path, image_url)
-
-    await _generate_png_from_html(root_path)
+    await _create_social_image(root_path, image_url)
 
     _update_social_image_in_mkdocs_yml(root_path)
 

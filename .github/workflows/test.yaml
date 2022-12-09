@@ -29,6 +29,10 @@ jobs:
             wget -q https://www.quarto.org/download/latest/quarto-macos.pkg
             sudo installer -pkg quarto-macos.pkg -target /
           fi
+      - name: Install chromium browser for playwright
+        run: |
+          pip install "playwright>=1.28.0"
+          playwright install chrome
       - uses: fastai/workflows/nbdev-ci@master
         with:
           version: ${{ matrix.version }}
@@ -44,4 +48,5 @@ jobs:
             ls -la mkdocs/site/
             exit 1
           fi
+
 
