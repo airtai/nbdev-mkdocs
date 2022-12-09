@@ -35,7 +35,7 @@ jobs:
             sw_vers
           fi
           python3 --version
-          pip install playwright==1.28.0
+          pip3 install playwright==1.28.0
           playwright install
       - uses: fastai/workflows/nbdev-ci@master
         with:
