@@ -31,8 +31,8 @@ jobs:
           fi
       - name: Install playwright
         run: |
-          pip3 install playwright==1.28.0
-          playwright install
+          pip3 install playwright
+          playwright install chromium
       - uses: fastai/workflows/nbdev-ci@master
         with:
           version: ${{ matrix.version }}
