@@ -1,4 +1,6 @@
-nbdev==2.3.9
-twine==4.0.1
-black==22.10.0
-nbdev-mkdocs==0.0.1
+nbdev>=2.3.9
+twine>=4.0.1
+black>=22.10.0
+nbdev-mkdocs>=0.0.1
+notebook
+jupyter_contrib_nbextensions
