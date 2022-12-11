@@ -4,7 +4,7 @@ env:
   REGISTRY: ghcr.io
   GITHUB_REPOSITORY: airtai/nbdev-mkdocs
   IMAGE: $REGISTRY/$GITHUB_REPOSITORY
-  IMAGE-CUDA: $IMAGE-cuda-11.2.1
+  IMAGE_CUDA: $IMAGE-cuda-11.2.1
 
 on:
   push:
@@ -41,8 +41,8 @@ jobs:
       if: github.ref_name == 'main' || github.ref_name == 'dev'
       run: |
         docker images
-        echo docker push ${{ env.IMAGE }} --all-tags
-        docker push ${{ env.IMAGE }} --all-tags
-        echo docker push ${{ env.IMAGE-CUDA }} --all-tags
-        docker push ${{ env.IMAGE-CUDA }} --all-tags
+        echo docker push $IMAGE --all-tags
+        docker push $IMAGE --all-tags
+        echo docker push $IMAGE_CUDA --all-tags
+        docker push $IMAGE_CUDA --all-tags
         
