@@ -86,11 +86,14 @@ theme:
 #     admonition:
 #         <type>: <icon> 
   favicon: overrides/images/compass-outline.png
+  
 extra_css:
   - overrides/css/extra.css
 
 extra_javascript:
   - overrides/js/extra.js
-  
+  - overrides/js/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js  
 extra:
   social_image: ""

@@ -8,7 +8,7 @@ env:
 
 on:
   push:
-    branches: ["main", "dev", "add-cuda-docker-image"]
+    branches: ["main", "dev"]
 
 jobs:
   docker_build_deploy:
