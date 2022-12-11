@@ -3,6 +3,8 @@ name: Build, scan and push minimal development environment container
 env:
   REGISTRY: ghcr.io
   GITHUB_REPOSITORY: airtai/nbdev-mkdocs
+  IMAGE: $REGISTRY/$GITHUB_REPOSITORY
+  IMAGE-CUDA: $IMAGE-cuda-11.2.1
 
 on:
   push:
@@ -37,4 +39,8 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Push only if branch name is main or dev
       if: github.ref_name == 'main' || github.ref_name == 'dev'
-      run: docker push ghcr.io/$GITHUB_REPOSITORY --all-tags
+      run: |
+        docker images
+        docker push $IMAGE --all-tags
+        docker push $IMAGE-CUDA --all-tags
+        
