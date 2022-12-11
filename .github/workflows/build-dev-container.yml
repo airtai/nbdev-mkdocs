@@ -4,11 +4,11 @@ env:
   REGISTRY: ghcr.io
   GITHUB_REPOSITORY: airtai/nbdev-mkdocs
   IMAGE: ghcr.io/airtai/nbdev-mkdocs
-  IMAGE_CUDA: ghcr.io/airtai/nbdev-mkdocs-cuda-11.2.1
+  IMAGE_TF: ghcr.io/airtai/nbdev-mkdocs-tensorflow-2.11
 
 on:
   push:
-    branches: ["main", "dev", "add-cuda-docker-image"]
+    branches: ["main", "dev", "add-tensorflow-image"]
 
 jobs:
   docker_build_deploy:
@@ -44,7 +44,7 @@ jobs:
         echo docker push $IMAGE --all-tags
         docker push $IMAGE --all-tags
         
-  docker_build_deploy_cuda:
+  docker_build_deploy_tensorflow:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -74,6 +74,6 @@ jobs:
       if: github.ref_name == 'main' || github.ref_name == 'dev'
       run: |
         docker images
-        echo docker push $IMAGE_CUDA --all-tags
-        docker push $IMAGE_CUDA --all-tags
+        echo docker push $IMAGE_TF --all-tags
+        docker push $IMAGE_TF --all-tags
         
