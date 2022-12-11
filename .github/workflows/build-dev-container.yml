@@ -41,6 +41,8 @@ jobs:
       if: github.ref_name == 'main' || github.ref_name == 'dev'
       run: |
         docker images
-        docker push $IMAGE --all-tags
-        docker push $IMAGE-CUDA --all-tags
+        echo docker push ${{ IMAGE }} --all-tags
+        docker push ${{ IMAGE }} --all-tags
+        echo docker push ${{ IMAGE-CUDA }} --all-tags
+        docker push ${{ IMAGE-CUDA }} --all-tags
         
