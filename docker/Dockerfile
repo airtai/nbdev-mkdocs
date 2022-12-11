@@ -19,13 +19,13 @@ RUN apt update -y && DEBIAN_FRONTEND=noninteractive apt install --assume-yes \
   software-properties-common \
   && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt list --installed | grep nv
+# RUN apt list --installed | grep nv
 
 RUN echo continuing...
 
 RUN apt update -y && apt upgrade -y
 
-RUN apt list --installed | grep nv
+# RUN apt list --installed | grep nv
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt update -y && DEBIAN_FRONTEND=noninteractive apt install --assume-yes \
@@ -54,7 +54,7 @@ RUN update-alternatives --set python3 /usr/bin/python${PYTHON}
 RUN python3 -V
 RUN python3 -m pip install --upgrade pip
 
-RUN apt list --installed | grep nv
+# RUN apt list --installed | grep nv
 
 COPY top_level_requirements.txt .
 RUN python3 -m pip install --no-cache-dir -r top_level_requirements.txt && rm top_level_requirements.txt
