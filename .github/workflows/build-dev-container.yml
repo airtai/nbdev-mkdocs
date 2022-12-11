@@ -63,7 +63,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install trivy
     - name: Run build script
-      run: ./build_docker_cuda.sh
+      run: ./build_docker_tensorflow.sh
     - name: Log in to the Container registry
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
