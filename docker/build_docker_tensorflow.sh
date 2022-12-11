@@ -12,8 +12,10 @@ fi
 
 if [[ $CI_COMMIT_REF_NAME == "main" ]]; then TAG=latest ; else TAG=$CI_COMMIT_REF_NAME ; fi;
 
-export CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE-cuda-11.2.1
-export BASE=nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu20.04
+export TF_VERSION=2.11.0
+
+export CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE-tensorflow-$TF_VERSION
+export BASE=tensorflow/tensorflow:$TF_VERSION-gpu
 export PYTHON=3.9
 
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
