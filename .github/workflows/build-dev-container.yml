@@ -4,7 +4,7 @@ env:
   REGISTRY: ghcr.io
   GITHUB_REPOSITORY: airtai/nbdev-mkdocs
   IMAGE: ghcr.io/airtai/nbdev-mkdocs
-  IMAGE_TF: ghcr.io/airtai/nbdev-mkdocs-tensorflow-2.11
+  IMAGE_TF: ghcr.io/airtai/nbdev-mkdocs-tensorflow-2.11.0
 
 on:
   push:
