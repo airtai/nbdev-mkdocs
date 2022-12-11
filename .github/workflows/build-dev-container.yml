@@ -3,8 +3,8 @@ name: Build, scan and push minimal development environment container
 env:
   REGISTRY: ghcr.io
   GITHUB_REPOSITORY: airtai/nbdev-mkdocs
-  IMAGE: $REGISTRY/$GITHUB_REPOSITORY
-  IMAGE_CUDA: $IMAGE-cuda-11.2.1
+  IMAGE: ghcr.io/airtai/nbdev-mkdocs
+  IMAGE_CUDA: ghcr.io/airtai/nbdev-mkdocs-cuda-11.2.1
 
 on:
   push:
