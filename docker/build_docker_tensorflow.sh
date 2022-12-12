@@ -20,6 +20,7 @@ export BASE=tensorflow/tensorflow:$TF_VERSION-gpu-jupyter
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
 docker build --build-arg BASE=$BASE \
     -t $CI_REGISTRY_IMAGE:`date -u +%Y.%m.%d-%H.%M.%S` -t $CI_REGISTRY_IMAGE:$TAG . \
+    -f Dockerfile_tensorflow \
     && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m -s CRITICAL,HIGH $CI_REGISTRY_IMAGE:$TAG \
     && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m --exit-code 1 --ignore-unfixed $CI_REGISTRY_IMAGE:$TAG
 
