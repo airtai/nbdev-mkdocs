@@ -62,7 +62,7 @@ RUN python3 -m pip install --no-cache-dir -r top_level_requirements.txt && rm to
 
 # Install node and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs \
-    && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
+    && apt purge -y --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
 RUN nbdev_install_quarto
 

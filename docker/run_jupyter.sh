@@ -5,7 +5,7 @@ then
 	nvidia-smi -L
     export GPU_PARAMS="--gpus all"
 	echo INFO: Running docker image with: $GPU_PARAMS
-    AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs-cuda-11.2.1:latest
+    AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs-tensorflow-2.11.0:latest
 else
 	echo INFO: Running docker image without GPU-s
 	export GPU_PARAMS=""
