@@ -303,6 +303,7 @@ def new(root_path: str):
     _create_summary_template(root_path)
     _replace_ghp_deploy_action(root_path)
     _update_gitignore_file(root_path)
+    _generate_default_social_image_link(root_path)
 
 
 @call_parse

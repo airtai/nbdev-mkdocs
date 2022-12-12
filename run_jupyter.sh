@@ -1,7 +1,18 @@
 #!/bin/bash
 
+if `which nvidia-smi`
+then
+	nvidia-smi -L
+    export GPU_PARAMS="--gpus all"
+	echo INFO: Running docker image with: $GPU_PARAMS
+    AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs-tensorflow-2.11.0:latest
+else
+	echo INFO: Running docker image without GPU-s
+	export GPU_PARAMS=""
+    AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs:latest
+fi
+
 BRANCH=$(git branch --show-current)
-AIRT_DOCKER=ghcr.io/airtai/nbdev-mkdocs:latest
 
 if test -z "$AIRT_JUPYTER_PORT"
 then
@@ -45,24 +56,14 @@ echo AIRT_PROJECT variable set to $AIRT_PROJECT
 echo Using $AIRT_DOCKER
 docker image ls $AIRT_DOCKER
 
-if `which nvidia-smi`
-then
-	echo INFO: Running docker image with: $AIRT_GPU_PARAMS
-	nvidia-smi -L
-	export GPU_PARAMS=$AIRT_GPU_PARAMS
-else
-	echo INFO: Running docker image without GPU-s
-	export GPU_PARAMS=""
-fi
-
-docker run --rm \
+docker run -it --rm $GPU_PARAMS \
     -e JUPYTER_CONFIG_DIR=/root/.jupyter \
     -p $AIRT_JUPYTER_PORT:8888 -p $AIRT_TB_PORT:6006 -p $AIRT_DASK_PORT:8787 -p $AIRT_DOCS_PORT:4000 \
-    -v $AIRT_PROJECT:/work/nbdev_mkdocs \
+    -v $AIRT_PROJECT:$AIRT_PROJECT --workdir=$AIRT_PROJECT \
     -v /etc/passwd:/etc/passwd -v /etc/group:/etc/group -v /etc/shadow:/etc/shadow \
     -v $HOME/.ssh:$HOME/.ssh -v $HOME/.gitconfig:$HOME/.gitconfig  \
     -e USER=$USER -e USERNAME=$USERNAME \
     -e GITHUB_TOKEN=$GITHUB_TOKEN \
     $AIRT_DOCKER
 
-#    -v /etc/passwd:/etc/passwd -v /etc/group:/etc/group -v /etc/shadow:/etc/shadow \
+#    -v $AIRT_PROJECT:/work/`basename $AIRT_PROJECT` --workdir=/work/`basename $AIRT_PROJECT`   \

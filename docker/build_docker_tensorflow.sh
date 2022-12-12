@@ -12,8 +12,11 @@ fi
 
 if [[ $CI_COMMIT_REF_NAME == "main" ]]; then TAG=latest ; else TAG=$CI_COMMIT_REF_NAME ; fi;
 
-export BASE=ubuntu:latest
-export PYTHON=3.10
+export TF_VERSION=2.11.0
+
+export CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE-tensorflow-$TF_VERSION
+export BASE=tensorflow/tensorflow:$TF_VERSION-gpu
+export PYTHON=3.9
 
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
 docker build --build-arg BASE=$BASE --build-arg PYTHON=$PYTHON \
