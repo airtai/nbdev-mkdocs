@@ -100,4 +100,4 @@ extra:
   analytics:
     provider: google
     property: G-0DTVVPJ60K
-  social_image: https://opengraph.githubassets.com/1670780981.299176/airtai/nbdev-mkdocs
+  social_image: overrides/images/social_image.png
