@@ -18,7 +18,12 @@ import typer
 from playwright.async_api import async_playwright
 from ruamel.yaml import YAML
 
-from ._helpers.utils import set_cwd, get_value_from_config, is_local_path
+from nbdev_mkdocs._helpers.utils import (
+    set_cwd,
+    get_value_from_config,
+    is_local_path,
+    add_counter_suffix_to_filename,
+)
 from ._package_data import get_root_data_path
 
 # %% ../nbs/Social_Image_Generator.ipynb 3
@@ -44,7 +49,7 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
         image_url: The image URL to be included in the HTML.
     """
 
-    with set_cwd(root_path):
+    with set_cwd(cwd_path=root_path, clear_nbdev_cache=False):
 
         _custom_social_image_template_path = (
             get_root_data_path() / "custom-social-image-template.html"
@@ -53,14 +58,14 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
         with open(_custom_social_image_template_path, "r") as f:
             _html_template = f.read()
 
-        author_name = get_value_from_config(root_path, "author")
+        user_name = get_value_from_config(root_path, "user")
         project_name = get_value_from_config(root_path, "repo")
         project_description = get_value_from_config(root_path, "description")
 
         image_url = Path(image_url).name if is_local_path(image_url) else image_url
 
         d = dict(
-            fill_in_author_name=author_name,
+            fill_in_user_name=user_name,
             fill_in_project_name=project_name,
             fill_in_project_description=project_description,
             fill_in_image_url=image_url,
@@ -92,6 +97,10 @@ async def _capture_and_save_screenshot(src_path: str, dst_path: str):
         output_path = (
             Path(dst_path) / "mkdocs" / "docs_overrides" / "images" / "social_image.png"
         )
+
+        if output_path.exists():
+            add_counter_suffix_to_filename(output_path)
+
         await page.locator("#container").screenshot(path=str(output_path.resolve()))
 
         typer.echo(f"Social share image generated and saved at: '{output_path}'")
@@ -154,7 +163,7 @@ def _update_social_image_in_site_overrides(root_path: str, image_url: str):
         else "config.extra.social_image "
     )
 
-    with set_cwd(root_path):
+    with set_cwd(cwd_path=root_path, clear_nbdev_cache=False):
         site_overrides_path = (
             Path(root_path) / "mkdocs" / "site_overrides" / "main.html"
         )
@@ -204,7 +213,7 @@ def _generate_image_url(
         image_url = _generate_ai_image(prompt=prompt)
 
     else:
-        with set_cwd(root_path):
+        with set_cwd(cwd_path=root_path, clear_nbdev_cache=False):
             if image_path is not None:
                 _image_path = Path(
                     os.path.normpath(Path(root_path).joinpath(image_path))
