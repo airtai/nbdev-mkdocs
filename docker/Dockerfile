@@ -9,7 +9,8 @@ LABEL org.opencontainers.image.source https://github.com/airtai/nbdev-mkdocs
 RUN apt update
 
 RUN if dpkg -l cuda-compat-11-2; then \
-    apt-mark hold cuda-compat-11-2 cuda-cudart-11-2 cuda-nvtx-11-2 libcusparse-11-2 libnpp-11-2; \
+      apt-mark hold cuda-compat-11-2 cuda-cudart-11-2 cuda-nvtx-11-2 libcusparse-11-2 libnpp-11-2 \
+      libcudnn8 libnvinfer-plugin7 libnvinfer7 ; \
     fi
 
 # install security updates
