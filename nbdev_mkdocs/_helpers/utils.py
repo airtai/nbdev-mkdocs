@@ -61,6 +61,15 @@ def add_counter_suffix_to_filename(src_path: Path):
         src_path: The path to the file to rename.
     """
     parent_dir = src_path.parent
-    counter_suffix = len([f.name for f in parent_dir.glob(f"{src_path.stem}*.*")])
+    counter_suffix = (
+        max(
+            [
+                int(f.stem.split(".")[1])
+                for f in parent_dir.glob(f"{src_path.stem}.*.*")
+            ],
+            default=0,
+        )
+        + 1
+    )
     dst_path = parent_dir / f"{src_path.stem}.{counter_suffix}{src_path.suffix}"
     os.rename(src_path, dst_path)
