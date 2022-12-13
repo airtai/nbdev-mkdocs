@@ -15,15 +15,14 @@ from configparser import ConfigParser
 
 # %% ../../nbs/Utils.ipynb 3
 @contextmanager
-def set_cwd(cwd_path: Union[Path, str], clear_nbdev_cache: bool = True):
+def set_cwd(cwd_path: Union[Path, str]):
 
     cwd_path = Path(cwd_path)
     original_cwd = os.getcwd()
     os.chdir(cwd_path)
 
     try:
-        if clear_nbdev_cache:
-            nbdev.config.get_config.cache_clear()
+        nbdev.config.get_config.cache_clear()
         yield
     finally:
         os.chdir(original_cwd)

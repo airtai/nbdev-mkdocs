@@ -49,7 +49,7 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
         image_url: The image URL to be included in the HTML.
     """
 
-    with set_cwd(cwd_path=root_path, clear_nbdev_cache=False):
+    with set_cwd(cwd_path=root_path):
 
         _custom_social_image_template_path = (
             get_root_data_path() / "custom-social-image-template.html"
@@ -163,7 +163,7 @@ def _update_social_image_in_site_overrides(root_path: str, image_url: str):
         else "config.extra.social_image "
     )
 
-    with set_cwd(cwd_path=root_path, clear_nbdev_cache=False):
+    with set_cwd(cwd_path=root_path):
         site_overrides_path = (
             Path(root_path) / "mkdocs" / "site_overrides" / "main.html"
         )
@@ -213,7 +213,7 @@ def _generate_image_url(
         image_url = _generate_ai_image(prompt=prompt)
 
     else:
-        with set_cwd(cwd_path=root_path, clear_nbdev_cache=False):
+        with set_cwd(cwd_path=root_path):
             if image_path is not None:
                 _image_path = Path(
                     os.path.normpath(Path(root_path).joinpath(image_path))
