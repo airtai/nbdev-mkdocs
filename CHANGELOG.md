@@ -2,6 +2,21 @@
 
 <!-- do not remove -->
 
+## 0.0.2rc1
+
+### New Features
+
+- Build tensorflow based Docker image with preinstalled nbdev_mkdocs and all requirements ([#95](https://github.com/airtai/nbdev-mkdocs/issues/95))
+
+- Build docker images with preinstalled nbdev_mkdocs and all requirements ([#94](https://github.com/airtai/nbdev-mkdocs/issues/94))
+
+- Use AI to generate social image ([#81](https://github.com/airtai/nbdev-mkdocs/issues/81))
+
+### Bugs Squashed
+
+- Copy requirements in dev-requirements for client projects and not for nbdev-mkdocs ([#79](https://github.com/airtai/nbdev-mkdocs/issues/79))
+
+
 ## 0.0.1
 
 ### New Features
