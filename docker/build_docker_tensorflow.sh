@@ -15,12 +15,12 @@ if [[ $CI_COMMIT_REF_NAME == "main" ]]; then TAG=latest ; else TAG=$CI_COMMIT_RE
 export TF_VERSION=2.11.0
 
 export CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE-tensorflow-$TF_VERSION
-export BASE=tensorflow/tensorflow:$TF_VERSION-gpu
-export PYTHON=3.9
+export BASE=tensorflow/tensorflow:$TF_VERSION-gpu-jupyter
 
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
-docker build --build-arg BASE=$BASE --build-arg PYTHON=$PYTHON \
+docker build --build-arg BASE=$BASE \
     -t $CI_REGISTRY_IMAGE:`date -u +%Y.%m.%d-%H.%M.%S` -t $CI_REGISTRY_IMAGE:$TAG . \
+    -f Dockerfile_tensorflow \
     && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m -s CRITICAL,HIGH $CI_REGISTRY_IMAGE:$TAG \
-    && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m --exit-code 1 --ignore-unfixed $CI_REGISTRY_IMAGE:$TAG
+    && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m -s CRITICAL,HIGH --exit-code 1 --ignore-unfixed $CI_REGISTRY_IMAGE:$TAG
 

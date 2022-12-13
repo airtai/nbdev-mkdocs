@@ -8,7 +8,7 @@ env:
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["main", "dev", "build-tensorflow-image"]
 
 jobs:
   docker_build_deploy:
