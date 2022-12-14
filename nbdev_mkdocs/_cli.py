@@ -87,7 +87,7 @@ def generate_social_image(
     ),
     image_path: Optional[str] = typer.Option(
         None,
-        help="Image file path to use in the social share image. If None, then the default image will be used.",
+        help="Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used.",
     ),
 ):
     """CLI command for generating a custom social share image"""
