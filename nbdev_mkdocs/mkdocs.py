@@ -366,11 +366,12 @@ def _get_files_to_convert_to_markdown(root_path: str) -> List[Path]:
         files = [
             f
             for f in dst_nbs_path.rglob("*")
-            if f.suffix in exts and not any(p.startswith(".") for p in f.parts)
+            if f.suffix in exts
+            and not str(f.name).startswith("_")
+            and not any(p.startswith(".") for p in f.parts)
+            and not is_library_notebook(f)
         ]
-        files = [
-            f.relative_to(dst_nbs_path) for f in files if not is_library_notebook(f)
-        ]
+        files = [f.relative_to(dst_nbs_path) for f in files]
 
         return files
 
