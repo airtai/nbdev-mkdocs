@@ -42,6 +42,7 @@ from nbdev.frontmatter import FrontmatterProc
 from nbdev.quarto import prepare as nbdev_prepare
 from nbdev.quarto import refresh_quarto_yml, nbdev_readme
 from nbdev.doclinks import nbdev_export
+from nbdev.frontmatter import _fm2dict
 from fastcore.shutil import move
 
 from ._package_data import get_root_data_path
@@ -496,21 +497,29 @@ def _copy_images_to_docs_dir(root_path: str):
         _update_path_in_markdown(root_path, doc_path)
 
 # %% ../nbs/Mkdocs.ipynb 47
-def _get_title_from_notebook(nb_path: Path) -> str:
+def _get_title_from_notebook(file_path: Path) -> str:
     cache = proc_nbs()
-    _nb_path = Path(cache) / nb_path
+    _file_path = Path(cache) / file_path
 
-    if not _nb_path.exists():
+    if not _file_path.exists():
         typer.secho(
-            f"Unexpected error: path {_nb_path.resolve()} does not exists!",
+            f"Unexpected error: path {_file_path.resolve()} does not exists!",
             err=True,
             fg=typer.colors.RED,
         )
         raise typer.Exit(code=1)
 
-    nbp = NBProcessor(_nb_path, procs=FrontmatterProc)
-    nbp.process()
-    return nbp.nb.frontmatter_["title"]
+    if _file_path.suffix == ".ipynb":
+        nbp = NBProcessor(_file_path, procs=FrontmatterProc)
+        nbp.process()
+        title = nbp.nb.frontmatter_["title"]
+
+    else:
+        with open(_file_path) as f:
+            contents = f.read()
+        title = _fm2dict(contents, nb=False)["title"]
+
+    return title
 
 # %% ../nbs/Mkdocs.ipynb 49
 def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
