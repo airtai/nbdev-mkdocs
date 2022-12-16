@@ -517,7 +517,9 @@ def _get_title_from_notebook(file_path: Path) -> str:
     else:
         with open(_file_path) as f:
             contents = f.read()
-        title = _fm2dict(contents, nb=False)["title"]
+        metadata = _fm2dict(contents, nb=False)
+        metadata = {k.lower(): v for k, v in metadata.items()}
+        title = metadata["title"]
 
     return title
 
