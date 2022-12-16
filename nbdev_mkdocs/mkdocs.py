@@ -24,7 +24,7 @@ import sys
 import multiprocessing
 import datetime
 from tempfile import TemporaryDirectory
-import yaml
+from ruamel.yaml import YAML
 
 import typer
 from typer.testing import CliRunner
@@ -522,15 +522,14 @@ def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
         cmd = f'cd "{root_path}" && nbdev_docs'
         _sprun(cmd)
 
+    yaml = YAML()
     if sidebar_yml_path.exists():
-        with open(sidebar_yml_path) as f:
-            y = yaml.safe_load(f)
+        config = yaml.load(sidebar_yml_path)
     else:
-        with open(_quarto_yml_path) as f:
-            y = yaml.safe_load(f)
+        config = yaml.load(_quarto_yml_path)
 
     try:
-        sidebar = y["website"]["sidebar"]["contents"]
+        sidebar = config["website"]["sidebar"]["contents"]
     except KeyError as e:
         typer.secho(
             f"Key Error: Contents of the sidebar are not defined in the files sidebar.yml or _quarto.yml.",
