@@ -577,7 +577,7 @@ def _expand_sidebar_if_needed(
     for index, item in enumerate(sidebar):
         if "auto" in item:
             files = list(_proc_dir.glob("".join(item["auto"].split("/")[1:])))  # type: ignore
-            files = [str(f.relative_to(_proc_dir)) for f in files if f.suffix in exts]  # type: ignore
+            files = sorted([str(f.relative_to(_proc_dir)) for f in files if f.suffix in exts])  # type: ignore
             sidebar[index] = files
 
         if isinstance(item, dict) and "contents" in item:
