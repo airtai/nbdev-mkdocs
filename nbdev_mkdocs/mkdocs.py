@@ -24,7 +24,7 @@ import sys
 import multiprocessing
 import datetime
 from tempfile import TemporaryDirectory
-from ruamel.yaml import YAML
+import yaml
 
 import typer
 from typer.testing import CliRunner
@@ -524,21 +524,10 @@ def _get_title_from_notebook(file_path: Path) -> str:
     return title
 
 # %% ../nbs/Mkdocs.ipynb 49
-def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
+def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
 
-    sidebar_yml_path = Path(root_path) / "nbs" / "sidebar.yml"
-    _quarto_yml_path = Path(root_path) / "nbs" / "_quarto.yml"
-
-    custom_sidebar = get_value_from_config(root_path, "custom_sidebar")
-    if custom_sidebar == "False":
-        cmd = f'cd "{root_path}" && nbdev_docs'
-        _sprun(cmd)
-
-    yaml = YAML()
-    if sidebar_yml_path.exists():
-        config = yaml.load(sidebar_yml_path)
-    else:
-        config = yaml.load(_quarto_yml_path)
+    with open(file_path) as f:
+        config = yaml.safe_load(f)
 
     try:
         sidebar = config["website"]["sidebar"]["contents"]
@@ -552,11 +541,63 @@ def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
 
     return sidebar
 
+
+def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
+
+    # can you read it from _proc
+    nbs_path = get_value_from_config(root_path, "nbs_path")
+    sidebar_yml_path = Path(root_path) / f"{nbs_path}" / "sidebar.yml"
+    _quarto_yml_path = Path(root_path) / f"{nbs_path}" / "_quarto.yml"
+
+    custom_sidebar = get_value_from_config(root_path, "custom_sidebar")
+    if custom_sidebar == "False":
+        cmd = f'cd "{root_path}" && nbdev_docs'
+        _sprun(cmd)
+
+    return (
+        _get_sidebar_from_config(sidebar_yml_path)
+        if sidebar_yml_path.exists()
+        else _get_sidebar_from_config(_quarto_yml_path)
+    )
+
 # %% ../nbs/Mkdocs.ipynb 52
+def _flattern_sidebar_items(items: List[Union[str, Any]]) -> List[Union[str, Any]]:
+    return [i for item in items if isinstance(item, list) for i in item] + [
+        item for item in items if not isinstance(item, list)
+    ]
+
+
+def _expand_sidebar_if_needed(
+    root_path: str, sidebar: List[Union[str, Any]]
+) -> List[Union[str, Any]]:
+    """ """
+    _proc_dir = Path(root_path) / "_proc"
+    exts = [".ipynb", ".qmd"]
+
+    for index, item in enumerate(sidebar):
+        if "auto" in item:
+            files = list(_proc_dir.glob("".join(item["auto"].split("/")[1:])))  # type: ignore
+            files = [str(f.relative_to(_proc_dir)) for f in files if f.suffix in exts]  # type: ignore
+            sidebar[index] = files
+
+        if isinstance(item, dict) and "contents" in item:
+            _contents = item["contents"]
+            if isinstance(_contents, str) and bool(re.search(r"[*?\[\]]", _contents)):
+                files = list(_proc_dir.glob(item["contents"]))
+                files = sorted([str(f.relative_to(_proc_dir)) for f in files if f.suffix in exts])  # type: ignore
+                item["contents"] = files
+
+    flat_sidebar = _flattern_sidebar_items(sidebar)
+    return flat_sidebar
+
+# %% ../nbs/Mkdocs.ipynb 54
 def _filter_sidebar(
-    sidebar: List[Union[str, Any]], nbs_to_include: List[Path]
+    root_path: str,
+    sidebar: List[Union[str, Any]],
+    nbs_to_include: List[Path],
 ) -> List[Union[str, Any]]:
     nbs_to_include_set = set(map(str, nbs_to_include))
+    _sidebar = _expand_sidebar_if_needed(root_path, sidebar)
 
     def should_include_item(item):
         if isinstance(item, str):
@@ -564,9 +605,9 @@ def _filter_sidebar(
         elif isinstance(item, dict):
             return any(map(should_include_item, item["contents"]))
 
-    return [item for item in sidebar if should_include_item(item)]
+    return [item for item in _sidebar if should_include_item(item)]
 
-# %% ../nbs/Mkdocs.ipynb 54
+# %% ../nbs/Mkdocs.ipynb 56
 def _generate_nav_from_sidebar(sidebar_items, level=0):
     output = ""
     links = [
@@ -583,7 +624,7 @@ def _generate_nav_from_sidebar(sidebar_items, level=0):
     output += "".join(links)
     return output
 
-# %% ../nbs/Mkdocs.ipynb 56
+# %% ../nbs/Mkdocs.ipynb 58
 def _generate_summary_for_sidebar(
     root_path: str,
 ) -> str:
@@ -591,12 +632,12 @@ def _generate_summary_for_sidebar(
         sidebar = _read_sidebar_from_yml(root_path)
         nbs_to_include = _get_files_to_convert_to_markdown(root_path)
 
-        filtered_sidebar = _filter_sidebar(sidebar, nbs_to_include)
+        filtered_sidebar = _filter_sidebar(root_path, sidebar, nbs_to_include)
         sidebar_nav = _generate_nav_from_sidebar(filtered_sidebar)
 
         return sidebar_nav
 
-# %% ../nbs/Mkdocs.ipynb 59
+# %% ../nbs/Mkdocs.ipynb 61
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -611,7 +652,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 61
+# %% ../nbs/Mkdocs.ipynb 63
 def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
     subpath = "API/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
@@ -641,7 +682,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 63
+# %% ../nbs/Mkdocs.ipynb 65
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -665,7 +706,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 65
+# %% ../nbs/Mkdocs.ipynb 67
 def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -720,7 +761,7 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 67
+# %% ../nbs/Mkdocs.ipynb 69
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
@@ -732,7 +773,7 @@ def _copy_change_log_if_exists(
         changelog = "- [Releases](CHANGELOG.md)"
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 70
+# %% ../nbs/Mkdocs.ipynb 72
 def build_summary(
     root_path: str,
     module: str,
@@ -776,7 +817,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 73
+# %% ../nbs/Mkdocs.ipynb 75
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -791,7 +832,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 75
+# %% ../nbs/Mkdocs.ipynb 77
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -812,7 +853,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 77
+# %% ../nbs/Mkdocs.ipynb 79
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -871,7 +912,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 80
+# %% ../nbs/Mkdocs.ipynb 82
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
