@@ -526,10 +526,17 @@ def _get_title_from_notebook(file_path: Path) -> str:
 # %% ../nbs/Mkdocs.ipynb 49
 def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
 
-    with open(file_path) as f:
-        config = yaml.safe_load(f)
+    if not file_path.exists():
+        typer.secho(
+            f"Path '{file_path.resolve()}' does not exists!",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=1)
 
     try:
+        with open(file_path) as f:
+            config = yaml.safe_load(f)
         sidebar = config["website"]["sidebar"]["contents"]
     except KeyError as e:
         typer.secho(
