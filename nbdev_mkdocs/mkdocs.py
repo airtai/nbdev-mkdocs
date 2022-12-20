@@ -543,11 +543,9 @@ def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
 
 
 def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
-
-    # can you read it from _proc
-    nbs_path = get_value_from_config(root_path, "nbs_path")
-    sidebar_yml_path = Path(root_path) / f"{nbs_path}" / "sidebar.yml"
-    _quarto_yml_path = Path(root_path) / f"{nbs_path}" / "_quarto.yml"
+    _proc_dir = Path(root_path) / "_proc"
+    sidebar_yml_path = _proc_dir / "sidebar.yml"
+    _quarto_yml_path = _proc_dir / "_quarto.yml"
 
     custom_sidebar = get_value_from_config(root_path, "custom_sidebar")
     if custom_sidebar == "False":
