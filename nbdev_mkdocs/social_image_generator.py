@@ -255,7 +255,7 @@ async def generate_social_image(
         root_path: The root path of the project.
         generator: Generator to use to create the social image. Valid options are: 'file' and 'dall_e'.
         prompt: The prompt to use for generating the image.
-        image_path: Image file path to use in the social share image. If None, then the default image will be used.
+        image_path: Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used.
     """
 
     image_url = _generate_image_url(root_path, generator, prompt, image_path)
