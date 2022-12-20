@@ -22,7 +22,6 @@ import shlex
 import sys
 import multiprocessing
 import datetime
-from tempfile import TemporaryDirectory
 import yaml
 
 import typer
@@ -326,11 +325,11 @@ def new_cli(root_path: str = "."):
     new(root_path)
 
 # %% ../nbs/Mkdocs.ipynb 35
-def _get_files_to_convert_to_markdown(cache_path: str) -> List[Path]:
+def _get_files_to_convert_to_markdown(cache: Path) -> List[Path]:
     """Gets a list of notebooks and qmd files that need to be converted to markdown.
 
     Args:
-        cache_path: cache directory path
+        cache: Path to the nbs cache directory
 
     Returns:
         A list of files that need to be converted to markdown
@@ -339,7 +338,7 @@ def _get_files_to_convert_to_markdown(cache_path: str) -> List[Path]:
     exts = [".ipynb", ".qmd"]
     files = [
         f
-        for f in Path(cache_path).rglob("*")
+        for f in cache.rglob("*")
         if f.suffix in exts and not any(p.startswith(".") for p in f.parts)
     ]
 
@@ -374,7 +373,7 @@ def _generate_markdown_from_files(root_path: str):
             dst_md = doc_path / f"{dir_prefix}" / f"{f.stem}.md"
             dst_md.parent.mkdir(parents=True, exist_ok=True)
 
-            cmd = f'cd "{cache}" && quarto render "{cache / f}" -o "{f.stem}.md" -t gfm --no-execute'
+            cmd = f'cd "{cache}" && quarto render "{f}" -o "{f.stem}.md" -t gfm --no-execute'
             _sprun(cmd)
 
             src_md = cache / "_docs" / f"{f.stem}.md"
@@ -409,17 +408,17 @@ def _replace_all(text: str, dir_prefix: str) -> str:
     return text
 
 # %% ../nbs/Mkdocs.ipynb 42
-def _update_path_in_markdown(cache_path: str, doc_path: Path):
+def _update_path_in_markdown(cache: Path, doc_path: Path):
     """Update guide images relative path in the markdown files
 
     Args:
-        cache_path: Path to cache directory
+        cache: Path to the nbs cache directory
         doc_path: Path to the mkdocs/docs directory
     """
-    files = _get_files_to_convert_to_markdown(cache_path)
+    files = _get_files_to_convert_to_markdown(cache)
 
     for file in files:
-        dir_prefix = str(file.parent)[len(str(cache_path)) + 1 :]
+        dir_prefix = str(file.parent)[len(str(cache)) + 1 :]
         md = doc_path / f"{dir_prefix}" / f"{file.stem}.md"
 
         with open(Path(md), "r") as f:
