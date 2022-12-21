@@ -16,7 +16,7 @@ mkdocs/docs/
 mkdocs/site/
 
 _publish.yml
-_quarto.yml
+/_quarto.yml
 _proc/
 tests/settings.ini
 idx/
