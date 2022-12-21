@@ -620,8 +620,10 @@ def get_submodules(package_name: str) -> List[str]:
     return submodules
 
 # %% ../nbs/Mkdocs.ipynb 60
-def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
-    subpath = "API/" + submodule.replace(".", "/") + ".md"
+def generate_api_doc_for_submodule(
+    root_path: str, docs_dir_name: str, submodule: str
+) -> str:
+    subpath = f"{docs_dir_name}/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
     with open(path, "w") as f:
@@ -635,14 +637,19 @@ def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
 
 def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     submodules = get_submodules(module_name)
-    shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "API", ignore_errors=True)
+    docs_dir_name = f"{module_name}_api"
+    shutil.rmtree(
+        Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
+    )
 
     if not len(submodules):
         return ""
 
     submodule_summary = "\n".join(
         [
-            generate_api_doc_for_submodule(root_path=root_path, submodule=x)
+            generate_api_doc_for_submodule(
+                root_path=root_path, docs_dir_name=docs_dir_name, submodule=x
+            )
             for x in submodules
         ]
     )
@@ -674,13 +681,13 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
     return _s
 
 # %% ../nbs/Mkdocs.ipynb 64
-def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
+def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
     module_name = cmd.split("=")[1].split(":")[0]
     method_name = cmd.split("=")[1].split(":")[1]
 
-    subpath = f"CLI/{cli_app_name}.md"
+    subpath = f"{docs_dir_name}/{cli_app_name}.md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
 
@@ -713,7 +720,10 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
-    shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "CLI", ignore_errors=True)
+    docs_dir_name = f"{module_name}_cli"
+    shutil.rmtree(
+        Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
+    )
     console_scripts = get_value_from_config(root_path, "console_scripts")
 
     if not console_scripts:
@@ -721,7 +731,9 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     submodule_summary = "\n".join(
         [
-            generate_cli_doc_for_submodule(root_path=root_path, cmd=cmd)
+            generate_cli_doc_for_submodule(
+                root_path=root_path, docs_dir_name=docs_dir_name, cmd=cmd
+            )
             for cmd in console_scripts.split("\n")
         ]
     )
