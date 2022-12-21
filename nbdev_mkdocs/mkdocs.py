@@ -22,6 +22,7 @@ import shlex
 import sys
 import multiprocessing
 import datetime
+import yaml
 
 import typer
 from typer.testing import CliRunner
@@ -39,6 +40,7 @@ from nbdev.frontmatter import FrontmatterProc
 from nbdev.quarto import prepare as nbdev_prepare
 from nbdev.quarto import refresh_quarto_yml, nbdev_readme
 from nbdev.doclinks import nbdev_export
+from nbdev.frontmatter import _fm2dict
 from fastcore.shutil import move
 
 from ._package_data import get_root_data_path
@@ -195,8 +197,7 @@ def _create_mkdocs_yaml(root_path: str):
         raise typer.Exit(code=3)
 
 # %% ../nbs/Mkdocs.ipynb 21
-_summary_template = """- [Home](index.md)
-{guides}
+_summary_template = """{sidebar}
 {api}
 {cli}
 {changelog}
@@ -324,13 +325,24 @@ def new_cli(root_path: str = "."):
     new(root_path)
 
 # %% ../nbs/Mkdocs.ipynb 35
-def _get_nbs_for_markdown_conversion(cache: Path):
-    """Get a list of notebooks that needs to be converted to markdown.
+def _get_files_to_convert_to_markdown(cache: Path) -> List[Path]:
+    """Gets a list of notebooks and qmd files that need to be converted to markdown.
 
     Args:
-        cache: Path to the nbs cache folder
+        cache: Path to the nbs cache directory
+
+    Returns:
+        A list of files that need to be converted to markdown
     """
-    return list(cache.glob("index.ipynb")) + list(cache.glob("./guides/*.ipynb"))
+
+    exts = [".ipynb", ".qmd"]
+    files = [
+        f
+        for f in cache.rglob("*")
+        if f.suffix in exts and not any(p.startswith(".") for p in f.parts)
+    ]
+
+    return files
 
 # %% ../nbs/Mkdocs.ipynb 37
 def _sprun(cmd):
@@ -346,29 +358,25 @@ def _sprun(cmd):
         )
 
 # %% ../nbs/Mkdocs.ipynb 38
-def _generate_markdown_from_nbs(root_path: str):
+def _generate_markdown_from_files(root_path: str):
 
     doc_path = Path(root_path) / "mkdocs" / "docs"
     doc_path.mkdir(exist_ok=True, parents=True)
 
     with set_cwd(root_path):
 
-        nbs_path = get_value_from_config(root_path, "nbs_path")
-        path = Path(root_path) / nbs_path
-
         cache = proc_nbs()
+        files = _get_files_to_convert_to_markdown(cache)
 
-        notebooks = _get_nbs_for_markdown_conversion(cache)
-
-        for nb in notebooks:
-            dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
-            dst_md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
+        for f in files:
+            dir_prefix = str(f.parent)[len(str(cache)) + 1 :]
+            dst_md = doc_path / f"{dir_prefix}" / f"{f.stem}.md"
             dst_md.parent.mkdir(parents=True, exist_ok=True)
 
-            cmd = f'cd "{cache}" && quarto render "{nb}" -o "{nb.stem}.md" -t gfm --no-execute'
+            cmd = f'cd "{cache}" && quarto render "{f}" -o "{f.stem}.md" -t gfm --no-execute'
             _sprun(cmd)
 
-            src_md = cache / "_docs" / f"{nb.stem}.md"
+            src_md = cache / "_docs" / f"{f.stem}.md"
             shutil.move(src_md, dst_md)
 
 # %% ../nbs/Mkdocs.ipynb 40
@@ -407,11 +415,11 @@ def _update_path_in_markdown(cache: Path, doc_path: Path):
         cache: Path to the nbs cache directory
         doc_path: Path to the mkdocs/docs directory
     """
-    notebooks = _get_nbs_for_markdown_conversion(cache)
+    files = _get_files_to_convert_to_markdown(cache)
 
-    for nb in notebooks:
-        dir_prefix = str(nb.parent)[len(str(cache)) + 1 :]
-        md = doc_path / f"{dir_prefix}" / f"{nb.stem}.md"
+    for file in files:
+        dir_prefix = str(file.parent)[len(str(cache)) + 1 :]
+        md = doc_path / f"{dir_prefix}" / f"{file.stem}.md"
 
         with open(Path(md), "r") as f:
             _new_text = f.read()
@@ -420,11 +428,11 @@ def _update_path_in_markdown(cache: Path, doc_path: Path):
             f.write(_new_text)
 
 
-def _copy_guide_images_to_docs_dir(root_path: str):
+def _copy_images_to_docs_dir(root_path: str):
     """Copy guide images to the docs directory
 
     Args:
-        root_path: path under which mkdocs directory will be created
+        root_path: Project's root directory
     """
     # Reference: https://github.com/quarto-dev/quarto-cli/blob/main/src/core/image.ts#L38
     image_extensions = [
@@ -458,41 +466,145 @@ def _copy_guide_images_to_docs_dir(root_path: str):
         _update_path_in_markdown(cache, doc_path)
 
 # %% ../nbs/Mkdocs.ipynb 46
-def _get_title_from_notebook(nb_name: str) -> str:
+def _get_title_from_notebook(file_path: Path) -> str:
     cache = proc_nbs()
-    nb_path = Path(cache) / "guides" / f"{nb_name}.ipynb"
+    _file_path = Path(cache) / file_path
 
-    if not nb_path.exists():
+    if not _file_path.exists():
         typer.secho(
-            f"Unexpected error: path {nb_path.resolve()} does not exists!",
+            f"Unexpected error: path {_file_path.resolve()} does not exists!",
             err=True,
             fg=typer.colors.RED,
         )
         raise typer.Exit(code=1)
 
-    nbp = NBProcessor(nb_path, procs=FrontmatterProc)
-    nbp.process()
-    return nbp.nb.frontmatter_["title"]
+    if _file_path.suffix == ".ipynb":
+        nbp = NBProcessor(_file_path, procs=FrontmatterProc)
+        nbp.process()
+
+        if "title" in nbp.nb.frontmatter_:
+            title = nbp.nb.frontmatter_["title"]
+        else:
+            headers = [
+                cell["source"]
+                for cell in nbp.nb["cells"]
+                if cell["cell_type"] == "markdown" and cell["source"].startswith("#")
+            ]
+            title = (
+                f"{_file_path.stem}.html"
+                if len(headers) == 0
+                else headers[0].replace("#", "").strip()
+            )
+    else:
+        with open(_file_path) as f:
+            contents = f.read()
+        metadata = _fm2dict(contents, nb=False)
+        metadata = {k.lower(): v for k, v in metadata.items()}
+        title = metadata["title"]
+
+    return title
 
 # %% ../nbs/Mkdocs.ipynb 48
-def _generate_summary_for_guides(root_path: str) -> str:
-    doc_path = Path(root_path) / "mkdocs" / "docs"
-    mds = sorted(
-        [md for md in doc_path.glob("**/*.md") if md.name.lower().startswith("guide")]
+def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
+
+    if not file_path.exists():
+        typer.secho(
+            f"Path '{file_path.resolve()}' does not exists!",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=1)
+
+    try:
+        with open(file_path) as f:
+            config = yaml.safe_load(f)
+        sidebar = config["website"]["sidebar"]["contents"]
+    except KeyError as e:
+        typer.secho(
+            f"Key Error: Contents of the sidebar are not defined in the files sidebar.yml or _quarto.yml.",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=1)
+
+    return sidebar
+
+
+def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
+    _proc_dir = Path(root_path) / "_proc"
+    sidebar_yml_path = _proc_dir / "sidebar.yml"
+    _quarto_yml_path = _proc_dir / "_quarto.yml"
+
+    custom_sidebar = get_value_from_config(root_path, "custom_sidebar")
+    if custom_sidebar == "False":
+        cmd = f'cd "{root_path}" && nbdev_docs'
+        _sprun(cmd)
+
+    return (
+        _get_sidebar_from_config(sidebar_yml_path)
+        if sidebar_yml_path.exists()
+        else _get_sidebar_from_config(_quarto_yml_path)
     )
 
-    i = len(doc_path.parts)
-    if len(mds) > 0:
-        return "- Guides\n    - " + "    - ".join(
-            [
-                f"[{_get_title_from_notebook(md.stem)}]({'/'.join(md.parts[i:])})\n"
-                for md in mds
-            ]
-        )
-    else:
-        return ""
-
 # %% ../nbs/Mkdocs.ipynb 51
+def _flattern_sidebar_items(items: List[Union[str, Any]]) -> List[Union[str, Any]]:
+    return [i for item in items if isinstance(item, list) for i in item] + [
+        item for item in items if not isinstance(item, list)
+    ]
+
+
+def _expand_sidebar_if_needed(
+    root_path: str, sidebar: List[Union[str, Any]]
+) -> List[Union[str, Any]]:
+    """ """
+    _proc_dir = Path(root_path) / "_proc"
+    exts = [".ipynb", ".qmd"]
+
+    for index, item in enumerate(sidebar):
+        if "auto" in item:
+            files = list(_proc_dir.glob("".join(item["auto"].split("/")[1:])))  # type: ignore
+            files = sorted([str(f.relative_to(_proc_dir)) for f in files if f.suffix in exts])  # type: ignore
+            sidebar[index] = files
+
+        if isinstance(item, dict) and "contents" in item:
+            _contents = item["contents"]
+            if isinstance(_contents, str) and bool(re.search(r"[*?\[\]]", _contents)):
+                files = list(_proc_dir.glob(item["contents"]))
+                files = sorted([str(f.relative_to(_proc_dir)) for f in files if f.suffix in exts])  # type: ignore
+                item["contents"] = files
+
+    flat_sidebar = _flattern_sidebar_items(sidebar)
+    return flat_sidebar
+
+# %% ../nbs/Mkdocs.ipynb 53
+def _generate_nav_from_sidebar(sidebar_items, level=0):
+    output = ""
+    links = [
+        "{}- [{}]({}.md)\n".format(
+            "    " * level,
+            _get_title_from_notebook(Path(item)),
+            Path(item).with_suffix(""),
+        )
+        if isinstance(item, str)
+        else "{}- {}\n".format("    " * level, item["section"])
+        + _generate_nav_from_sidebar(item["contents"], level + 1)
+        for item in sidebar_items
+    ]
+    output += "".join(links)
+    return output
+
+# %% ../nbs/Mkdocs.ipynb 55
+def _generate_summary_for_sidebar(
+    root_path: str,
+) -> str:
+    with set_cwd(root_path):
+        sidebar = _read_sidebar_from_yml(root_path)
+        expanded_sidebar = _expand_sidebar_if_needed(root_path, sidebar)
+        sidebar_nav = _generate_nav_from_sidebar(expanded_sidebar)
+
+        return sidebar_nav
+
+# %% ../nbs/Mkdocs.ipynb 58
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -507,9 +619,11 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 53
-def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
-    subpath = "API/" + submodule.replace(".", "/") + ".md"
+# %% ../nbs/Mkdocs.ipynb 60
+def generate_api_doc_for_submodule(
+    root_path: str, docs_dir_name: str, submodule: str
+) -> str:
+    subpath = f"{docs_dir_name}/" + submodule.replace(".", "/") + ".md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
     with open(path, "w") as f:
@@ -523,21 +637,26 @@ def generate_api_doc_for_submodule(root_path: str, submodule: str) -> str:
 
 def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     submodules = get_submodules(module_name)
-    shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "API", ignore_errors=True)
+    docs_dir_name = f"{module_name}_api_docs"
+    shutil.rmtree(
+        Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
+    )
 
     if not len(submodules):
         return ""
 
     submodule_summary = "\n".join(
         [
-            generate_api_doc_for_submodule(root_path=root_path, submodule=x)
+            generate_api_doc_for_submodule(
+                root_path=root_path, docs_dir_name=docs_dir_name, submodule=x
+            )
             for x in submodules
         ]
     )
 
     return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 55
+# %% ../nbs/Mkdocs.ipynb 62
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -561,14 +680,14 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 57
-def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
+# %% ../nbs/Mkdocs.ipynb 64
+def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
     module_name = cmd.split("=")[1].split(":")[0]
     method_name = cmd.split("=")[1].split(":")[1]
 
-    subpath = f"CLI/{cli_app_name}.md"
+    subpath = f"{docs_dir_name}/{cli_app_name}.md"
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
 
@@ -601,7 +720,10 @@ def generate_cli_doc_for_submodule(root_path: str, cmd: str) -> str:
 
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
-    shutil.rmtree(Path(root_path) / "mkdocs" / "docs" / "CLI", ignore_errors=True)
+    docs_dir_name = f"{module_name}_cli_docs"
+    shutil.rmtree(
+        Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
+    )
     console_scripts = get_value_from_config(root_path, "console_scripts")
 
     if not console_scripts:
@@ -609,14 +731,16 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     submodule_summary = "\n".join(
         [
-            generate_cli_doc_for_submodule(root_path=root_path, cmd=cmd)
+            generate_cli_doc_for_submodule(
+                root_path=root_path, docs_dir_name=docs_dir_name, cmd=cmd
+            )
             for cmd in console_scripts.split("\n")
         ]
     )
 
     return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 59
+# %% ../nbs/Mkdocs.ipynb 66
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
@@ -628,7 +752,7 @@ def _copy_change_log_if_exists(
         changelog = "- [Releases](CHANGELOG.md)"
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 62
+# %% ../nbs/Mkdocs.ipynb 69
 def build_summary(
     root_path: str,
     module: str,
@@ -641,13 +765,13 @@ def build_summary(
     shutil.copy(Path(root_path) / "README.md", docs_path / "index.md")
 
     # generate markdown files
-    _generate_markdown_from_nbs(root_path)
+    _generate_markdown_from_files(root_path)
 
-    # copy guide images to docs dir and update path in generated markdown files
-    _copy_guide_images_to_docs_dir(root_path)
+    # copy images to docs dir and update path in generated markdown files
+    _copy_images_to_docs_dir(root_path)
 
-    # generates guides
-    guides = _generate_summary_for_guides(root_path)
+    # generates sidebar navigation
+    sidebar = _generate_summary_for_sidebar(root_path)
 
     # generate API
     api = generate_api_docs_for_module(root_path, module)
@@ -663,7 +787,7 @@ def build_summary(
         summary_template = f.read()
 
     summary = summary_template.format(
-        guides=guides, api=api, cli=cli, changelog=changelog
+        sidebar=sidebar, api=api, cli=cli, changelog=changelog
     )
     summary = "\n".join(
         [l for l in [l.rstrip() for l in summary.split("\n")] if l != ""]
@@ -672,7 +796,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 65
+# %% ../nbs/Mkdocs.ipynb 72
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -687,7 +811,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 67
+# %% ../nbs/Mkdocs.ipynb 74
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -708,7 +832,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 69
+# %% ../nbs/Mkdocs.ipynb 76
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -767,7 +891,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 72
+# %% ../nbs/Mkdocs.ipynb 79
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
