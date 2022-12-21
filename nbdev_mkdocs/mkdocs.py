@@ -637,7 +637,7 @@ def generate_api_doc_for_submodule(
 
 def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     submodules = get_submodules(module_name)
-    docs_dir_name = f"{module_name}_api"
+    docs_dir_name = f"{module_name}_api_docs"
     shutil.rmtree(
         Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
     )
@@ -720,7 +720,7 @@ def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str)
 
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
-    docs_dir_name = f"{module_name}_cli"
+    docs_dir_name = f"{module_name}_cli_docs"
     shutil.rmtree(
         Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
     )
