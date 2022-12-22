@@ -198,9 +198,11 @@ def _create_mkdocs_yaml(root_path: str):
 
 # %% ../nbs/Mkdocs.ipynb 21
 _summary_template = """{sidebar}
+- API
 {api}
+- CLI
 {cli}
-{changelog}
+- [Releases]{changelog}
 """
 
 
@@ -620,6 +622,75 @@ def get_submodules(package_name: str) -> List[str]:
     return submodules
 
 # %% ../nbs/Mkdocs.ipynb 60
+def _check_and_remove_key_from_summary_template(root_path: Union[Path, str], key: str):
+    """Remove the key from the 'mkdocs/summary_template.txt' file if it is present.
+
+    Args:
+        root_path: The root path of the project.
+        key: The key to be removed from the 'mkdocs/summary_template.txt' file.
+    """
+    msg = {
+        "api": "INFO: No exported modules were found.",
+        "cli": "INFO: No CLI commands found in 'console_scripts' in 'settings.ini' file.",
+        "changelog": f"INFO: '{Path(root_path)}/CHANGELOG.md' does not exists.",
+    }
+    summary_template_path = Path(root_path) / "mkdocs" / "summary_template.txt"
+
+    with summary_template_path.open("r") as f:
+        contents = f.read()
+
+    for i in contents.split("-"):
+        if f"{key}" in i:
+            typer.echo(
+                f"\n{msg[f'{key}']} The following lines were removed from the file '{summary_template_path}'.\n\n-{i}"
+            )
+            updated_contents = contents.replace(f"-{i}", "")
+
+    with summary_template_path.open("w") as f:
+        f.write(updated_contents)
+
+# %% ../nbs/Mkdocs.ipynb 64
+def _check_and_add_key_to_summary_template(root_path: Union[Path, str], key: str):
+    """Add the key to the 'mkdocs/summary_template.txt' file if it is not already present.
+
+    Args:
+        root_path: The root path of the project.
+        key: The key to be removed from the 'mkdocs/summary_template.txt' file.
+    """
+
+    msg = {
+        "api": "INFO: Exported modules were found.",
+        "cli": "INFO: CLI commands found in 'console_scripts' in 'settings.ini' file.",
+        "changelog": f"INFO: '{Path(root_path)}/CHANGELOG.md' exists.",
+    }
+    key_to_add = {
+        "api": " API\n{" + key + "}",
+        "cli": " CLI\n{" + key + "}",
+        "changelog": " [Releases]{" + key + "}",
+    }
+
+    summary_template_path = Path(root_path) / "mkdocs" / "summary_template.txt"
+
+    with summary_template_path.open("r") as f:
+        contents = f.read()
+
+    contents_list = contents.split("-")
+    if not any(key in sub for sub in contents_list):
+        typer.echo(
+            f"\n{msg[f'{key}']} The following lines were added to '{summary_template_path}'.\n\n-{key_to_add[key]}"
+        )
+
+        if len(contents_list) == 1 or key == "changelog":
+            contents_list.append(f"{key_to_add[key]}\n")
+        elif key == "api":
+            contents_list.insert(1, f"{key_to_add[key]}\n")
+        else:
+            contents_list.insert(len(contents_list) - 1, f"{key_to_add[key]}\n")
+
+        with summary_template_path.open("w") as f:
+            f.write("-".join(contents_list))
+
+# %% ../nbs/Mkdocs.ipynb 67
 def generate_api_doc_for_submodule(
     root_path: str, docs_dir_name: str, submodule: str
 ) -> str:
@@ -643,8 +714,10 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     )
 
     if not len(submodules):
+        _check_and_remove_key_from_summary_template(root_path=root_path, key="api")
         return ""
 
+    _check_and_add_key_to_summary_template(root_path=root_path, key="api")
     submodule_summary = "\n".join(
         [
             generate_api_doc_for_submodule(
@@ -654,9 +727,9 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
         ]
     )
 
-    return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
+    return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 62
+# %% ../nbs/Mkdocs.ipynb 69
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -680,7 +753,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 64
+# %% ../nbs/Mkdocs.ipynb 71
 def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -727,8 +800,10 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
     console_scripts = get_value_from_config(root_path, "console_scripts")
 
     if not console_scripts:
+        _check_and_remove_key_from_summary_template(root_path=root_path, key="cli")
         return ""
 
+    _check_and_add_key_to_summary_template(root_path=root_path, key="cli")
     submodule_summary = "\n".join(
         [
             generate_cli_doc_for_submodule(
@@ -738,21 +813,29 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
         ]
     )
 
-    return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
+    return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 66
+# %% ../nbs/Mkdocs.ipynb 73
 def _copy_change_log_if_exists(
     root_path: Union[Path, str], docs_path: Union[Path, str]
 ) -> str:
     changelog = ""
     source_change_log_path = Path(root_path) / "CHANGELOG.md"
     dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
+
     if source_change_log_path.exists():
+        _check_and_add_key_to_summary_template(root_path=root_path, key="changelog")
         shutil.copy(source_change_log_path, dst_change_log_path)
-        changelog = "- [Releases](CHANGELOG.md)"
+        changelog = "(CHANGELOG.md)"
+
+    else:
+        _check_and_remove_key_from_summary_template(
+            root_path=root_path, key="changelog"
+        )
+
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 69
+# %% ../nbs/Mkdocs.ipynb 76
 def build_summary(
     root_path: str,
     module: str,
@@ -796,7 +879,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 72
+# %% ../nbs/Mkdocs.ipynb 79
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -811,7 +894,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 74
+# %% ../nbs/Mkdocs.ipynb 81
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -832,7 +915,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 76
+# %% ../nbs/Mkdocs.ipynb 83
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -855,7 +938,6 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
         lib_path = get_value_from_config(root_path, "lib_path")
 
         build_summary(root_path, lib_path)
-        #         _generate_default_social_image_link(root_path)
 
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
         _sprun(cmd)
@@ -891,7 +973,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 86
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
