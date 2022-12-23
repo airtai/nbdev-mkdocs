@@ -1,4 +1,4 @@
-## 404: CHANGELOG.md file not found. 
+## CHANGELOG.md file not found. 
 
 To generate the changelog file, please run the following command from the project root directory. 
 

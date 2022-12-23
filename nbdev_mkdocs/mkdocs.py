@@ -640,7 +640,7 @@ def _copy_not_found_file_and_get_path(root_path: str, file_prefix: str) -> str:
     return (
         f"({dst_path.name})"
         if file_prefix == "changelog"
-        else " " * 4 + f"- [{dst_path.stem}]({dst_path.name})"
+        else " " * 4 + f"- [Not found]({dst_path.name})"
     )
 
 # %% ../nbs/Mkdocs.ipynb 62
@@ -661,16 +661,11 @@ def generate_api_doc_for_submodule(
 
 def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     submodules = get_submodules(module_name)
+    submodules = [f"{module_name}"] + submodules
     docs_dir_name = f"{module_name}_api_docs"
     shutil.rmtree(
         Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
     )
-
-    if not len(submodules):
-        ret_val = _copy_not_found_file_and_get_path(
-            root_path=root_path, file_prefix="api_modules"
-        )
-        return ret_val
 
     submodule_summary = "\n".join(
         [

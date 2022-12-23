@@ -1,4 +1,4 @@
-# 404: No CLI commands found in console_scripts in settings.ini file.
+# No CLI commands found in console_scripts in settings.ini file.
 
  For documenting CLI commands, please add command line executables in `console_scripts` in `settings.ini` file. 
  
