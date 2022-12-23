@@ -661,11 +661,13 @@ def generate_api_doc_for_submodule(
 
 def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     submodules = get_submodules(module_name)
-    submodules = [f"{module_name}"] + submodules
     docs_dir_name = f"{module_name}_api_docs"
     shutil.rmtree(
         Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
     )
+
+    if len(submodules) == 0:
+        submodules = [f"{module_name}"]
 
     submodule_summary = "\n".join(
         [
@@ -736,18 +738,13 @@ def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str)
             cli_doc = _restrict_line_length(cli_doc)
             cli_doc = "\n```\n" + cli_doc + "\n```\n"
 
-        with open(path, "w") as f:
-            f.write(cli_doc)
-
-        ret_val = f"- [{cli_app_name}]({subpath})"
-
     except AttributeError as e:
-        typer.secho(
-            f"AttributeError: {e}, skipping its docs creation.", fg=typer.colors.RED
-        )
-        ret_val = ""
+        cli_doc = f"Unable to generate documentation for command. Execution of `{cli_app_name} --help` command failed."
 
-    return ret_val
+    with open(path, "w") as f:
+        f.write(cli_doc)
+
+    return f"- [{cli_app_name}]({subpath})"
 
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
@@ -773,15 +770,9 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
         ]
     )
 
-    if submodule_summary == "":
-        ret_val = _copy_not_found_file_and_get_path(
-            root_path=root_path, file_prefix="cli_commands"
-        )
-        return ret_val
-
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 71
+# %% ../nbs/Mkdocs.ipynb 70
 def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
     source_change_log_path = Path(root_path) / "CHANGELOG.md"
     dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
@@ -796,7 +787,7 @@ def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> s
 
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 74
+# %% ../nbs/Mkdocs.ipynb 73
 def build_summary(
     root_path: str,
     module: str,
@@ -840,7 +831,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 77
+# %% ../nbs/Mkdocs.ipynb 76
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -855,7 +846,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 78
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -876,7 +867,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 81
+# %% ../nbs/Mkdocs.ipynb 80
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -934,7 +925,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 84
+# %% ../nbs/Mkdocs.ipynb 83
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
