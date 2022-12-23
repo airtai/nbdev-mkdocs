@@ -661,11 +661,13 @@ def generate_api_doc_for_submodule(
 
 def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     submodules = get_submodules(module_name)
-    submodules = [f"{module_name}"] + submodules
     docs_dir_name = f"{module_name}_api_docs"
     shutil.rmtree(
         Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
     )
+
+    if len(submodules) == 0:
+        submodules = [f"{module_name}"]
 
     submodule_summary = "\n".join(
         [
