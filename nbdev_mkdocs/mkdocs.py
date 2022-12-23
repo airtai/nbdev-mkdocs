@@ -704,7 +704,6 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
 
 # %% ../nbs/Mkdocs.ipynb 66
 def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str) -> str:
-
     cli_app_name = cmd.split("=")[0]
     module_name = cmd.split("=")[1].split(":")[0]
     method_name = cmd.split("=")[1].split(":")[1]
@@ -713,32 +712,42 @@ def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str)
     path = Path(root_path) / "mkdocs" / "docs" / subpath
     path.parent.mkdir(exist_ok=True, parents=True)
 
-    # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
-    m = importlib.import_module(module_name)
-    if isinstance(getattr(m, method_name), typer.Typer):
-        app = typer.Typer()
-        app.command()(generate_cli_doc)
-        runner = CliRunner()
-        result = runner.invoke(app, [module_name, cli_app_name])
-        cli_doc = str(result.stdout)
-    else:
-        cmd = f"{cli_app_name} --help"
+    try:
+        # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
+        m = importlib.import_module(module_name)
+        if isinstance(getattr(m, method_name), typer.Typer):
+            app = typer.Typer()
+            app.command()(generate_cli_doc)
+            runner = CliRunner()
+            result = runner.invoke(app, [module_name, cli_app_name])
+            cli_doc = str(result.stdout)
+        else:
+            cmd = f"{cli_app_name} --help"
+            cli_doc = (
+                # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+                subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
+                    cmd,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                ).stdout.decode("utf-8")
+            )
 
-        # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-        cli_doc = subprocess.run(  # nosec: B602:subprocess_popen_with_shell_equals_true
-            cmd,
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-        ).stdout.decode("utf-8")
+            cli_doc = _restrict_line_length(cli_doc)
+            cli_doc = "\n```\n" + cli_doc + "\n```\n"
 
-        cli_doc = _restrict_line_length(cli_doc)
-        cli_doc = "\n```\n" + cli_doc + "\n```\n"
+        with open(path, "w") as f:
+            f.write(cli_doc)
 
-    with open(path, "w") as f:
-        f.write(cli_doc)
+        ret_val = f"- [{cli_app_name}]({subpath})"
 
-    return f"- [{cli_app_name}]({subpath})"
+    except AttributeError as e:
+        typer.secho(
+            f"AttributeError: {e}, skipping its docs creation.", fg=typer.colors.RED
+        )
+        ret_val = ""
+
+    return ret_val
 
 
 def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
@@ -760,12 +769,19 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
                 root_path=root_path, docs_dir_name=docs_dir_name, cmd=cmd
             )
             for cmd in console_scripts.split("\n")
+            if cmd != ""
         ]
     )
 
+    if submodule_summary == "":
+        ret_val = _copy_not_found_file_and_get_path(
+            root_path=root_path, file_prefix="cli_commands"
+        )
+        return ret_val
+
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 69
+# %% ../nbs/Mkdocs.ipynb 71
 def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
     source_change_log_path = Path(root_path) / "CHANGELOG.md"
     dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
@@ -780,7 +796,7 @@ def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> s
 
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 72
+# %% ../nbs/Mkdocs.ipynb 74
 def build_summary(
     root_path: str,
     module: str,
@@ -824,7 +840,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 75
+# %% ../nbs/Mkdocs.ipynb 77
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -839,7 +855,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 77
+# %% ../nbs/Mkdocs.ipynb 79
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -860,7 +876,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 81
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -918,7 +934,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 82
+# %% ../nbs/Mkdocs.ipynb 84
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
