@@ -158,3 +158,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# nbdev_mkdocs
+mkdocs/docs/
+mkdocs/site/
+

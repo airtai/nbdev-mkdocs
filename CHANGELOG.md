@@ -2,9 +2,15 @@
 
 <!-- do not remove -->
 
-## 0.0.2rc1
+## 0.0.2rc3
 
 ### New Features
+
+- If a CLI command documentation fails, rather than failing, print the exception in the terminal. ([#107](https://github.com/airtai/nbdev-mkdocs/issues/107))
+
+- Make API, CLI and Releases configurable in the docs ([#106](https://github.com/airtai/nbdev-mkdocs/issues/106))
+
+- Handle glob expressions while building the navigation tree for MkDocs ([#100](https://github.com/airtai/nbdev-mkdocs/issues/100))
 
 - Build tensorflow based Docker image with preinstalled nbdev_mkdocs and all requirements ([#95](https://github.com/airtai/nbdev-mkdocs/issues/95))
 
@@ -12,9 +18,15 @@
 
 - Use AI to generate social image ([#81](https://github.com/airtai/nbdev-mkdocs/issues/81))
 
+- Read sidebar.yml for generating the docs navigation ([#62](https://github.com/airtai/nbdev-mkdocs/issues/62))
+
 ### Bugs Squashed
 
+- Uploading large images breaks the social share image. ([#98](https://github.com/airtai/nbdev-mkdocs/issues/98))
+
 - Copy requirements in dev-requirements for client projects and not for nbdev-mkdocs ([#79](https://github.com/airtai/nbdev-mkdocs/issues/79))
+
+- Install mkdoc-nbdev from pypi instead of git ([#54](https://github.com/airtai/nbdev-mkdocs/issues/54))
 
 
 ## 0.0.1

@@ -56,7 +56,7 @@ echo AIRT_PROJECT variable set to $AIRT_PROJECT
 echo Using $AIRT_DOCKER
 docker image ls $AIRT_DOCKER
 
-docker run -it --rm $GPU_PARAMS \
+docker run --rm $GPU_PARAMS \
     -e JUPYTER_CONFIG_DIR=/root/.jupyter \
     -p $AIRT_JUPYTER_PORT:8888 -p $AIRT_TB_PORT:6006 -p $AIRT_DASK_PORT:8787 -p $AIRT_DOCS_PORT:4000 \
     -v $AIRT_PROJECT:$AIRT_PROJECT --workdir=$AIRT_PROJECT \
