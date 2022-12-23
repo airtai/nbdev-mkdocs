@@ -198,9 +198,11 @@ def _create_mkdocs_yaml(root_path: str):
 
 # %% ../nbs/Mkdocs.ipynb 21
 _summary_template = """{sidebar}
+- API
 {api}
+- CLI
 {cli}
-{changelog}
+- [Releases]{changelog}
 """
 
 
@@ -620,6 +622,28 @@ def get_submodules(package_name: str) -> List[str]:
     return submodules
 
 # %% ../nbs/Mkdocs.ipynb 60
+def _copy_not_found_file_and_get_path(root_path: str, file_prefix: str) -> str:
+    src_path = get_root_data_path() / f"{file_prefix}_not_found.md"
+    if not src_path.exists():
+        typer.secho(
+            f"Unexpected error: path {src_path.resolve()} does not exists!",
+            err=True,
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(code=1)
+
+    docs_path = Path(root_path) / "mkdocs" / "docs"
+    docs_path.mkdir(exist_ok=True, parents=True)
+    dst_path = docs_path / f"{file_prefix}_not_found.md"
+    shutil.copyfile(src_path, dst_path)
+
+    return (
+        f"({dst_path.name})"
+        if file_prefix == "changelog"
+        else " " * 4 + f"- [Not found]({dst_path.name})"
+    )
+
+# %% ../nbs/Mkdocs.ipynb 62
 def generate_api_doc_for_submodule(
     root_path: str, docs_dir_name: str, submodule: str
 ) -> str:
@@ -642,8 +666,8 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
         Path(root_path) / "mkdocs" / "docs" / f"{docs_dir_name}", ignore_errors=True
     )
 
-    if not len(submodules):
-        return ""
+    if len(submodules) == 0:
+        submodules = [f"{module_name}"]
 
     submodule_summary = "\n".join(
         [
@@ -654,9 +678,9 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
         ]
     )
 
-    return "- API\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
+    return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 62
+# %% ../nbs/Mkdocs.ipynb 64
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -680,7 +704,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 64
+# %% ../nbs/Mkdocs.ipynb 66
 def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str) -> str:
 
     cli_app_name = cmd.split("=")[0]
@@ -727,7 +751,10 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
     console_scripts = get_value_from_config(root_path, "console_scripts")
 
     if not console_scripts:
-        return ""
+        ret_val = _copy_not_found_file_and_get_path(
+            root_path=root_path, file_prefix="cli_commands"
+        )
+        return ret_val
 
     submodule_summary = "\n".join(
         [
@@ -738,21 +765,24 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
         ]
     )
 
-    return "- CLI\n" + textwrap.indent(submodule_summary, prefix=" " * 4)
-
-# %% ../nbs/Mkdocs.ipynb 66
-def _copy_change_log_if_exists(
-    root_path: Union[Path, str], docs_path: Union[Path, str]
-) -> str:
-    changelog = ""
-    source_change_log_path = Path(root_path) / "CHANGELOG.md"
-    dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
-    if source_change_log_path.exists():
-        shutil.copy(source_change_log_path, dst_change_log_path)
-        changelog = "- [Releases](CHANGELOG.md)"
-    return changelog
+    return textwrap.indent(submodule_summary, prefix=" " * 4)
 
 # %% ../nbs/Mkdocs.ipynb 69
+def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
+    source_change_log_path = Path(root_path) / "CHANGELOG.md"
+    dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
+
+    if source_change_log_path.exists():
+        shutil.copy(source_change_log_path, dst_change_log_path)
+        changelog = "(CHANGELOG.md)"
+    else:
+        changelog = _copy_not_found_file_and_get_path(
+            root_path=root_path, file_prefix="changelog"
+        )
+
+    return changelog
+
+# %% ../nbs/Mkdocs.ipynb 72
 def build_summary(
     root_path: str,
     module: str,
@@ -796,7 +826,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 72
+# %% ../nbs/Mkdocs.ipynb 75
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -811,7 +841,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 74
+# %% ../nbs/Mkdocs.ipynb 77
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -832,7 +862,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 76
+# %% ../nbs/Mkdocs.ipynb 79
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -855,7 +885,6 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
         lib_path = get_value_from_config(root_path, "lib_path")
 
         build_summary(root_path, lib_path)
-        #         _generate_default_social_image_link(root_path)
 
         cmd = f"mkdocs build -f \"{(Path(root_path) / 'mkdocs' / 'mkdocs.yml').resolve()}\""
         _sprun(cmd)
@@ -891,7 +920,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 82
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
