@@ -2,7 +2,7 @@
 
 <!-- do not remove -->
 
-## 0.0.2rc3
+## 0.0.2
 
 ### New Features
 
@@ -27,6 +27,7 @@
 - Copy requirements in dev-requirements for client projects and not for nbdev-mkdocs ([#79](https://github.com/airtai/nbdev-mkdocs/issues/79))
 
 - Install mkdoc-nbdev from pypi instead of git ([#54](https://github.com/airtai/nbdev-mkdocs/issues/54))
+  - The following code in deployed.yml installs the git version for all our projects, but it should do that only for the nbdev-mkdocs project:
 
 
 ## 0.0.1
