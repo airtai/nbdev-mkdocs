@@ -2,6 +2,12 @@
 
 <!-- do not remove -->
 
+## 0.0.3
+
+### Bugs Squashed
+
+- CI bug fix
+
 ## 0.0.2
 
 ### New Features
