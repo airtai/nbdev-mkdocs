@@ -8,7 +8,8 @@ Downloads](https://img.shields.io/pypi/dm/nbdev-mkdocs.png) ![PyPI -
 Python Version](https://img.shields.io/pypi/pyversions/nbdev-mkdocs.png)
 
 ![GitHub Workflow
-Status](https://img.shields.io/github/workflow/status/airtai/nbdev-mkdocs/CI?logo=GitHub.png)
+Status](https://img.shields.io/github/actions/workflow/status/airtai/nbdev-mkdocs/test.yaml)
+
 ![CodeQL](https://github.com/airtai/nbdev-mkdocs/actions/workflows/codeql.yml/badge.svg)
 ![Dependency
 Review](https://github.com/airtai/nbdev-mkdocs/actions/workflows/dependency-review.yml/badge.svg)
