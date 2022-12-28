@@ -415,26 +415,29 @@ def _replace_all(text: str, dir_prefix: str) -> str:
     """
     _replace = {}
 
-    _md_pattern = re.compile(
-        r"!\[[^\]]*\]\(([^https?:\/\/].*?)\s*(\"(?:.*[^\"])\")?\s*\)"
-    )
-    _md_matches = [match.groups()[0] for match in _md_pattern.finditer(text)]
+    image_patterns = [
+        (
+            re.compile(r"!\[[^\]]*\]\(([^https?:\/\/].*?)\s*(\"(?:.*[^\"])\")?\s*\)"),
+            "../images/nbs/",
+        ),
+        (
+            re.compile(r"<img\s*src\s*=\s*\"([^http|https][^\"]*)\""),
+            "../../images/nbs/",
+        ),
+    ]
 
-    _html_pattern = re.compile(r"<img\s*src\s*=\s*\"([^http|https][^\"]*)\"")
-    _html_matches = [match.groups()[0] for match in _html_pattern.finditer(text)]
+    for pattern, image_path in image_patterns:
+        matches = [match.groups()[0] for match in pattern.finditer(text)]
+        if len(matches) > 0:
+            for m in matches:
+                _replace[m] = (
+                    os.path.normpath(Path(image_path).joinpath(f"{dir_prefix}/{m}"))
+                    if len(dir_prefix) > 0
+                    else f"images/nbs/{m}"
+                )
 
-    _matches = _md_matches + _html_matches
-
-    if len(_matches) > 0:
-        for m in _matches:
-            _replace[m] = (
-                os.path.normpath(Path("../images/nbs/").joinpath(f"{dir_prefix}/{m}"))
-                if len(dir_prefix) > 0
-                else f"images/nbs/{m}"
-            )
-
-        for k, v in _replace.items():
-            text = text.replace(k, v)
+    for k, v in _replace.items():
+        text = text.replace(k, v)
 
     return text
 
