@@ -11,7 +11,7 @@ nbdev_mkdocs: $(SRC) $(PACKAGE_DATA) settings.ini Makefile
 
 .PHONY: mypy
 mypy: nbdev_mkdocs
-	mypy nbdev_mkdocs --ignore-missing-imports --install-types --non-interactive
+	mypy nbdev_mkdocs
 
 .PHONY: sast
 sast: .sast_bandit .sast_semgrep
