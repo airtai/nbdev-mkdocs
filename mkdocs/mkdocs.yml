@@ -33,13 +33,18 @@ plugins:
           show_if_no_docstring: true
 
 markdown_extensions:
+- md_in_html
 - pymdownx.arithmatex:
     generic: true
 - pymdownx.inlinehilite
 - pymdownx.details
 - pymdownx.emoji
 - pymdownx.magiclink
-- pymdownx.superfences
+- pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
 - pymdownx.tasklist
 - pymdownx.highlight:
     linenums: false

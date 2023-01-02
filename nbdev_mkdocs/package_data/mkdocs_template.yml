@@ -32,6 +32,7 @@ plugins:
             show_if_no_docstring: true
             
 markdown_extensions:
+    - md_in_html
     - pymdownx.arithmatex:
         generic: true
     - pymdownx.inlinehilite
