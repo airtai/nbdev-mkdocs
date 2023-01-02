@@ -23,6 +23,7 @@ from nbdev_mkdocs._helpers.utils import (
     get_value_from_config,
     is_local_path,
     add_counter_suffix_to_filename,
+    unescape_exclamation_mark,
 )
 from ._package_data import get_root_data_path
 
@@ -146,7 +147,7 @@ def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
     mkdocs_yml_path = Path(root_path) / "mkdocs" / "mkdocs.yml"
     config = yaml.load(mkdocs_yml_path)
     config["extra"]["social_image"] = image_url
-    yaml.dump(config, mkdocs_yml_path)
+    yaml.dump(config, mkdocs_yml_path, transform=unescape_exclamation_mark)
 
 # %% ../nbs/Social_Image_Generator.ipynb 14
 def _update_social_image_in_site_overrides(root_path: str, image_url: str):
