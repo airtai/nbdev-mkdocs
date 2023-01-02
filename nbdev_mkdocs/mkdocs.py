@@ -356,14 +356,18 @@ def _update_conditional_content_tags(text: str) -> str:
     Returns:
         The updated text with the conditional content tags modified.
     """
-    for i in ["markdown", "html"]:
-        old = f'.content-visible when-format=\\"{i}\\"'
-        new = f'.content-visible unless-format=\\"{i}\\"'
-        text = text.replace(old, new)
 
+    regex = r":::\s*{(?:\s*.content-visible|\s*.content-hidden)\s*(when|unless)-format\s*=\\(\"|\')\s*(html|markdown)\s*\\(\"|\')\s*}"
+    text = re.sub(
+        regex,
+        lambda m: m.group(0).replace(
+            m.group(1), "when" if m.group(1) == "unless" else "unless"
+        ),
+        text,
+    )
     return text
 
-# %% ../nbs/Mkdocs.ipynb 39
+# %% ../nbs/Mkdocs.ipynb 40
 def _update_mermaid_chart_tags(text: str) -> str:
     """Update the mermaid chart tags from quarto format to markdown format
 
@@ -376,7 +380,7 @@ def _update_mermaid_chart_tags(text: str) -> str:
     text = re.sub(r"```\s*{mermaid}", "``` mermaid", text)
     return text
 
-# %% ../nbs/Mkdocs.ipynb 41
+# %% ../nbs/Mkdocs.ipynb 42
 def _add_markdown_attribute_to_enable_md_in_html(s: str) -> str:
     """Add support for markdown in HTML
 
@@ -389,10 +393,10 @@ def _add_markdown_attribute_to_enable_md_in_html(s: str) -> str:
     Returns:
         The input string with the `::: {` character sequence replaced by `::: {markdown=1`
     """
-    pattern = r"::: {\s*(markdown=1)?\s*"
+    pattern = r":::\s*{\s*(markdown=1)?\s*"
     return re.sub(pattern, r"::: {markdown=1 ", s)
 
-# %% ../nbs/Mkdocs.ipynb 43
+# %% ../nbs/Mkdocs.ipynb 44
 def _update_quarto_tags_to_markdown_format(nb_path: Path):
     """Update Quarto tags to Markdown format in the given notebook.
 
@@ -409,7 +413,7 @@ def _update_quarto_tags_to_markdown_format(nb_path: Path):
     with open(nb_path, "w") as f:
         f.write(contents)
 
-# %% ../nbs/Mkdocs.ipynb 46
+# %% ../nbs/Mkdocs.ipynb 47
 def _sprun(cmd):
     try:
         # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
@@ -422,7 +426,7 @@ def _sprun(cmd):
             f"CMD Failed: e={e}\n e.returncode={e.returncode}\n e.output={e.output}\n e.stderr={e.stderr}\n cmd={cmd}"
         )
 
-# %% ../nbs/Mkdocs.ipynb 47
+# %% ../nbs/Mkdocs.ipynb 48
 def _generate_markdown_from_files(root_path: str):
 
     doc_path = Path(root_path) / "mkdocs" / "docs"
@@ -446,7 +450,7 @@ def _generate_markdown_from_files(root_path: str):
             src_md = cache / "_docs" / f"{f.stem}.md"
             shutil.move(src_md, dst_md)
 
-# %% ../nbs/Mkdocs.ipynb 49
+# %% ../nbs/Mkdocs.ipynb 50
 def _replace_all(text: str, dir_prefix: str) -> str:
     """Replace the images relative path in the markdown text
 
@@ -485,7 +489,7 @@ def _replace_all(text: str, dir_prefix: str) -> str:
 
     return text
 
-# %% ../nbs/Mkdocs.ipynb 51
+# %% ../nbs/Mkdocs.ipynb 52
 def _update_path_in_markdown(cache: Path, doc_path: Path):
     """Update guide images relative path in the markdown files
 
@@ -543,7 +547,7 @@ def _copy_images_to_docs_dir(root_path: str):
 
         _update_path_in_markdown(cache, doc_path)
 
-# %% ../nbs/Mkdocs.ipynb 55
+# %% ../nbs/Mkdocs.ipynb 56
 def _get_title_from_notebook(file_path: Path) -> str:
     cache = proc_nbs()
     _file_path = Path(cache) / file_path
@@ -582,7 +586,7 @@ def _get_title_from_notebook(file_path: Path) -> str:
 
     return title
 
-# %% ../nbs/Mkdocs.ipynb 57
+# %% ../nbs/Mkdocs.ipynb 58
 def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
 
     if not file_path.exists():
@@ -624,7 +628,7 @@ def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
         else _get_sidebar_from_config(_quarto_yml_path)
     )
 
-# %% ../nbs/Mkdocs.ipynb 60
+# %% ../nbs/Mkdocs.ipynb 61
 def _flattern_sidebar_items(items: List[Union[str, Any]]) -> List[Union[str, Any]]:
     return [i for item in items if isinstance(item, list) for i in item] + [
         item for item in items if not isinstance(item, list)
@@ -654,7 +658,7 @@ def _expand_sidebar_if_needed(
     flat_sidebar = _flattern_sidebar_items(sidebar)
     return flat_sidebar
 
-# %% ../nbs/Mkdocs.ipynb 62
+# %% ../nbs/Mkdocs.ipynb 63
 def _generate_nav_from_sidebar(sidebar_items, level=0):
     output = ""
     links = [
@@ -671,7 +675,7 @@ def _generate_nav_from_sidebar(sidebar_items, level=0):
     output += "".join(links)
     return output
 
-# %% ../nbs/Mkdocs.ipynb 64
+# %% ../nbs/Mkdocs.ipynb 65
 def _generate_summary_for_sidebar(
     root_path: str,
 ) -> str:
@@ -682,7 +686,7 @@ def _generate_summary_for_sidebar(
 
         return sidebar_nav
 
-# %% ../nbs/Mkdocs.ipynb 67
+# %% ../nbs/Mkdocs.ipynb 68
 def get_submodules(package_name: str) -> List[str]:
     # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
     m = importlib.import_module(package_name)
@@ -697,7 +701,7 @@ def get_submodules(package_name: str) -> List[str]:
     ]
     return submodules
 
-# %% ../nbs/Mkdocs.ipynb 69
+# %% ../nbs/Mkdocs.ipynb 70
 def _copy_not_found_file_and_get_path(root_path: str, file_prefix: str) -> str:
     src_path = get_root_data_path() / f"{file_prefix}_not_found.md"
     if not src_path.exists():
@@ -719,7 +723,7 @@ def _copy_not_found_file_and_get_path(root_path: str, file_prefix: str) -> str:
         else " " * 4 + f"- [Not found]({dst_path.name})"
     )
 
-# %% ../nbs/Mkdocs.ipynb 71
+# %% ../nbs/Mkdocs.ipynb 72
 def generate_api_doc_for_submodule(
     root_path: str, docs_dir_name: str, submodule: str
 ) -> str:
@@ -756,7 +760,7 @@ def generate_api_docs_for_module(root_path: str, module_name: str) -> str:
 
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 73
+# %% ../nbs/Mkdocs.ipynb 74
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of the given string.
 
@@ -780,7 +784,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 75
+# %% ../nbs/Mkdocs.ipynb 76
 def generate_cli_doc_for_submodule(root_path: str, docs_dir_name: str, cmd: str) -> str:
     cli_app_name = cmd.split("=")[0]
     module_name = cmd.split("=")[1].split(":")[0]
@@ -848,7 +852,7 @@ def generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 80
 def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
     source_change_log_path = Path(root_path) / "CHANGELOG.md"
     dst_change_log_path = Path(docs_path) / "CHANGELOG.md"
@@ -863,7 +867,7 @@ def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> s
 
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 82
+# %% ../nbs/Mkdocs.ipynb 83
 def build_summary(
     root_path: str,
     module: str,
@@ -907,7 +911,7 @@ def build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 85
+# %% ../nbs/Mkdocs.ipynb 86
 def copy_cname_if_needed(root_path: str):
     cname_path = Path(root_path) / "CNAME"
     dst_path = Path(root_path) / "mkdocs" / "docs" / "CNAME"
@@ -922,7 +926,7 @@ def copy_cname_if_needed(root_path: str):
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 87
+# %% ../nbs/Mkdocs.ipynb 88
 def _copy_docs_overrides(root_path: str):
     """Copy lib assets inside mkodcs/docs directory
 
@@ -943,7 +947,7 @@ def _copy_docs_overrides(root_path: str):
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 89
+# %% ../nbs/Mkdocs.ipynb 90
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False):
     """Prepares mkdocs documentation
 
@@ -1001,7 +1005,7 @@ def prepare_cli(root_path: str = "."):
     """Prepares mkdocs for serving"""
     prepare(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 92
+# %% ../nbs/Mkdocs.ipynb 93
 def preview(root_path: str, port: Optional[int] = None):
     """Previes mkdocs documentation
 
