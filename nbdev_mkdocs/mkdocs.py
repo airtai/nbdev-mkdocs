@@ -357,7 +357,7 @@ def _update_conditional_content_tags(text: str) -> str:
         The updated text with the conditional content tags modified.
     """
 
-    regex = r":::\s*{(?:\s*.content-visible|\s*.content-hidden)\s*(when|unless)-format\s*=\\(\"|\')\s*(html|markdown)\s*\\(\"|\')\s*}"
+    regex = r":::\s*{(?:\s*.*\.content-visible|\s*\.content-hidden)\s*(when|unless)-format\s*=\\\s*(\"|\')\s*(html|markdown)\s*\\(\"|\')\s*.*}"
     text = re.sub(
         regex,
         lambda m: m.group(0).replace(
