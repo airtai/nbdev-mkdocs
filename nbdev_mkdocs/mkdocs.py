@@ -7,6 +7,7 @@ __all__ = ['new', 'new_cli', 'get_submodules', 'generate_api_doc_for_submodule',
 
 # %% ../nbs/Mkdocs.ipynb 1
 from typing import *
+
 import os
 import re
 import collections
@@ -21,15 +22,18 @@ import shlex
 import sys
 import multiprocessing
 import datetime
+import yaml
 
 import typer
-import nbdev
 from typer.testing import CliRunner
+
 from configupdater import ConfigUpdater, Section
 from configupdater.option import Option
+
 from configparser import ConfigParser
 from fastcore.script import call_parse
-from ruamel.yaml import YAML
+
+import nbdev
 from nbdev.serve import proc_nbs
 from nbdev.process import NBProcessor
 from nbdev.frontmatter import FrontmatterProc
@@ -514,8 +518,8 @@ def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
         raise typer.Exit(code=1)
 
     try:
-        yaml = YAML()
-        config = yaml.load(file_path)
+        with open(file_path) as f:
+            config = yaml.safe_load(f)
         sidebar = config["website"]["sidebar"]["contents"]
     except KeyError as e:
         typer.secho(
