@@ -5,12 +5,7 @@ jobs:
   static_check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-      - run: pip install -U nbdev black
-      - run: make static_check
+      - uses: airtai/workflows/nbdev-mkdocs-static-check@main
   test:
     strategy:
       fail-fast: false

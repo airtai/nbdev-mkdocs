@@ -92,7 +92,7 @@ def _get_typer_from_state() -> Optional[typer.Typer]:
             typer.echo(f"Could not import as Python module: {_state.module}", err=True)
         sys.exit(1)
     module = importlib.util.module_from_spec(spec)  # type: ignore
-    spec.loader.exec_module(module)  # type: ignore
+    spec.loader.exec_module(module)
     obj = _get_typer_from_module(module)
     return obj
 

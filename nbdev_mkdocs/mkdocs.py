@@ -551,6 +551,7 @@ def _copy_images_to_docs_dir(root_path: str):
 
 # %% ../nbs/Mkdocs.ipynb 56
 def _get_title_from_notebook(file_path: Path) -> str:
+    title: str
     cache = proc_nbs()
     _file_path = Path(cache) / file_path
 
@@ -589,7 +590,7 @@ def _get_title_from_notebook(file_path: Path) -> str:
     return title
 
 # %% ../nbs/Mkdocs.ipynb 58
-def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
+def _get_sidebar_from_config(file_path: Path) -> List[Any]:
 
     if not file_path.exists():
         typer.secho(
@@ -602,7 +603,7 @@ def _get_sidebar_from_config(file_path: Path) -> List[Union[str, Any]]:
     try:
         with open(file_path) as f:
             config = yaml.safe_load(f)
-        sidebar = config["website"]["sidebar"]["contents"]
+        sidebar: List[Any] = config["website"]["sidebar"]["contents"]
     except KeyError as e:
         typer.secho(
             f"Key Error: Contents of the sidebar are not defined in the files sidebar.yml or _quarto.yml.",
@@ -661,7 +662,7 @@ def _expand_sidebar_if_needed(
     return flat_sidebar
 
 # %% ../nbs/Mkdocs.ipynb 63
-def _generate_nav_from_sidebar(sidebar_items, level=0):
+def _generate_nav_from_sidebar(sidebar_items, level=0) -> str:
     output = ""
     links = [
         "{}- [{}]({}.md)\n".format(

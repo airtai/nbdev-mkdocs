@@ -37,7 +37,7 @@ def _generate_ai_image(prompt: str) -> str:
         The URL of the generated image.
     """
     response = openai.Image.create(prompt=prompt, n=1, size="512x512")
-    image_url = response["data"][0]["url"]
+    image_url: str = response["data"][0]["url"]
     return image_url
 
 # %% ../nbs/Social_Image_Generator.ipynb 5
