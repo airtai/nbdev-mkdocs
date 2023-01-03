@@ -23,7 +23,6 @@ from nbdev_mkdocs._helpers.utils import (
     get_value_from_config,
     is_local_path,
     add_counter_suffix_to_filename,
-    unescape_exclamation_mark,
 )
 from ._package_data import get_root_data_path
 
@@ -131,6 +130,20 @@ async def _create_social_image(root_path: str, image_url: str):
         await _capture_and_save_screenshot(d, root_path)
 
 # %% ../nbs/Social_Image_Generator.ipynb 12
+def _unescape_exclamation_mark(text: str) -> str:
+    """Replaces the URL-encoded `!%21` character sequence with `!!` in a string.
+
+    Args:
+        text: The string to be processed.
+
+    Returns:
+        The input string with the `!%21` character sequence replaced with `!!`.
+    """
+    pattern = r":\s*!%21"
+    text = re.sub(pattern, r": !!", text)
+    return text
+
+# %% ../nbs/Social_Image_Generator.ipynb 14
 def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
     """Update social image link in mkdocs yml file
 
@@ -147,9 +160,9 @@ def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
     mkdocs_yml_path = Path(root_path) / "mkdocs" / "mkdocs.yml"
     config = yaml.load(mkdocs_yml_path)
     config["extra"]["social_image"] = image_url
-    yaml.dump(config, mkdocs_yml_path, transform=unescape_exclamation_mark)
+    yaml.dump(config, mkdocs_yml_path, transform=_unescape_exclamation_mark)
 
-# %% ../nbs/Social_Image_Generator.ipynb 14
+# %% ../nbs/Social_Image_Generator.ipynb 16
 def _update_social_image_in_site_overrides(root_path: str, image_url: str):
     """Update social image link in site_overrides HTML template
 
@@ -185,7 +198,7 @@ def _update_social_image_in_site_overrides(root_path: str, image_url: str):
         with open(site_overrides_path, "w") as f:
             f.write(_new_text)
 
-# %% ../nbs/Social_Image_Generator.ipynb 17
+# %% ../nbs/Social_Image_Generator.ipynb 19
 class _IMG_Generator(str, Enum):
     file = "file"
     dall_e = "dall_e"
@@ -243,7 +256,7 @@ def _generate_image_url(
 
     return image_url
 
-# %% ../nbs/Social_Image_Generator.ipynb 24
+# %% ../nbs/Social_Image_Generator.ipynb 26
 async def generate_social_image(
     root_path: str,
     generator: str = "file",

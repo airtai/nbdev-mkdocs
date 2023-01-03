@@ -357,9 +357,9 @@ def _update_conditional_content_tags(text: str) -> str:
         The updated text with the conditional content tags modified.
     """
 
-    regex = r":::\s*{(?:\s*.*\.content-visible|\s*\.content-hidden)\s*(when|unless)-format\s*=\\\s*(\"|\')\s*(html|markdown)\s*\\(\"|\')\s*.*}"
+    pattern = r":::\s*{(?:\s*.*\.content-visible|\s*\.content-hidden)\s*(when|unless)-format\s*=\\\s*(\"|\')\s*(html|markdown)\s*\\(\"|\')\s*.*}"
     text = re.sub(
-        regex,
+        pattern,
         lambda m: m.group(0).replace(
             m.group(1), "when" if m.group(1) == "unless" else "unless"
         ),
@@ -377,24 +377,26 @@ def _update_mermaid_chart_tags(text: str) -> str:
     Returns:
         The updated text with the mermaid chart tags modified.
     """
-    text = re.sub(r"```\s*{mermaid}", "``` mermaid", text)
+    pattern = r"```\s*{mermaid\s*}"
+    text = re.sub(pattern, "``` mermaid", text)
     return text
 
 # %% ../nbs/Mkdocs.ipynb 42
-def _add_markdown_attribute_to_enable_md_in_html(s: str) -> str:
+def _add_markdown_attribute_to_enable_md_in_html(text: str) -> str:
     """Add support for markdown in HTML
 
     This function replaces the `::: {` character sequence into `::: {markdown=1` in a string
     to support markdown in HTML
 
     Args:
-        s: The input string to be processed
+        text: The input string to be processed
 
     Returns:
         The input string with the `::: {` character sequence replaced by `::: {markdown=1`
     """
     pattern = r":::\s*{\s*(markdown=1)?\s*"
-    return re.sub(pattern, r"::: {markdown=1 ", s)
+    text = re.sub(pattern, r"::: {markdown=1 ", text)
+    return text
 
 # %% ../nbs/Mkdocs.ipynb 44
 def _update_quarto_tags_to_markdown_format(nb_path: Path):
