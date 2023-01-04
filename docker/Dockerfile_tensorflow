@@ -16,7 +16,7 @@ RUN apt-mark hold cuda-compat-11-2 cuda-cudart-11-2 cuda-nvtx-11-2 libcusparse-1
 # install security updates
 RUN apt update --fix-missing --yes
 RUN apt update -y && apt install --assume-yes \
-  apt-utils git zip curl sudo wget vim fish pip htop nano less wget \
+  apt-utils git zip curl sudo wget vim fish pip htop nano less wget openssh-client \
   software-properties-common \
   && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 

@@ -16,7 +16,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update --fix-missing --yes \
     && apt upgrade --yes \
     && apt install --assume-yes \
-      apt-utils git zip curl sudo wget vim fish pip htop nano less wget \
+      apt-utils git zip curl sudo wget vim fish pip htop nano less wget openssh-client \
       software-properties-common \
     && apt purge --auto-remove \
     && apt clean \
