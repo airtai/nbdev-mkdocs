@@ -6,6 +6,7 @@ __all__ = ['generate_cli_doc']
 # %% ../../nbs/CLI_Doc_Helper.ipynb 1
 from typing import *
 import importlib
+import importlib.util
 import sys
 from pathlib import Path
 
@@ -33,7 +34,7 @@ _state = _State()
 def _get_typer_from_module(module: Any) -> Optional[typer.Typer]:
     # Try to get defined app
     if _state.app:
-        obj: typer.Typer = getattr(module, _state.app, None)  # type: ignore
+        obj: Optional[typer.Typer] = getattr(module, _state.app, None)
         if not isinstance(obj, typer.Typer):
             typer.echo(f"Not a Typer object: --app {_state.app}", err=True)
             sys.exit(1)
@@ -53,7 +54,7 @@ def _get_typer_from_module(module: Any) -> Optional[typer.Typer]:
     # Try to get a default Typer app
     for name in _default_app_names:
         if name in local_names_set:
-            obj = getattr(module, name, None)  # type: ignore
+            obj = getattr(module, name, None)
             if isinstance(obj, typer.Typer):
                 return obj
     # Try to get any Typer app
@@ -82,17 +83,19 @@ def _get_typer_from_state() -> Optional[typer.Typer]:
     spec = None
     if _state.file:
         module_name = _state.file.name
-        spec = importlib.util.spec_from_file_location(module_name, str(_state.file))  # type: ignore
+        spec = importlib.util.spec_from_file_location(module_name, str(_state.file))
     elif _state.module:
-        spec = importlib.util.find_spec(_state.module)  # type: ignore
+        spec = importlib.util.find_spec(_state.module)
+
     if spec is None:
         if _state.file:
             typer.echo(f"Could not import as Python file: {_state.file}", err=True)
         else:
             typer.echo(f"Could not import as Python module: {_state.module}", err=True)
         sys.exit(1)
-    module = importlib.util.module_from_spec(spec)  # type: ignore
-    spec.loader.exec_module(module)
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)  # type: ignore
     obj = _get_typer_from_module(module)
     return obj
 

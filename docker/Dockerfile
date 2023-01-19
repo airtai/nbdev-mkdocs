@@ -16,7 +16,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update --fix-missing --yes \
     && apt upgrade --yes \
     && apt install --assume-yes \
-      apt-utils git zip curl sudo wget vim fish pip htop nano less wget \
+      apt-utils git zip curl sudo wget vim fish pip htop nano less wget openssh-client \
       software-properties-common \
     && apt purge --auto-remove \
     && apt clean \
@@ -57,7 +57,7 @@ RUN python3 -m pip install --no-cache-dir -r top_level_requirements.txt \
     && rm top_level_requirements.txt
 
 # Install node and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs \
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && apt-get install -y nodejs \
     && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
 RUN nbdev_install_quarto
