@@ -200,9 +200,6 @@ def _create_docstring_gen_sub_cmd(_app: typer.Typer = _app) -> None:
 
         if path is None:
             path = str(Path(get_config().nbs_path).resolve())
-            typer.echo(
-                f'INFO: --path not specified. Using "nbs_path" from settings.ini: {path}'
-            )
 
         else:
             if not Path(path).exists():
