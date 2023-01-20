@@ -14,6 +14,7 @@ import click
 import click.core
 from click import Command, Group  # , Option
 import typer
+from typer.testing import CliRunner
 
 # %% ../../nbs/CLI_Doc_Helper.ipynb 3
 _default_app_names = ("app", "cli", "main")
@@ -244,19 +245,26 @@ def _get_docs_for_click(
     return docs
 
 # %% ../../nbs/CLI_Doc_Helper.ipynb 4
-def generate_cli_doc(
-    ctx: typer.Context,
-    module_name: str,
-    app_name: str,
-) -> None:
-    """Generate Markdown docs for a Typer app."""
-    _state.module = f"{module_name}"
-    typer_obj = _get_typer_from_state()
+def generate_cli_doc(module_name: str, app_name: str) -> str:
+    def _generate_cli_doc(
+        ctx: typer.Context,
+        module_name: str,
+        app_name: str,
+    ) -> None:
+        """Generate Markdown docs for a Typer app."""
+        _state.module = f"{module_name}"
+        typer_obj = _get_typer_from_state()
 
-    if not typer_obj:
-        typer.echo(f"No Typer app found", err=True)
-        raise typer.Abort()
-    click_obj = typer.main.get_command(typer_obj)
-    docs = _get_docs_for_click(obj=click_obj, ctx=ctx, name=app_name)
-    clean_docs = f"{docs.strip()}\n"
-    typer.echo(clean_docs)
+        if not typer_obj:
+            typer.echo(f"No Typer app found", err=True)
+            raise typer.Abort()
+        click_obj = typer.main.get_command(typer_obj)
+        docs = _get_docs_for_click(obj=click_obj, ctx=ctx, name=app_name)
+        clean_docs = f"{docs.strip()}\n"
+        typer.echo(clean_docs)
+
+    app = typer.Typer()
+    app.command()(_generate_cli_doc)
+    runner = CliRunner()
+    result = runner.invoke(app, [module_name, app_name])
+    return result.stdout

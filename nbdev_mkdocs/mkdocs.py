@@ -23,7 +23,6 @@ import datetime
 import yaml
 
 import typer
-from typer.testing import CliRunner
 
 from configupdater import ConfigUpdater, Section
 from configupdater.option import Option
@@ -1092,11 +1091,7 @@ def _generate_cli_doc_for_submodule(
         # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
         m = importlib.import_module(module_name)
         if isinstance(getattr(m, method_name), typer.Typer):
-            app = typer.Typer()
-            app.command()(generate_cli_doc)
-            runner = CliRunner()
-            result = runner.invoke(app, [module_name, cli_app_name])
-            cli_doc = str(result.stdout)
+            cli_doc = generate_cli_doc(module_name, cli_app_name)
         else:
             cmd = f"{cli_app_name} --help"
             cli_doc = (
