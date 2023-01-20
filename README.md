@@ -191,8 +191,8 @@ nbdev_mkdocs --help
     ╭─ Commands ───────────────────────────────────────────────────────────────────╮
     │ docs                   Prepares files in **mkdocs/docs** and then runs       │
     │                        **mkdocs build** command on them                      │
-    │ docstring-gen          Add docstrings for classes and methods that don't     │
-    │                        have one using the 'docstring-gen' library.           │
+    │ docstring              Command for adding docstrings to classes and methods  │
+    │                        that don't have one.                                  │
     │ generate-social-image  Generate a custom social share image                  │
     │ new                    Creates files in **mkdocs** subdirectory needed for   │
     │                        other **nbdev_mkdocs** subcommands                    │
