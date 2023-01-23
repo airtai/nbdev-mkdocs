@@ -90,7 +90,7 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
         return _html_template
 
 # %% ../nbs/Social_Image_Generator.ipynb 8
-async def _capture_and_save_screenshot(src_path: str, dst_path: str):
+async def _capture_and_save_screenshot(src_path: str, dst_path: str) -> None:
     """Capture screenshot of an HTML file from source directory and save the
     output in destination directory
 
@@ -126,8 +126,8 @@ async def _capture_and_save_screenshot(src_path: str, dst_path: str):
         await browser.close()
 
 # %% ../nbs/Social_Image_Generator.ipynb 10
-async def _create_social_image(root_path: str, image_url: str):
-    """Create a social image
+async def _create_social_image(root_path: str, image_url: str) -> None:
+    """Create social image for the project
 
     Args:
         root_path: The root path
@@ -175,8 +175,8 @@ def _unescape_exclamation_mark(text: str) -> str:
     return text
 
 # %% ../nbs/Social_Image_Generator.ipynb 14
-def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
-    """Update social image link in mkdocs.yml
+def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str) -> None:
+    """Update social image link in mkdocs yml file
 
     Args:
         root_path: The root path
@@ -197,8 +197,8 @@ def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
     yaml.dump(config, mkdocs_yml_path, transform=_unescape_exclamation_mark)
 
 # %% ../nbs/Social_Image_Generator.ipynb 16
-def _update_social_image_in_site_overrides(root_path: str, image_url: str):
-    """Update the social image in the site_overrides/main.html file.
+def _update_social_image_in_site_overrides(root_path: str, image_url: str) -> None:
+    """Update social image link in site_overrides HTML template
 
     Args:
         root_path: The root path of the project
@@ -317,8 +317,8 @@ async def generate_social_image(
     generator: str = "file",
     prompt: str = "Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render",
     image_path: Optional[str] = None,
-):
-    """Generate a social image for the project.
+) -> None:
+    """Generate a custom image for social card using the OpenAI Image API.
 
     Args:
         root_path: The root path of the project.

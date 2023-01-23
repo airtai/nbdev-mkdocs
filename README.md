@@ -189,17 +189,17 @@ nbdev_mkdocs --help
     │ --help                        Show this message and exit.                    │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Commands ───────────────────────────────────────────────────────────────────╮
-    │ docs                   Prepares files in **mkdocs/docs** and then runs       │
-    │                        **mkdocs build** command on them                      │
-    │ docstring              Command for adding docstrings to classes and methods  │
-    │                        that don't have one using docstring-gen library.      │
-    │ generate-social-image  Generate a custom social share image                  │
-    │ new                    Creates files in **mkdocs** subdirectory needed for   │
-    │                        other **nbdev_mkdocs** subcommands                    │
-    │ prepare                Runs tests and prepares files in **mkdocs/docs** and  │
-    │                        then runs **mkdocs build** command on them            │
-    │ preview                Prepares files in **mkdocs/docs** and then runs       │
-    │                        **mkdocs serve** command on them                      │
+    │ docs          Prepares files in **mkdocs/docs** and then runs **mkdocs       │
+    │               build** command on them                                        │
+    │ docstring     Command for adding docstrings to classes and methods that      │
+    │               don't have one using docstring-gen library.                    │
+    │ new           Creates files in **mkdocs** subdirectory needed for other      │
+    │               **nbdev_mkdocs** subcommands                                   │
+    │ prepare       Runs tests and prepares files in **mkdocs/docs** and then runs │
+    │               **mkdocs build** command on them                               │
+    │ preview       Prepares files in **mkdocs/docs** and then runs **mkdocs       │
+    │               serve** command on them                                        │
+    │ social-image  Command for generating a custom social share image.            │
     ╰──────────────────────────────────────────────────────────────────────────────╯
 
 ### Setup
