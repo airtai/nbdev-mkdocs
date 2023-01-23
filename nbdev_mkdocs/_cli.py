@@ -20,7 +20,7 @@ _app = typer.Typer(help="")
 @_app.command(
     help="Creates files in **mkdocs** subdirectory needed for other **nbdev_mkdocs** subcommands",
 )
-def new(root_path: str = typer.Option(".", help="")):
+def new(root_path: str = typer.Option(".", help="")) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.new(root_path=root_path)
@@ -32,7 +32,7 @@ def new(root_path: str = typer.Option(".", help="")):
 @_app.command(
     help="Runs tests and prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
-def prepare(root_path: str = typer.Option(".", help="")):
+def prepare(root_path: str = typer.Option(".", help="")) -> None:
     """CLI command for running tests and creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.prepare(root_path=root_path)
@@ -49,7 +49,7 @@ def preview(
         ".", help="path under which mkdocs directory will be created"
     ),
     port: int = typer.Option(4000, help="port to use"),
-):
+) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.preview(root_path=root_path, port=port)
@@ -61,7 +61,7 @@ def preview(
 @_app.command(
     help="Prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
-def docs(root_path: str = typer.Option(".", help="Project's root path.")):
+def docs(root_path: str = typer.Option(".", help="Project's root path.")) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs(
@@ -85,7 +85,7 @@ def _create_generate_social_img_sub_cmd(_app: typer.Typer = _app) -> None:
             "file",
             help="Generator to use to create the social image. Valid options are: 'file' and 'dall_e'. Choose 'file' if you want to use an existing image from your local machine in the social share image.",
         ),
-        prompt: Optional[str] = typer.Option(
+        prompt: str = typer.Option(
             "Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render",
             help="The prompt to use for generating the image.",
         ),
@@ -96,7 +96,9 @@ def _create_generate_social_img_sub_cmd(_app: typer.Typer = _app) -> None:
     ) -> None:
         """CLI command for generating a custom social share image"""
 
-        async def _generate_social_image(root_path, generator, prompt, image_path):
+        async def _generate_social_image(
+            root_path: str, generator: str, prompt: str, image_path: Optional[str]
+        ) -> None:
             try:
                 await nbdev_mkdocs.social_image_generator.generate_social_image(
                     root_path=root_path,
