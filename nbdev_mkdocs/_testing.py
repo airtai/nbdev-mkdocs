@@ -28,7 +28,7 @@ def mock_openai_Image_create() -> Generator[None, None, None]:
 openai_Image_mock = mock_openai_Image_create()
 
 
-def mock_openai_Image_create_for_notebook():
+def mock_openai_Image_create_for_notebook() -> None:
     global openai_Image_mock
 
     openai_Image_mock.__enter__()
