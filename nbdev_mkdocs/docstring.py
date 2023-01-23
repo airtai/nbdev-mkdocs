@@ -132,7 +132,7 @@ def _get_keywords(examples: List[str]) -> List[str]:
     return keywords
 
 # %% ../nbs/Docstring.ipynb 17
-def _replace_keywords(examples: List[str], **kwargs) -> List[str]:
+def _replace_keywords(examples: List[str], **kwargs: str) -> List[str]:
     """Replace keywords in a list of strings with the corresponding values in kwargs.
 
     Args:
@@ -170,7 +170,7 @@ def _format_output(
     supress: bool = False,
     sub_dict: Optional[Dict[str, str]] = None,
     width: Optional[int] = None,
-):
+) -> Group:
     """Format the output of a string.
 
     Args:
@@ -207,8 +207,8 @@ def run_examples_from_docstring(
     supress_stderr: bool = False,
     sub_dict: Optional[Dict[str, str]] = None,
     width: Optional[int] = 80,
-    **kwargs,
-):
+    **kwargs: str,
+) -> None:
     """Runs example from a docstring
 
     Parses docstring of an objects looking for examples. The examples are then saved into files and executed
