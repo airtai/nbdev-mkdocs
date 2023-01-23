@@ -81,7 +81,7 @@ def generate_social_image(
         "file",
         help="Generator to use to create the social image. Valid options are: 'file' and 'dall_e'. Choose 'file' if you want to use an existing image from your local machine in the social share image.",
     ),
-    prompt: Optional[str] = typer.Option(
+    prompt: str = typer.Option(
         "Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render",
         help="The prompt to use for generating the image.",
     ),
@@ -92,7 +92,9 @@ def generate_social_image(
 ) -> None:
     """CLI command for generating a custom social share image"""
 
-    async def _generate_social_image(root_path, generator, prompt, image_path):
+    async def _generate_social_image(
+        root_path: str, generator: str, prompt: str, image_path: Optional[str]
+    ) -> None:
         try:
             await nbdev_mkdocs.social_image_generator.generate_social_image(
                 root_path=root_path,
