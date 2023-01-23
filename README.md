@@ -191,6 +191,8 @@ nbdev_mkdocs --help
     ╭─ Commands ───────────────────────────────────────────────────────────────────╮
     │ docs          Prepares files in **mkdocs/docs** and then runs **mkdocs       │
     │               build** command on them                                        │
+    │ docstring     Command for adding docstrings to classes and methods that      │
+    │               don't have one using docstring-gen library.                    │
     │ new           Creates files in **mkdocs** subdirectory needed for other      │
     │               **nbdev_mkdocs** subcommands                                   │
     │ prepare       Runs tests and prepares files in **mkdocs/docs** and then runs │
