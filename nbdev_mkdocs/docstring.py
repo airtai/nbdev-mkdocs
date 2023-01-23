@@ -4,23 +4,21 @@
 __all__ = ['logger', 'run_examples_from_docstring']
 
 # %% ../nbs/Docstring.ipynb 2
-from typing import *
-import sys
+import logging
 import os
-
 import re
-
+import sys
 import textwrap
-from subprocess import run, CalledProcessError  # nosec: B404
-from tempfile import TemporaryDirectory
 from pathlib import Path
+from subprocess import CalledProcessError, run  # nosec: B404
+from tempfile import TemporaryDirectory
+from typing import *
 
 import rich
 from rich import print
-from rich.console import Group, Console
+from rich.console import Console, Group
 from rich.panel import Panel
 from rich.rule import Rule
-import logging
 
 # %% ../nbs/Docstring.ipynb 3
 logging.basicConfig(level=logging.INFO)

@@ -4,45 +4,41 @@
 __all__ = ['new', 'new_cli', 'nbdev_mkdocs_docs', 'nbdev_mkdocs_docs_cli', 'prepare', 'prepare_cli', 'preview', 'preview_cli']
 
 # %% ../nbs/Mkdocs.ipynb 1
+import collections
+import datetime
+import importlib
+import multiprocessing
+import os
+import pkgutil
+import re
+import shlex
+import shutil
+import subprocess  # nosec: B404
+import sys
+import textwrap
+import types
+from configparser import ConfigParser
+from pathlib import Path
 from typing import *
 
-import os
-import re
-import collections
-from pathlib import Path
-import textwrap
-import shutil
-import types
-import pkgutil
-import importlib
-import subprocess  # nosec: B404
-import shlex
-import sys
-import multiprocessing
-import datetime
-import yaml
-
+import nbdev
 import typer
-
+import yaml
 from configupdater import ConfigUpdater, Section
 from configupdater.option import Option
-
-from configparser import ConfigParser
 from fastcore.script import call_parse
-
-import nbdev
-from nbdev.serve import proc_nbs
-from nbdev.process import NBProcessor
-from nbdev.frontmatter import FrontmatterProc
-from nbdev.quarto import prepare as nbdev_prepare
-from nbdev.quarto import refresh_quarto_yml, nbdev_readme
-from nbdev.doclinks import nbdev_export
-from nbdev.frontmatter import _fm2dict
 from fastcore.shutil import move
+from nbdev.doclinks import nbdev_export
+from nbdev.frontmatter import FrontmatterProc, _fm2dict
+from nbdev.process import NBProcessor
+from nbdev.quarto import nbdev_readme
+from nbdev.quarto import prepare as nbdev_prepare
+from nbdev.quarto import refresh_quarto_yml
+from nbdev.serve import proc_nbs
 
-from ._package_data import get_root_data_path
 from ._helpers.cli_doc import generate_cli_doc
-from ._helpers.utils import set_cwd, get_value_from_config
+from ._helpers.utils import get_value_from_config, set_cwd
+from ._package_data import get_root_data_path
 from .social_image_generator import _update_social_image_in_mkdocs_yml
 
 # %% ../nbs/Mkdocs.ipynb 5

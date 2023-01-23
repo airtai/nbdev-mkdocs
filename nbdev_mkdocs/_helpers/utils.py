@@ -5,13 +5,13 @@ __all__ = ['set_cwd', 'get_value_from_config', 'is_local_path', 'add_counter_suf
 
 # %% ../../nbs/Utils.ipynb 1
 import os
-from typing import *
-from urllib.parse import urlparse
+from configparser import ConfigParser
 from contextlib import contextmanager
 from pathlib import Path
+from typing import *
+from urllib.parse import urlparse
 
 import nbdev
-from configparser import ConfigParser
 
 # %% ../../nbs/Utils.ipynb 3
 @contextmanager

@@ -4,9 +4,8 @@
 __all__ = ['get_root_data_path']
 
 # %% ../nbs/PackageData.ipynb 1
-from typing import *
-
 from pathlib import Path
+from typing import *
 
 # %% ../nbs/PackageData.ipynb 2
 def get_root_data_path() -> Path:

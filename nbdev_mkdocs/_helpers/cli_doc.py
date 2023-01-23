@@ -4,16 +4,16 @@
 __all__ = ['generate_cli_doc']
 
 # %% ../../nbs/CLI_Doc_Helper.ipynb 1
-from typing import *
 import importlib
 import importlib.util
 import sys
 from pathlib import Path
+from typing import *
 
 import click
 import click.core
-from click import Command, Group  # , Option
 import typer
+from click import Command, Group  # , Option
 from typer.testing import CliRunner
 
 # %% ../../nbs/CLI_Doc_Helper.ipynb 3

@@ -4,14 +4,15 @@
 __all__ = ['generate_social_image']
 
 # %% ../nbs/Social_Image_Generator.ipynb 1
-from typing import *
-from pathlib import Path
-import re
-import os
 import asyncio
+import os
+import re
 import shutil
-from tempfile import TemporaryDirectory
+from contextlib import contextmanager
 from enum import Enum
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from typing import *
 
 import openai
 import typer
@@ -19,10 +20,10 @@ from playwright.async_api import async_playwright
 from ruamel.yaml import YAML
 
 from nbdev_mkdocs._helpers.utils import (
-    set_cwd,
+    add_counter_suffix_to_filename,
     get_value_from_config,
     is_local_path,
-    add_counter_suffix_to_filename,
+    set_cwd,
 )
 from ._package_data import get_root_data_path
 
@@ -44,7 +45,7 @@ def _generate_ai_image(prompt: str) -> str:
     image_url: str = response["data"][0]["url"]
     return image_url
 
-# %% ../nbs/Social_Image_Generator.ipynb 5
+# %% ../nbs/Social_Image_Generator.ipynb 6
 def _generate_html_str(root_path: str, image_url: str) -> str:
     """Generate HTML string for the social card.
 
@@ -89,7 +90,7 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
 
         return _html_template
 
-# %% ../nbs/Social_Image_Generator.ipynb 8
+# %% ../nbs/Social_Image_Generator.ipynb 9
 async def _capture_and_save_screenshot(src_path: str, dst_path: str) -> None:
     """Capture screenshot of an HTML file from source directory and save the
     output in destination directory
@@ -125,7 +126,7 @@ async def _capture_and_save_screenshot(src_path: str, dst_path: str) -> None:
     finally:
         await browser.close()
 
-# %% ../nbs/Social_Image_Generator.ipynb 10
+# %% ../nbs/Social_Image_Generator.ipynb 11
 async def _create_social_image(root_path: str, image_url: str) -> None:
     """Create social image for the project
 
@@ -156,7 +157,7 @@ async def _create_social_image(root_path: str, image_url: str) -> None:
 
         await _capture_and_save_screenshot(d, root_path)
 
-# %% ../nbs/Social_Image_Generator.ipynb 12
+# %% ../nbs/Social_Image_Generator.ipynb 13
 def _unescape_exclamation_mark(text: str) -> str:
     """Replace the URL-encoded `!%21` character sequence with `!!` in a string.
 
@@ -174,7 +175,7 @@ def _unescape_exclamation_mark(text: str) -> str:
     text = re.sub(pattern, r": !!", text)
     return text
 
-# %% ../nbs/Social_Image_Generator.ipynb 14
+# %% ../nbs/Social_Image_Generator.ipynb 15
 def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str) -> None:
     """Update social image link in mkdocs yml file
 
@@ -196,7 +197,7 @@ def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str) -> None:
     config["extra"]["social_image"] = image_url
     yaml.dump(config, mkdocs_yml_path, transform=_unescape_exclamation_mark)
 
-# %% ../nbs/Social_Image_Generator.ipynb 16
+# %% ../nbs/Social_Image_Generator.ipynb 17
 def _update_social_image_in_site_overrides(root_path: str, image_url: str) -> None:
     """Update social image link in site_overrides HTML template
 
@@ -235,7 +236,7 @@ def _update_social_image_in_site_overrides(root_path: str, image_url: str) -> No
         with open(site_overrides_path, "w") as f:
             f.write(_new_text)
 
-# %% ../nbs/Social_Image_Generator.ipynb 19
+# %% ../nbs/Social_Image_Generator.ipynb 20
 class _IMG_Generator(str, Enum):
     """An enumeration class for the different types of image generators.
 
@@ -311,7 +312,7 @@ def _generate_image_url(
 
     return image_url
 
-# %% ../nbs/Social_Image_Generator.ipynb 26
+# %% ../nbs/Social_Image_Generator.ipynb 27
 async def generate_social_image(
     root_path: str,
     generator: str = "file",

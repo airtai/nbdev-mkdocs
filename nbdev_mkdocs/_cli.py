@@ -4,16 +4,16 @@
 __all__ = ['new', 'prepare', 'preview', 'docs']
 
 # %% ../nbs/CLI.ipynb 1
-from typing import *
-from pathlib import Path
 from asyncio import run as aiorun
+from pathlib import Path
+from typing import *
 
 import typer
+from docstring_gen.docstring_generator import add_docstring_to_source
 from nbdev.config import get_config
 
 import nbdev_mkdocs
 import nbdev_mkdocs.mkdocs
-from docstring_gen.docstring_generator import add_docstring_to_source
 
 # %% ../nbs/CLI.ipynb 4
 _app = typer.Typer(help="")
