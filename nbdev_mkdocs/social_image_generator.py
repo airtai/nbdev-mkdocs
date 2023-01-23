@@ -77,7 +77,7 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
         return _html_template
 
 # %% ../nbs/Social_Image_Generator.ipynb 8
-async def _capture_and_save_screenshot(src_path: str, dst_path: str):
+async def _capture_and_save_screenshot(src_path: str, dst_path: str) -> None:
     """Capture screenshot of an HTML file from source directory and save the
     output in destination directory
 
@@ -109,7 +109,7 @@ async def _capture_and_save_screenshot(src_path: str, dst_path: str):
         await browser.close()
 
 # %% ../nbs/Social_Image_Generator.ipynb 10
-async def _create_social_image(root_path: str, image_url: str):
+async def _create_social_image(root_path: str, image_url: str) -> None:
     """Create social image for the project
 
     Args:
@@ -144,7 +144,7 @@ def _unescape_exclamation_mark(text: str) -> str:
     return text
 
 # %% ../nbs/Social_Image_Generator.ipynb 14
-def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
+def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str) -> None:
     """Update social image link in mkdocs yml file
 
     Args:
@@ -163,7 +163,7 @@ def _update_social_image_in_mkdocs_yml(root_path: str, image_url: str):
     yaml.dump(config, mkdocs_yml_path, transform=_unescape_exclamation_mark)
 
 # %% ../nbs/Social_Image_Generator.ipynb 16
-def _update_social_image_in_site_overrides(root_path: str, image_url: str):
+def _update_social_image_in_site_overrides(root_path: str, image_url: str) -> None:
     """Update social image link in site_overrides HTML template
 
     Args:
@@ -262,7 +262,7 @@ async def generate_social_image(
     generator: str = "file",
     prompt: str = "Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render",
     image_path: Optional[str] = None,
-):
+) -> None:
     """Generate a custom image for social card using the OpenAI Image API.
 
     Args:

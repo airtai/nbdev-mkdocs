@@ -15,7 +15,7 @@ from configparser import ConfigParser
 
 # %% ../../nbs/Utils.ipynb 3
 @contextmanager
-def set_cwd(cwd_path: Union[Path, str]):
+def set_cwd(cwd_path: Union[Path, str]) -> Generator:
 
     cwd_path = Path(cwd_path)
     original_cwd = os.getcwd()
@@ -39,7 +39,7 @@ def get_value_from_config(root_path: str, config_name: str) -> str:
     return config["DEFAULT"][config_name]
 
 # %% ../../nbs/Utils.ipynb 7
-def is_local_path(path):
+def is_local_path(path: str) -> bool:
     # Check if the path is an absolute path
     if os.path.isabs(path):
         return True
@@ -54,7 +54,7 @@ def is_local_path(path):
     return True
 
 # %% ../../nbs/Utils.ipynb 9
-def add_counter_suffix_to_filename(src_path: Path):
+def add_counter_suffix_to_filename(src_path: Path) -> None:
     """Add a counter suffix to the given file
 
     Args:

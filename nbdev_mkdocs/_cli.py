@@ -20,7 +20,7 @@ _app = typer.Typer(help="")
 @_app.command(
     help="Creates files in **mkdocs** subdirectory needed for other **nbdev_mkdocs** subcommands",
 )
-def new(root_path: str = typer.Option(".", help="")):
+def new(root_path: str = typer.Option(".", help="")) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.new(root_path=root_path)
@@ -32,7 +32,7 @@ def new(root_path: str = typer.Option(".", help="")):
 @_app.command(
     help="Runs tests and prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
-def prepare(root_path: str = typer.Option(".", help="")):
+def prepare(root_path: str = typer.Option(".", help="")) -> None:
     """CLI command for running tests and creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.prepare(root_path=root_path)
@@ -49,7 +49,7 @@ def preview(
         ".", help="path under which mkdocs directory will be created"
     ),
     port: int = typer.Option(4000, help="port to use"),
-):
+) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.preview(root_path=root_path, port=port)
@@ -61,7 +61,7 @@ def preview(
 @_app.command(
     help="Prepares files in **mkdocs/docs** and then runs **mkdocs build** command on them ",
 )
-def docs(root_path: str = typer.Option(".", help="Project's root path.")):
+def docs(root_path: str = typer.Option(".", help="Project's root path.")) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
         nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs(
@@ -89,7 +89,7 @@ def generate_social_image(
         None,
         help="Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used.",
     ),
-):
+) -> None:
     """CLI command for generating a custom social share image"""
 
     async def _generate_social_image(root_path, generator, prompt, image_path):
