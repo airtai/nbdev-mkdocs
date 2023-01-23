@@ -6,6 +6,8 @@
 
 ### New Features
 
+- Rename the CLI command "nbdev_mkdocs generate-social-image" to "nbdev_mkdocs social-image generate" ([#127](https://github.com/airtai/nbdev-mkdocs/issues/127))
+
 - Integrate docstring-gen into nbdev-mkdocs ([#123](https://github.com/airtai/nbdev-mkdocs/issues/123))
 
 ### Bugs Squashed
@@ -15,6 +17,7 @@
 - nbdev docs: The CI build status badge should not appear in the documentation. ([#113](https://github.com/airtai/nbdev-mkdocs/issues/113))
 
 - nbdev docs: Locally referenced images are not showing up in the docs ([#110](https://github.com/airtai/nbdev-mkdocs/issues/110))
+
 
 
 ## 0.0.3
