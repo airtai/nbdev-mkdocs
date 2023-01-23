@@ -1,7 +1,8 @@
 from pkg_resources import parse_version
 from configparser import ConfigParser
 import setuptools
-assert parse_version(setuptools.__version__)>=parse_version('36.2')
+# [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+assert parse_version(setuptools.__version__)>=parse_version('36.2') # nosec: B101
 
 # note: all settings are in settings.ini; edit there, not here
 config = ConfigParser(delimiters=['='])
@@ -10,7 +11,8 @@ cfg = config['DEFAULT']
 
 cfg_keys = 'version description keywords author author_email'.split()
 expected = cfg_keys + "lib_name user branch license status min_python audience language".split()
-for o in expected: assert o in cfg, "missing expected setting: {}".format(o)
+# [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+for o in expected: assert o in cfg, "missing expected setting: {}".format(o) # nosec: B101
 setup_cfg = {o:cfg[o] for o in cfg_keys}
 
 licenses = {
