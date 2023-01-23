@@ -2,6 +2,21 @@
 
 <!-- do not remove -->
 
+## 0.0.4
+
+### New Features
+
+- Integrate docstring-gen into nbdev-mkdocs ([#123](https://github.com/airtai/nbdev-mkdocs/issues/123))
+
+### Bugs Squashed
+
+- Hide the badges displayed on the index page in the docs ([#118](https://github.com/airtai/nbdev-mkdocs/issues/118))
+
+- nbdev docs: The CI build status badge should not appear in the documentation. ([#113](https://github.com/airtai/nbdev-mkdocs/issues/113))
+
+- nbdev docs: Locally referenced images are not showing up in the docs ([#110](https://github.com/airtai/nbdev-mkdocs/issues/110))
+
+
 ## 0.0.3
 
 ### Bugs Squashed
