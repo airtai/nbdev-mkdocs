@@ -15,7 +15,7 @@ def get_root_data_path() -> Path:
         ``` python
         from nbdev_mkdocs._package_data import get_root_data_path
 
-        req_path = get_root_data_path() / "requirements.txt"
+        req_path = get_root_data_path() / "mkdocs_template.yml"
         print(f"Path is: {req_path.resolve()}")
         assert req_path.exists()
 
