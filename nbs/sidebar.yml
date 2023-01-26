@@ -2,6 +2,6 @@ website:
   sidebar:
     contents:
       - index.ipynb
-      - section: guides
+      - section: Guides
         contents:
           - guides/Guide_01_End_To_End_Walkthrough.ipynb
