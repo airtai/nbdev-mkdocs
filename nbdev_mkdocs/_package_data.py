@@ -15,9 +15,9 @@ def get_root_data_path() -> Path:
         ``` python
         from nbdev_mkdocs._package_data import get_root_data_path
 
-        mkdocs_template = get_root_data_path() / "mkdocs_template.yml"
-        print(f"Path is: {mkdocs_template.resolve()}")
-        assert mkdocs_template.exists()
+        mkdocs_template_path = get_root_data_path() / "mkdocs_template.yml"
+        print(f"Path is: {mkdocs_template_path.resolve()}")
+        assert mkdocs_template_path.exists()
 
         ```
 
