@@ -2,7 +2,7 @@ website:
   sidebar:
     contents:
       - index.ipynb
-      - section: guides
+      - section: Guides
         contents:
           - guides/Basic_User_Guide.ipynb
           - section: Advanced User Guide
