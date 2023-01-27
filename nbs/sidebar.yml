@@ -4,4 +4,12 @@ website:
       - index.ipynb
       - section: Guides
         contents:
-          - guides/Guide_01_End_To_End_Walkthrough.ipynb
+          - guides/Basic_User_Guide.ipynb
+          - section: Advanced User Guide
+            contents:
+              - guides/Auto_Generate_Docstrings.ipynb
+              - guides/Configure_Social_Share_Image.ipynb
+              - guides/Add_Guides.ipynb
+              - guides/Customizing_The_Sidebar.ipynb
+              - guides/Add_Release_Notes.ipynb
+              - guides/Material_for_MkDocs_Customization.ipynb
