@@ -35,7 +35,6 @@ from nbdev.quarto import prepare as nbdev_prepare
 from nbdev.quarto import refresh_quarto_yml
 from nbdev.serve import proc_nbs
 
-import nbdev_mkdocs
 from ._helpers.cli_doc import generate_cli_doc
 from ._helpers.utils import get_value_from_config, set_cwd
 from ._package_data import get_root_data_path
