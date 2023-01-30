@@ -91,7 +91,7 @@ WORKDIR /work
 ENTRYPOINT []
 COPY user_startup.sh /var
 RUN chmod 777 /var/user_startup.sh
-CMD ["/bin/bash", "-c", "chown -R $USER /home/$USER && sudo -u $USER /var/user_startup.sh && sudo --preserve-env=\"$PRESERVE_ENVS\" -u $USER jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"]
+CMD ["/bin/bash", "-c", "chown -R $USER /home/$USER && sudo -u $USER /var/user_startup.sh && sudo --preserve-env=\"$PRESERVE_ENVS\" -u $USER PATH=$PATH:/home/$USER/.local/bin jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"]
 
 EXPOSE 8888
 
