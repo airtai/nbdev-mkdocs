@@ -7,9 +7,10 @@ website:
           - guides/Basic_User_Guide.ipynb
           - section: Advanced User Guide
             contents:
+              - guides/Add_Guides.ipynb
+              - guides/Add_Release_Notes.ipynb
               - guides/Auto_Generate_Docstrings.ipynb
               - guides/Configure_Social_Share_Image.ipynb
-              - guides/Add_Guides.ipynb
               - guides/Customizing_The_Sidebar.ipynb
-              - guides/Add_Release_Notes.ipynb
+              - guides/Handle_Pandas_In_The_Output.ipynb
               - guides/Material_for_MkDocs_Customization.ipynb
