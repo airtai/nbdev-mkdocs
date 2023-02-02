@@ -10,7 +10,7 @@ website:
               - guides/Adding_Guides.ipynb
               - guides/Adding_Release_Notes.ipynb
               - guides/Customizing_The_Sidebar.ipynb
-              - guides/Automatically_Generate_Docstrings.ipynb
+              - guides/Auto_Generating_Docstrings.ipynb
               - guides/Setting_up_social_cards.ipynb
               - guides/Handling_Pandas_In_The_Output.ipynb
               - guides/Advanced_Customization_Options.ipynb
