@@ -1193,7 +1193,7 @@ def _get_docs_deploy_params(
 
     else:
         ret_val["doc_deployment_version"] = current_docs_version
-        ret_val["doc_deployment_tag"] = current_docs_version
+        ret_val["doc_deployment_tag"] = "dev"
 
     return ret_val
 
