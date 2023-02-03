@@ -246,7 +246,6 @@ def _get_docs_for_click(
 
 # %% ../../nbs/CLI_Doc_Helper.ipynb 4
 def generate_cli_doc(module_name: str, app_name: str) -> str:
-
     """Generate CLI documentation for a Typer app.
 
     Args:
