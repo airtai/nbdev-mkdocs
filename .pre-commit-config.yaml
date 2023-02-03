@@ -17,10 +17,10 @@ repos:
   - id: bandit
     #args: ["-r", "nbdev_mkdocs"]
 
-#- repo: https://github.com/returntocorp/semgrep
-#  rev: "v1.6.0"
-#  hooks:
-#    - id: semgrep
-#      name: Semgrep 
-#      args: ["--config", "auto", "--error"]
+- repo: https://github.com/returntocorp/semgrep
+  rev: "v1.6.0"
+  hooks:
+    - id: semgrep
+      name: Semgrep 
+      args: ["--config", "auto", "--error"]
 
