@@ -24,6 +24,7 @@ from nbdev_mkdocs._helpers.utils import (
     get_value_from_config,
     is_local_path,
     set_cwd,
+    raise_error_and_exit,
 )
 from ._package_data import get_root_data_path
 
@@ -224,12 +225,9 @@ def _update_social_image_in_site_overrides(root_path: str, image_url: str) -> No
             Path(root_path) / "mkdocs" / "site_overrides" / "main.html"
         )
         if not site_overrides_path.exists():
-            typer.secho(
-                f"Unexpected error: path {site_overrides_path.resolve()} does not exists!",
-                err=True,
-                fg=typer.colors.RED,
+            raise_error_and_exit(
+                f"Unexpected error: path {site_overrides_path.resolve()} does not exists!"
             )
-            raise typer.Exit(code=1)
 
         with open(site_overrides_path, "r") as f:
             _new_text = f.read()
@@ -294,12 +292,9 @@ def _generate_image_url(
                 ).resolve()
 
                 if not _image_path.exists():
-                    typer.secho(
-                        f"Unexpected error: path {_image_path.resolve()} does not exists!",
-                        err=True,
-                        fg=typer.colors.RED,
+                    raise_error_and_exit(
+                        f"Unexpected error: path {_image_path.resolve()} does not exists!"
                     )
-                    raise typer.Exit(code=1)
 
                 image_url = str(_image_path)
 
