@@ -176,7 +176,6 @@ def _create_docstring_gen_sub_cmd(_app: typer.Typer = _app) -> None:
             help="The number of docstrings to be generated for each function or class, with the best one being added to the source code. Please note that a higher number will deplete your token quota faster.",
         ),
     ) -> None:
-
         """Add docstring to classes and methods that don't have one by using the 'docstring-gen' library
 
         Args:
