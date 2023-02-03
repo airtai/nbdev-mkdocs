@@ -1215,18 +1215,15 @@ def _update_deploy_yaml_if_docs_versioning_enabled(root_path: str) -> None:
     settings_config.read(settings_path)
     if settings_config["DEFAULT"]["enable_docs_versioning"] == "False":
         return
+
     try:
-        with open(deploy_yaml_path, "r") as file:
-            deploy_config = yaml.safe_load(file)
-
-        deploy_config["jobs"]["deploy"]["steps"][0]["with"] = _get_docs_deploy_params(
-            root_path,
-            settings_config["DEFAULT"]["version"],
-            settings_config["DEFAULT"]["override_docs_patch_deploy"],
-        )
-
-        with open(deploy_yaml_path, "w") as file:
-            yaml.dump(deploy_config, file)
+        with _read_yaml_file(deploy_yaml_path) as (yaml, config):
+            config["jobs"]["deploy"]["steps"][0]["with"] = _get_docs_deploy_params(
+                root_path,
+                settings_config["DEFAULT"]["version"],
+                settings_config["DEFAULT"]["override_docs_patch_deploy"],
+            )
+            yaml.dump(config, deploy_yaml_path)
 
     except Exception as e:
         typer.secho(
