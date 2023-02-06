@@ -53,6 +53,11 @@ then
 fi
 echo AIRT_PROJECT variable set to $AIRT_PROJECT
 
+if test -z "$OPENAI_API_KEY"
+then
+      echo 'WARNING: OPENAI_API_KEY variable not set, automatic generation of docstrings will not work!'
+fi
+
 echo Using $AIRT_DOCKER
 docker image ls $AIRT_DOCKER
 
@@ -63,6 +68,7 @@ docker run -it --rm $GPU_PARAMS \
     -v /etc/passwd:/etc/passwd -v /etc/group:/etc/group -v /etc/shadow:/etc/shadow \
     -v $HOME/.ssh:$HOME/.ssh -v $HOME/.gitconfig:$HOME/.gitconfig  \
     -e USER=$USER -e USERNAME=$USERNAME \
+    -e OPENAI_API_KEY=$OPENAI_API_KEY \
     -e GITHUB_TOKEN=$GITHUB_TOKEN \
     $AIRT_DOCKER
 
