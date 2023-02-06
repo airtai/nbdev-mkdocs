@@ -251,7 +251,7 @@ def _filter_exclustion_list(versions_to_delete: List[str], exclude: str) -> List
     return list(set(versions_to_delete) - set(exclusion_list))
 
 # %% ../nbs/CLI.ipynb 15
-def _add_git_args(cmd: list[str], rebase: bool, ignore: bool, prefix: str) -> List[str]:
+def _add_git_args(cmd: List[str], rebase: bool, ignore: bool, prefix: str) -> List[str]:
     if rebase:
         cmd = cmd + ["--rebase"]
     if ignore:
@@ -300,6 +300,9 @@ def delete_doc_versions(
 ) -> None:
     """Delete the deployed release candidate documentation versions."""
     try:
+        typer.echo(f"Fetching {remote}/{branch} for changes.")
+        nbdev_mkdocs.mkdocs._sprun(f"git fetch {remote} {branch} --depth=1")
+
         cmd = ["-b", branch, "-r", remote, "-F", config_file]
         cmd = _add_git_args(cmd, rebase, ignore, prefix)
         nl = "\n"
