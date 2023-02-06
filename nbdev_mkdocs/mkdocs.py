@@ -1195,7 +1195,10 @@ def _update_deploy_yaml_if_docs_versioning_enabled(root_path: str) -> None:
     try:
         with _read_yaml_file(deploy_yaml_path) as (yaml, config):
             if docs_versioning == "None":
-                config["jobs"]["deploy"]["steps"][0].pop("with", None)
+                try:
+                    del config["jobs"]["deploy"]["steps"][0]["with"]
+                except KeyError as e:
+                    return
             else:
                 config["jobs"]["deploy"]["steps"][0]["with"] = _get_docs_deploy_params(
                     root_path,
