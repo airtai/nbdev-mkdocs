@@ -178,6 +178,8 @@ def _unescape_exclamation_mark(text: str) -> str:
 @contextmanager
 def _read_yaml_file(file_path: Path) -> Generator[Tuple[YAML, Any], None, None]:
     yaml = YAML()
+    yaml.preserve_quotes = True
+
     config = yaml.load(file_path)
     yield yaml, config
 
