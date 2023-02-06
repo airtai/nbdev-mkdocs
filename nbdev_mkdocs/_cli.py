@@ -317,12 +317,12 @@ def delete_doc_versions(
 
         if deployed_docs_list == "":
             typer.echo(
-                "No release candidate documentation versions have been deployed."
+                "\nNo release candidate documentation versions have been deployed."
             )
             return
 
         typer.echo(
-            f"List of deployed release candidate documentation versions: \n{deployed_docs_list}\n"
+            f"\nList of deployed release candidate documentation versions: \n{deployed_docs_list}\n"
         )
         option = typer.prompt(
             "\nSelect an option: \n1. Delete all versions listed above \n2. Retain some versions while deleting others \n3. Abort\n\n"
