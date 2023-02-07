@@ -1185,8 +1185,11 @@ def _update_deploy_yaml_if_docs_versioning_enabled(root_path: str) -> None:
 
     settings_config = ConfigParser()
     settings_config.read(settings_path)
-    docs_versioning = settings_config["DEFAULT"]["docs_versioning"]
 
+    if not settings_config.has_option("DEFAULT", "docs_versioning"):
+        return
+
+    docs_versioning = settings_config["DEFAULT"]["docs_versioning"]
     if docs_versioning not in ALLOWED_DOCS_VERSIONING_VALUES:
         raise_error_and_exit(
             f"Error: Invalid value set for 'docs_versioning' in settings.ini file: '{docs_versioning}'. Allowed values are [{', '.join(ALLOWED_DOCS_VERSIONING_VALUES)}]"
@@ -1210,7 +1213,7 @@ def _update_deploy_yaml_if_docs_versioning_enabled(root_path: str) -> None:
     except Exception as e:
         raise_error_and_exit(f"Unexpected error while parsing deploy.yaml: {e}")
 
-# %% ../nbs/Mkdocs.ipynb 93
+# %% ../nbs/Mkdocs.ipynb 94
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False) -> None:
     """Prepare mkdocs documentation
 
@@ -1264,7 +1267,7 @@ def prepare(root_path: str, no_test: bool = False) -> None:
 
     nbdev_mkdocs_docs(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 96
+# %% ../nbs/Mkdocs.ipynb 97
 def preview(root_path: str, port: Optional[int] = None) -> None:
     """Preview the mkdocs documentation.
 

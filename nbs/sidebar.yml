@@ -12,6 +12,7 @@ website:
               - guides/Customizing_The_Sidebar.ipynb
               - guides/Auto_Generating_Docstrings.ipynb
               - guides/Setting_up_social_cards.ipynb
+              - guides/Setting_Up_Document_Versioning.ipynb
               - guides/Handling_Pandas_In_The_Output.ipynb
               - guides/Advanced_Customization_Options.ipynb
 
