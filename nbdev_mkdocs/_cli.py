@@ -373,7 +373,7 @@ def delete_doc_versions(
                     f"\nSuccessfully deleted the below version(s):\n{nl.join(versions_to_delete)}"
                 )
                 typer.echo(
-                    "\n Once the 'pages build and deployment' Github action completes, view the project documentation URL to see the changes."
+                    "\nOnce the 'pages build and deployment' Github action completes, view the project documentation URL to see the changes."
                 )
 
     except Exception as e:
