@@ -5,5 +5,5 @@ jt -t airtd -cellw 90% -N -T  --logo /tmp/airt-neg-trans-small.png --fav_icon_di
 jupyter nbextension install https://github.com/airtai/jupyter-docstring-gen/archive/main.zip --user
 
 jupyter nbextension enable jupyter-black-master/jupyter-black
-# jupyter nbextension enable jupyter-docstring-gen-main/jupyter-docstring-gen
+jupyter nbextension enable jupyter-docstring-gen-main/jupyter-docstring-gen
 
