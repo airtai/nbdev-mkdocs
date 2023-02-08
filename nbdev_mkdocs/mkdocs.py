@@ -42,10 +42,7 @@ from nbdev_mkdocs._helpers.utils import (
     raise_error_and_exit,
 )
 from ._package_data import get_root_data_path
-from nbdev_mkdocs.social_image_generator import (
-    _update_social_image_in_mkdocs_yml,
-    _read_yaml_file,
-)
+from .social_image_generator import _update_social_image_in_mkdocs_yml
 
 # %% ../nbs/Mkdocs.ipynb 5
 def _create_mkdocs_dir(root_path: str) -> None:
