@@ -10,7 +10,9 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update
 
-RUN apt-get install --only-upgrade linux-libc-dev
+# security updates
+RUN apt-get install --only-upgrade linux-libc-dev libssl1.1 openssl
+
 RUN apt-mark hold cuda-compat-11-2 cuda-cudart-11-2 cuda-nvtx-11-2 libcusparse-11-2 libnpp-11-2 \
       libcudnn8 libnvinfer-plugin7 libnvinfer7
 
