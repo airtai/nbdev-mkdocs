@@ -103,5 +103,4 @@ extra_javascript:
 extra:
   version:
     provider: mike
-    default: latest
   social_image: ""

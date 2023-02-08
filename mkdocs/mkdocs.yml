@@ -105,7 +105,6 @@ extra_javascript:
 extra:
   version:
     provider: mike
-    default: latest
   analytics:
     provider: google
     property: G-0DTVVPJ60K
