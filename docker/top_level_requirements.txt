@@ -1,4 +1,4 @@
-nbdev>=2.3.9
+nbdev==2.3.11
 twine>=4.0.1
 notebook
 jupyter_contrib_nbextensions
