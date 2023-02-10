@@ -1,2 +1,4 @@
 nbdev_mkdocs/package_data/mkdocs_template/*
+mkdocs/site_overrides/main.html
+package_data/mkdocs_template/site_overrides/main.html
 
