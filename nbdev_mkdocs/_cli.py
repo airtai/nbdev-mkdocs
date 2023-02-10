@@ -271,12 +271,10 @@ def delete_pre_release_docs() -> None:
             f"\nList of deployed pre-release documentation version(s): \n{deployed_docs_list}\n"
         )
 
-        delete = typer.confirm(
-            "Are you sure you want to delete all the above version(s)?"
-        )
+        delete = typer.confirm("Delete the pre-release version(s) listed above?")
         if not delete:
             typer.echo(
-                "No changes made. Pre-release documentation versions remain untouched."
+                "\nNo changes made. Pre-release documentation versions remain untouched."
             )
             return
 
@@ -288,7 +286,7 @@ def delete_pre_release_docs() -> None:
             stdout=subprocess.PIPE,
         )
         if result.returncode == 0:
-            typer.echo(f"\nSuccessfully deleted the above version(s)")
+            typer.echo(f"\nSuccessfully deleted the version(s) listed above.")
             typer.echo(
                 "\nOnce the 'pages build and deployment' Github action completes, view the project documentation URL to see the changes."
             )
