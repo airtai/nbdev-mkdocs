@@ -105,6 +105,7 @@ extra_javascript:
 extra:
   version:
     provider: mike
+    default: dev
   analytics:
     provider: google
     property: G-0DTVVPJ60K
