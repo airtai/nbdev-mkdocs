@@ -2,10 +2,14 @@
 
 <!-- do not remove -->
 
-## 1.0.0
+## 0.1.0
 
 ### New Features
 
+- Add documentation versioning ([#72](https://github.com/airtai/nbdev-mkdocs/issues/72))
+  - https://squidfunk.github.io/mkdocs-material/setup/setting-up-versioning/
+
+- add detect-secrets to pre-commit hooks ([#138](https://github.com/airtai/nbdev-mkdocs/issues/138))
 
 - Integrate docstring-gen into nbdev-mkdocs ([#123](https://github.com/airtai/nbdev-mkdocs/issues/123))
 
