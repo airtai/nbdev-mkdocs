@@ -2,122 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/CHANGELOG/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/CLI/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/CLI_Doc_Helper/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/Docstring/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/Mkdocs/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/PackageData/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>None</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/Social_Image_Generator/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/Testing/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/Utils/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Adding_Guides/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Adding_Release_Notes/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Advanced_Customization_Options/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Auto_Generating_Docstrings/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Basic_User_Guide/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Customizing_The_Sidebar/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Handling_Pandas_In_The_Output/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Setting_Up_Document_Versioning/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/guides/Setting_up_social_cards/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/nbdev_mkdocs_api_docs/nbdev_mkdocs/docstring/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/nbdev_mkdocs_api_docs/nbdev_mkdocs/mkdocs/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/nbdev_mkdocs_api_docs/nbdev_mkdocs/social_image_generator/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://airtai.github.io/nbdev-mkdocs/0.1/nbdev_mkdocs_cli_docs/nbdev_mkdocs/</loc>
-         <lastmod>2023-02-23</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
