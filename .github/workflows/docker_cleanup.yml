@@ -10,7 +10,7 @@ on:  [push]
 
 jobs:
   delete-untagged-nbdev-mkdocs-images:
-    name: Delete Untagged Images
+    name: Delete Untagged nbdev-mkdocs Images
     runs-on: ubuntu-latest
     steps:
       - uses: bots-house/ghcr-delete-image-action@v1.1.0
@@ -24,7 +24,7 @@ jobs:
           untagged-keep-latest: 1
 
   delete-untagged-nbdev-mkdocs-tensorflow-images:
-    name: Delete Untagged Images
+    name: Delete Untagged nbdev-mkdocs-tensorflow-2.11.0 Images
     runs-on: ubuntu-latest
     steps:
       - uses: bots-house/ghcr-delete-image-action@v1.1.0
