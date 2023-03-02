@@ -1,0 +1,37 @@
+name: Cleanup Untagged Images
+
+on:
+  # every sunday at 00:00
+  schedule:
+    - cron: "0 0 * * SUN"
+  # or manually
+  workflow_dispatch:
+
+jobs:
+  delete-untagged-nbdev-mkdocs-images:
+    name: Delete Untagged Images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          # NOTE: at now only orgs is supported
+          owner: airtai
+          name: nbdev-mkdocs
+
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Keep latest N untagged images
+          untagged-keep-latest: 1
+
+  delete-untagged-nbdev-mkdocs-tensorflow-images:
+    name: Delete Untagged Images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          # NOTE: at now only orgs is supported
+          owner: airtai
+          name: nbdev-mkdocs-tensorflow-2.11.0
+
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Keep latest N untagged images
+          untagged-keep-latest: 1
