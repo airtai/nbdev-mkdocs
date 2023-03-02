@@ -1,12 +1,11 @@
 name: Cleanup Untagged Images
-on:  [push]
 
-# on:
-#   # every sunday at 00:00
-#   schedule:
-#     - cron: "0 0 * * SUN"
-#   # or manually
-#   workflow_dispatch:
+on:
+  # every sunday at 00:00
+  schedule:
+    - cron: "0 0 * * SUN"
+  # or manually
+  workflow_dispatch:
 
 jobs:
   delete-untagged-nbdev-mkdocs-images:
