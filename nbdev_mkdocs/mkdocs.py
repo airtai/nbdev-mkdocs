@@ -4,6 +4,7 @@
 __all__ = ['new', 'nbdev_mkdocs_docs', 'prepare', 'preview']
 
 # %% ../nbs/Mkdocs.ipynb 1
+import ast
 import collections
 import datetime
 import importlib
@@ -26,8 +27,17 @@ import typer
 import yaml
 from configupdater import ConfigUpdater, Section
 from configupdater.option import Option
+from fastcore.foundation import L
 from fastcore.shutil import move
-from nbdev.doclinks import nbdev_export
+from nbdev.config import get_config
+from nbdev.doclinks import (
+    nbdev_export,
+    _get_modidx,
+    _build_modidx,
+    _iter_py_cells,
+    _nbpath2html,
+    patch_name,
+)
 from nbdev.frontmatter import FrontmatterProc, _fm2dict
 from nbdev.process import NBProcessor
 from nbdev.quarto import nbdev_readme
@@ -1142,6 +1152,40 @@ def _copy_docs_overrides(root_path: str) -> None:
     shutil.copytree(src_path, dst_path)
 
 # %% ../nbs/Mkdocs.ipynb 86
+def _get_modidx_nbdev_mkdocs(
+    py_path: Path, code_root: str, nbs_path: Path
+) -> Dict[str, Dict[str, Tuple[str, str]]]:
+    "Get module symbol index for a Python source file"
+    cfg = get_config()
+    rel_name = py_path.resolve().relative_to(code_root).as_posix()
+    mod_name = ".".join(rel_name.rpartition(".")[0].split("/"))
+    repo_name = mod_name.split(".")[0]
+
+    _def_types = ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef
+    d = {}
+    for cell in _iter_py_cells(py_path):
+        if cell.nb == "auto":
+            continue
+        loc = _nbpath2html(cell.nb_path.relative_to(nbs_path))
+
+        def _stor(nm: str) -> None:
+            for n in L(nm):
+                #                 d[f"{mod_name}.{n}"] = f"{loc.as_posix()}#{n.lower()}", rel_name
+                d[f"{mod_name}.{n}"] = (
+                    f"{repo_name}_api_docs/{repo_name}/{mod_name.split('.')[1]}/#{mod_name}.{n}",
+                    rel_name,
+                )
+
+        for tree in ast.parse(cell.code).body:
+            if isinstance(tree, _def_types):
+                _stor(patch_name(tree))
+            if isinstance(tree, ast.ClassDef):
+                for t2 in tree.body:
+                    if isinstance(t2, _def_types):
+                        _stor(f"{tree.name}.{t2.name}")
+    return {mod_name: d}
+
+# %% ../nbs/Mkdocs.ipynb 88
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False) -> None:
     """Prepare mkdocs documentation
 
@@ -1164,6 +1208,9 @@ def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False) -> 
 
         lib_name = get_value_from_config(root_path, "lib_name")
         lib_path = get_value_from_config(root_path, "lib_path")
+
+        nbdev.doclinks._get_modidx = _get_modidx_nbdev_mkdocs
+        nbdev.doclinks._build_modidx()
 
         _build_summary(root_path, lib_path)
 
@@ -1193,7 +1240,7 @@ def prepare(root_path: str, no_test: bool = False) -> None:
 
     nbdev_mkdocs_docs(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 89
+# %% ../nbs/Mkdocs.ipynb 91
 def preview(root_path: str, port: Optional[int] = None) -> None:
     """Preview the mkdocs documentation.
 
