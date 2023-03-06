@@ -12,23 +12,27 @@
         <meta name="author" content="airt">
       
       
-        <link rel="canonical" href="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/Utils/">
+        <link rel="canonical" href="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/api/nbdev_mkdocs/mkdocs/nbdev_mkdocs_docs/">
       
       
+        <link rel="prev" href="../../docstring/run_examples_from_docstring/">
       
-      <link rel="icon" href="../overrides/images/compass-outline.png">
+      
+        <link rel="next" href="../new/">
+      
+      <link rel="icon" href="../../../../overrides/images/compass-outline.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.1">
     
     
       
-        <title>Utils - nbdev-mkdocs</title>
+        <title>nbdev_mkdocs_docs - nbdev-mkdocs</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.402914a4.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.402914a4.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -44,11 +48,11 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../overrides/css/extra.css">
+      <link rel="stylesheet" href="../../../../overrides/css/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -73,18 +77,18 @@
   
   
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="nbdev-mkdocs - Utils" />
+  <meta property="og:title" content="nbdev-mkdocs - nbdev_mkdocs_docs" />
   <meta property="og:description" content="Extension of nbdev for generating documentation using Material for Mkdocs instead of Quarto" />
-  <meta property="og:url" content="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/Utils/" />
-  <meta property="og:image" content="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/Utils/overrides/images/social_image.png" />
+  <meta property="og:url" content="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/api/nbdev_mkdocs/mkdocs/nbdev_mkdocs_docs/" />
+  <meta property="og:image" content="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/api/nbdev_mkdocs/mkdocs/nbdev_mkdocs_docs/overrides/images/social_image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="nbdev-mkdocs - Utils" />
+  <meta name="twitter:title" content="nbdev-mkdocs - nbdev_mkdocs_docs" />
   <meta name="twitter:description" content="Extension of nbdev for generating documentation using Material for Mkdocs instead of Quarto" />
-  <meta name="twitter:image" content="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/Utils/overrides/images/social_image.png" />
+  <meta name="twitter:image" content="https://airtai.github.io/nbdev-mkdocs/0.1.1rc2/api/nbdev_mkdocs/mkdocs/nbdev_mkdocs_docs/overrides/images/social_image.png" />
 
   </head>
   
@@ -108,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#set_cwd" class="md-skip">
+        <a href="#nbdev_mkdocs.mkdocs" class="md-skip">
           Skip to content
         </a>
       
@@ -123,7 +127,7 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You're not viewing the latest version.
-  <a href="../..">
+  <a href="../../../../..">
     <strong>Click here to go to latest.</strong>
   </a>
 
@@ -140,7 +144,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="nbdev-mkdocs" class="md-header__button md-logo" aria-label="nbdev-mkdocs" data-md-component="logo">
+    <a href="../../../.." title="nbdev-mkdocs" class="md-header__button md-logo" aria-label="nbdev-mkdocs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8L7 17m5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8Z"/></svg>
@@ -159,7 +163,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Utils
+              nbdev_mkdocs_docs
             
           </span>
         </div>
@@ -264,7 +268,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="nbdev-mkdocs" class="md-nav__button md-logo" aria-label="nbdev-mkdocs" data-md-component="logo">
+    <a href="../../../.." title="nbdev-mkdocs" class="md-nav__button md-logo" aria-label="nbdev-mkdocs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8L7 17m5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8Z"/></svg>
@@ -295,7 +299,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         Material for nbdev
       </a>
     </li>
@@ -343,7 +347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Basic_User_Guide/" class="md-nav__link">
+      <a href="../../../../guides/Basic_User_Guide/" class="md-nav__link">
         Basic User Guide
       </a>
     </li>
@@ -402,7 +406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Adding_Guides/" class="md-nav__link">
+      <a href="../../../../guides/Adding_Guides/" class="md-nav__link">
         Adding guides
       </a>
     </li>
@@ -416,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Adding_Release_Notes/" class="md-nav__link">
+      <a href="../../../../guides/Adding_Release_Notes/" class="md-nav__link">
         Adding release notes
       </a>
     </li>
@@ -430,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Customizing_The_Sidebar/" class="md-nav__link">
+      <a href="../../../../guides/Customizing_The_Sidebar/" class="md-nav__link">
         Customizing the sidebar
       </a>
     </li>
@@ -444,7 +448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Auto_Generating_Docstrings/" class="md-nav__link">
+      <a href="../../../../guides/Auto_Generating_Docstrings/" class="md-nav__link">
         Auto-generating docstrings
       </a>
     </li>
@@ -458,7 +462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Setting_up_social_cards/" class="md-nav__link">
+      <a href="../../../../guides/Setting_up_social_cards/" class="md-nav__link">
         Setting up social cards
       </a>
     </li>
@@ -472,7 +476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Setting_Up_Document_Versioning/" class="md-nav__link">
+      <a href="../../../../guides/Setting_Up_Document_Versioning/" class="md-nav__link">
         Setting up document versioning
       </a>
     </li>
@@ -486,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Handling_Pandas_In_The_Output/" class="md-nav__link">
+      <a href="../../../../guides/Handling_Pandas_In_The_Output/" class="md-nav__link">
         Handling pandas in the output
       </a>
     </li>
@@ -500,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/Advanced_Customization_Options/" class="md-nav__link">
+      <a href="../../../../guides/Advanced_Customization_Options/" class="md-nav__link">
         Advanced customization options
       </a>
     </li>
@@ -527,14 +531,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
         
@@ -547,7 +553,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           API
@@ -558,14 +564,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
       
       
         
@@ -582,7 +590,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_1">
           <span class="md-nav__icon md-icon"></span>
           nbdev_mkdocs
@@ -626,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/nbdev_mkdocs/docstring/run_examples_from_docstring/" class="md-nav__link">
+      <a href="../../docstring/run_examples_from_docstring/" class="md-nav__link">
         run_examples_from_docstring
       </a>
     </li>
@@ -645,14 +653,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" checked>
       
       
         
@@ -671,7 +681,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_1_2">
           <span class="md-nav__icon md-icon"></span>
           mkdocs
@@ -682,11 +692,76 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../api/nbdev_mkdocs/mkdocs/nbdev_mkdocs_docs/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          nbdev_mkdocs_docs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         nbdev_mkdocs_docs
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nbdev_mkdocs.mkdocs" class="md-nav__link">
+    nbdev_mkdocs.mkdocs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs" class="md-nav__link">
+    nbdev_mkdocs_docs()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nbdev_mkdocs.mkdocs.new" class="md-nav__link">
+    new()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nbdev_mkdocs.mkdocs.prepare" class="md-nav__link">
+    prepare()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nbdev_mkdocs.mkdocs.preview" class="md-nav__link">
+    preview()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -698,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/nbdev_mkdocs/mkdocs/new/" class="md-nav__link">
+      <a href="../new/" class="md-nav__link">
         new
       </a>
     </li>
@@ -712,7 +787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/nbdev_mkdocs/mkdocs/prepare/" class="md-nav__link">
+      <a href="../prepare/" class="md-nav__link">
         prepare
       </a>
     </li>
@@ -726,7 +801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/nbdev_mkdocs/mkdocs/preview/" class="md-nav__link">
+      <a href="../preview/" class="md-nav__link">
         preview
       </a>
     </li>
@@ -778,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/nbdev_mkdocs/social_image_generator/generate_social_image/" class="md-nav__link">
+      <a href="../../social_image_generator/generate_social_image/" class="md-nav__link">
         generate_social_image
       </a>
     </li>
@@ -845,7 +920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/nbdev_mkdocs/" class="md-nav__link">
+      <a href="../../../../cli/nbdev_mkdocs/" class="md-nav__link">
         nbdev_mkdocs
       </a>
     </li>
@@ -867,7 +942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../CHANGELOG/" class="md-nav__link">
+      <a href="../../../../CHANGELOG/" class="md-nav__link">
         Releases
       </a>
     </li>
@@ -899,36 +974,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#set_cwd" class="md-nav__link">
-    set_cwd
+  <a href="#nbdev_mkdocs.mkdocs" class="md-nav__link">
+    nbdev_mkdocs.mkdocs
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#get_value_from_config" class="md-nav__link">
-    get_value_from_config
+  <a href="#nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs" class="md-nav__link">
+    nbdev_mkdocs_docs()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#is_local_path" class="md-nav__link">
-    is_local_path
+  <a href="#nbdev_mkdocs.mkdocs.new" class="md-nav__link">
+    new()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#add_counter_suffix_to_filename" class="md-nav__link">
-    add_counter_suffix_to_filename
+  <a href="#nbdev_mkdocs.mkdocs.prepare" class="md-nav__link">
+    prepare()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#raise_error_and_exit" class="md-nav__link">
-    raise_error_and_exit
+  <a href="#nbdev_mkdocs.mkdocs.preview" class="md-nav__link">
+    preview()
   </a>
   
 </li>
@@ -948,180 +1023,358 @@
                   
 
 
-  <h1>Utils</h1>
+  <h1>nbdev_mkdocs_docs</h1>
 
-<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p><code>nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs</code></p>
 
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pytest</span>
-</code></pre></div>
-<hr />
-<p><a
-href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/_helpers/utils.py#L19"
-target="_blank" style="float:right; font-size:smaller">source</a></p>
-<h3 id="set_cwd">set_cwd<a class="headerlink" href="#set_cwd" title="Permanent link">¤</a></h3>
-<blockquote>
-<div class="highlight"><pre><span></span><code> set_cwd (cwd_path:Union[pathlib.Path,str])
-</code></pre></div>
-</blockquote>
-<p>Set the current working directory for the duration of the context
-manager.</p>
-<p>Args: cwd_path: The path to the new working directory.</p>
-<div class="admonition note">
+  <div class="doc doc-object doc-module">
+
+<a id="nbdev_mkdocs.mkdocs"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">nbdev_mkdocs_docs</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">refresh_quarto_settings</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs" class="headerlink" title="Permanent link">¤</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Prepare mkdocs documentation</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>root_path</code></td>
+        <td><code>str</code></td>
+        <td><p>The root path of the project</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>refresh_quarto_settings</code></td>
+        <td><code>bool</code></td>
+        <td><p>Flag to refresh quarto yml file. This flag should be set to <code>True</code>
+if this function is called directly without calling prepare.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>      <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The above docstring is autogenerated by docstring-gen library (<a href="https://github.com/airtai/docstring-gen">https://github.com/airtai/docstring-gen</a>)</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
-    <span class="k">with</span> <span class="n">set_cwd</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="p">(</span>
-            <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">==</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <details class="quote">
+          <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">nbdev_mkdocs_docs</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">refresh_quarto_settings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare mkdocs documentation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root_path: The root path of the project</span>
+<span class="sd">        refresh_quarto_settings: Flag to refresh quarto yml file. This flag should be set to `True`</span>
+<span class="sd">            if this function is called directly without calling prepare.</span>
+
+<span class="sd">    !!! note</span>
+
+<span class="sd">        The above docstring is autogenerated by docstring-gen library (https://github.com/airtai/docstring-gen)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">set_cwd</span><span class="p">(</span><span class="n">root_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">refresh_quarto_settings</span><span class="p">:</span>
+            <span class="n">refresh_quarto_yml</span><span class="p">()</span>
+
+        <span class="n">_copy_cname_if_needed</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+
+        <span class="n">_copy_docs_overrides</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+
+        <span class="n">lib_name</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;lib_name&quot;</span><span class="p">)</span>
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;lib_path&quot;</span><span class="p">)</span>
+
+        <span class="n">cache_path</span> <span class="o">=</span> <span class="n">proc_nbs</span><span class="p">()</span>
+        <span class="n">nbdev_lookup</span> <span class="o">=</span> <span class="n">NbdevLookup</span><span class="p">(</span><span class="n">incl_libs</span><span class="o">=</span><span class="n">lib_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">))</span>
+        <span class="n">docs_versioning</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;docs_versioning&quot;</span><span class="p">)</span>
+        <span class="n">lib_version</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">)</span>
+        <span class="n">_fix_sym_links_in_nbs</span><span class="p">(</span>
+            <span class="n">root_path</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">,</span> <span class="n">nbdev_lookup</span><span class="p">,</span> <span class="n">docs_versioning</span><span class="p">,</span> <span class="n">lib_version</span>
+        <span class="p">)</span>
+
+        <span class="n">_build_summary</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">lib_path</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">)</span>
+
+        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;mkdocs build -f </span><span class="se">\&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="s1">&#39;mkdocs&#39;</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="s1">&#39;mkdocs.yml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+        <span class="n">_sprun</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<p><a
-href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/_helpers/utils.py#L40"
-target="_blank" style="float:right; font-size:smaller">source</a></p>
-<h3 id="get_value_from_config">get_value_from_config<a class="headerlink" href="#get_value_from_config" title="Permanent link">¤</a></h3>
-<blockquote>
-<div class="highlight"><pre><span></span><code> get_value_from_config (root_path:str, config_name:str)
-</code></pre></div>
-</blockquote>
-<p>Get a value from the configuration file.</p>
-<p>Args: root_path: The root path of the configuration file. config_name:
-The name of the configuration to get.</p>
-<p>Returns: The value of the configuration.</p>
-<div class="admonition note">
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="nbdev_mkdocs.mkdocs.new" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">new</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span></code>
+
+
+<a href="#nbdev_mkdocs.mkdocs.new" class="headerlink" title="Permanent link">¤</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Initialize mkdocs project files</p>
+<p>Creates <strong>mkdocs</strong> directory in the <strong>root_path</strong> directory and populates
+it with initial values. You should edit mkdocs.yml file to customize it if
+needed.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>root_path</code></td>
+        <td><code>str</code></td>
+        <td><p>The path to the root of the project</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>      <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The above docstring is autogenerated by docstring-gen library (<a href="https://github.com/airtai/docstring-gen">https://github.com/airtai/docstring-gen</a>)</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
-    <span class="n">settings_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;settings.ini&quot;</span>
-    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;settings.ini&quot;</span><span class="p">,</span> <span class="n">settings_path</span><span class="p">)</span>
-    <span class="n">ret_val</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;lib_path&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">ret_val</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">ret_val</span> <span class="o">==</span> <span class="s2">&quot;nbdev_mkdocs&quot;</span><span class="p">,</span> <span class="n">ret_val</span>
 
-    <span class="n">ret_val</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;repo&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">ret_val</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">ret_val</span> <span class="o">==</span> <span class="s2">&quot;nbdev-mkdocs&quot;</span><span class="p">,</span> <span class="n">ret_val</span>
+        <details class="quote">
+          <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize mkdocs project files</span>
 
-    <span class="n">ret_val</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">ret_val</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">ret_val</span> <span class="o">==</span> <span class="s2">&quot;airtai&quot;</span><span class="p">,</span> <span class="n">ret_val</span>
+<span class="sd">    Creates **mkdocs** directory in the **root_path** directory and populates</span>
+<span class="sd">    it with initial values. You should edit mkdocs.yml file to customize it if</span>
+<span class="sd">    needed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root_path: The path to the root of the project</span>
+
+<span class="sd">    !!! note</span>
+
+<span class="sd">        The above docstring is autogenerated by docstring-gen library (https://github.com/airtai/docstring-gen)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_create_mkdocs_dir</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+    <span class="n">_create_mkdocs_yaml</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+    <span class="n">_create_summary_template</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+    <span class="n">_replace_ghp_deploy_action</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+    <span class="n">_update_gitignore_file</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+    <span class="n">_generate_default_social_image_link</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>nbdev_mkdocs
-nbdev-mkdocs
-airtai
-</code></pre></div>
-<hr />
-<p><a
-href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/_helpers/utils.py#L62"
-target="_blank" style="float:right; font-size:smaller">source</a></p>
-<h3 id="is_local_path">is_local_path<a class="headerlink" href="#is_local_path" title="Permanent link">¤</a></h3>
-<blockquote>
-<div class="highlight"><pre><span></span><code> is_local_path (path:str)
-</code></pre></div>
-</blockquote>
-<p>Check if a path is a local path.</p>
-<p>Args: path: The path to check.</p>
-<p>Returns: True if the path is a local path, False otherwise.</p>
-<div class="admonition note">
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="nbdev_mkdocs.mkdocs.prepare" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">prepare</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">no_test</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#nbdev_mkdocs.mkdocs.prepare" class="headerlink" title="Permanent link">¤</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Prepare mkdocs for serving</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>root_path</code></td>
+        <td><code>str</code></td>
+        <td><p>The root path of the project</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>no_test</code></td>
+        <td><code>bool</code></td>
+        <td><p>If set to False, the unit tests will be run, else they will be skipped</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>      <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The above docstring is autogenerated by docstring-gen library (<a href="https://github.com/airtai/docstring-gen">https://github.com/airtai/docstring-gen</a>)</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="k">assert</span> <span class="n">is_local_path</span><span class="p">(</span><span class="s2">&quot;/tmp/abc/file.txt&quot;</span><span class="p">)</span>
-<span class="k">assert</span> <span class="ow">not</span> <span class="n">is_local_path</span><span class="p">(</span><span class="s2">&quot;http://www.example.com&quot;</span><span class="p">)</span>
+
+        <details class="quote">
+          <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">no_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare mkdocs for serving</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root_path: The root path of the project</span>
+<span class="sd">        no_test: If set to False, the unit tests will be run, else they will be skipped</span>
+
+<span class="sd">    !!! note</span>
+
+<span class="sd">        The above docstring is autogenerated by docstring-gen library (https://github.com/airtai/docstring-gen)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">set_cwd</span><span class="p">(</span><span class="n">root_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">no_test</span><span class="p">:</span>
+            <span class="n">nbdev_export</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">()</span>
+            <span class="n">refresh_quarto_yml</span><span class="p">()</span>
+            <span class="n">nbdev_readme</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="n">chk_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;nbdev_prepare&quot;</span>
+            <span class="n">_sprun</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="n">nbdev_mkdocs_docs</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<p><a
-href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/_helpers/utils.py#L89"
-target="_blank" style="float:right; font-size:smaller">source</a></p>
-<h3 id="add_counter_suffix_to_filename">add_counter_suffix_to_filename<a class="headerlink" href="#add_counter_suffix_to_filename" title="Permanent link">¤</a></h3>
-<blockquote>
-<div class="highlight"><pre><span></span><code> add_counter_suffix_to_filename (src_path:pathlib.Path)
-</code></pre></div>
-</blockquote>
-<p>Add a counter suffix to the given file</p>
-<p>Args: src_path: Path to the file to be renamed</p>
-<p>Returns: None</p>
-<div class="admonition note">
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="nbdev_mkdocs.mkdocs.preview" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">preview</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a href="#nbdev_mkdocs.mkdocs.preview" class="headerlink" title="Permanent link">¤</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Preview the mkdocs documentation.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>root_path</code></td>
+        <td><code>str</code></td>
+        <td><p>The root path of the documentation.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>port</code></td>
+        <td><code>Optional[int]</code></td>
+        <td><p>The port to serve the documentation on.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>      <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The above docstring is autogenerated by docstring-gen library (<a href="https://github.com/airtai/docstring-gen">https://github.com/airtai/docstring-gen</a>)</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;social_image.txt&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;sample_text&quot;</span><span class="p">)</span>
 
-    <span class="n">add_counter_suffix_to_filename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <details class="quote">
+          <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">preview</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preview the mkdocs documentation.</span>
 
-    <span class="n">actual</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_path</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">*.*&quot;</span><span class="p">)]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
+<span class="sd">    Args:</span>
+<span class="sd">        root_path: The root path of the documentation.</span>
+<span class="sd">        port: The port to serve the documentation on.</span>
 
-    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;social_image.1.txt&quot;</span><span class="p">]</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+<span class="sd">    !!! note</span>
 
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;social_image.1.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>[&#39;social_image.1.txt&#39;]
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span>
-        <span class="s2">&quot;social_image.txt&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;social_image.1.txt&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;social_image.2.txt&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;social_image.11.txt&quot;</span><span class="p">,</span>
-    <span class="p">]:</span>
-        <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">i</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;sample_text&quot;</span><span class="p">)</span>
+<span class="sd">        The above docstring is autogenerated by docstring-gen library (https://github.com/airtai/docstring-gen)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">set_cwd</span><span class="p">(</span><span class="n">root_path</span><span class="p">):</span>
+        <span class="n">prepare</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="n">root_path</span><span class="p">,</span> <span class="n">no_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;social_image.txt&quot;</span>
-    <span class="n">add_counter_suffix_to_filename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;mkdocs serve -f </span><span class="si">{</span><span class="n">root_path</span><span class="si">}</span><span class="s2">/mkdocs/mkdocs.yml -a 0.0.0.0&quot;</span>
+        <span class="k">if</span> <span class="n">port</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="n">actual</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_path</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">*.*&quot;</span><span class="p">)])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="s2">&quot;social_image.1.txt&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;social_image.2.txt&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;social_image.11.txt&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;social_image.12.txt&quot;</span><span class="p">,</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>  <span class="c1"># nosec B603:subprocess_without_shell_equals_true</span>
+            <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">),</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">bufsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;social_image.12.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">typer</span><span class="o">.</span><span class="n">secho</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Command cmd=&#39;</span><span class="si">{</span><span class="n">cmd</span><span class="si">}</span><span class="s2">&#39; failed!&quot;</span><span class="p">,</span>
+                <span class="n">err</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">fg</span><span class="o">=</span><span class="n">typer</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">RED</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>[&#39;social_image.1.txt&#39;, &#39;social_image.11.txt&#39;, &#39;social_image.12.txt&#39;, &#39;social_image.2.txt&#39;]
-</code></pre></div>
-<hr />
-<p><a
-href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/_helpers/utils.py#L117"
-target="_blank" style="float:right; font-size:smaller">source</a></p>
-<h3 id="raise_error_and_exit">raise_error_and_exit<a class="headerlink" href="#raise_error_and_exit" title="Permanent link">¤</a></h3>
-<blockquote>
-<div class="highlight"><pre><span></span><code> raise_error_and_exit (message:str)
-</code></pre></div>
-</blockquote>
-<p>Raise an error and exit</p>
-<p>Args: message: The error message to display</p>
-<p>Returns: None</p>
-<p>Raises: typer.Exit: If the error message is not provided</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The above docstring is autogenerated by docstring-gen library (<a href="https://docstring-gen.airt.ai">https://docstring-gen.airt.ai</a>)</p>
-</div>
-<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="n">raise_error_and_exit</span><span class="p">(</span><span class="s2">&quot;testing!!!&quot;</span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>testing!!!
-</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
   
@@ -1174,14 +1427,14 @@ target="_blank" style="float:right; font-size:smaller">source</a></p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.b78d2936.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.b78d2936.min.js"></script>
       
-        <script src="../overrides/js/extra.js"></script>
+        <script src="../../../../overrides/js/extra.js"></script>
       
-        <script src="../overrides/js/mathjax.js"></script>
+        <script src="../../../../overrides/js/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
