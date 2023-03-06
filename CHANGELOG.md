@@ -2,6 +2,15 @@
 
 <!-- do not remove -->
 
+## 0.1.1rc0
+
+
+### Bugs Squashed
+
+- Fix link to symbols in docs ([#144](https://github.com/airtai/nbdev-mkdocs/issues/144))
+  - https://github.com/fastai/nbdev/blob/master/nbdev/doclinks.py#L87
+
+
 ## 0.1.0
 
 ### New Features
