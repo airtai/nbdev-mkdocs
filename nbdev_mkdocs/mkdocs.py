@@ -1232,7 +1232,7 @@ def _fix_sym_links(s: str, nbdev_lookup: NbdevLookup, docs_versioning: str, lib_
             package_name = symbol_details[1].split("/")[0]
             fixed_part_with_docs_version = (
                 f"{fixed_part}/{_get_current_docs_version(docs_versioning, lib_version)}"
-                if docs_versioning
+                if docs_versioning != "" and docs_versioning != "None"
                 else fixed_part
             )
             sym_path = _get_sym_path_from_nbdev_lookup(nbdev_lookup, symbol_details)
