@@ -13,7 +13,7 @@ fi
 if [[ $CI_COMMIT_REF_NAME == "main" ]]; then TAG=latest ; else TAG=$CI_COMMIT_REF_NAME ; fi;
 
 export BASE=ubuntu:latest
-export PYTHON=3.10
+export PYTHON=3.11
 
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
 docker build --build-arg BASE=$BASE --build-arg PYTHON=$PYTHON \
