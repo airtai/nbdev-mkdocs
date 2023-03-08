@@ -2,10 +2,16 @@
 
 <!-- do not remove -->
 
-## 0.1.1rc0
+## 0.2.0
 
 
 ### Bugs Squashed
+
+- Upgrade mkdocstrings and python handler
+
+- Fix prepare and preview tests ([#155](https://github.com/airtai/nbdev-mkdocs/issues/155))
+
+- Add docs version in the link to the symbols ([#151](https://github.com/airtai/nbdev-mkdocs/issues/151))
 
 - Fix link to symbols in docs ([#144](https://github.com/airtai/nbdev-mkdocs/issues/144))
   - https://github.com/fastai/nbdev/blob/master/nbdev/doclinks.py#L87
