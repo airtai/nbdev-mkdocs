@@ -910,12 +910,7 @@ def _generate_api_doc(name: str, docs_path: Path) -> Path:
     module_name = ".".join(xs[:-1])
     member_name = xs[-1]
     path = docs_path / f"{('/').join(xs)}.md"
-    content = f"""`{module_name}.{member_name}`
-
-::: {module_name}
-    options:
-        members: ["{member_name}"]
-"""
+    content = f"::: {module_name}.{member_name}\n"
 
     path.parent.mkdir(exist_ok=True, parents=True)
     with open(path, "w") as f:
