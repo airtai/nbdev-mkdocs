@@ -823,14 +823,14 @@ def _get_submodules(package_name: str) -> List[str]:
         # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
         m = importlib.import_module(package_name)
     except ModuleNotFoundError as e:
-        if (
-            "NBDEV_MKDOCS_PATCH_IMPORTLIB" in os.environ
-            and os.environ["NBDEV_MKDOCS_PATCH_IMPORTLIB"] != "false"
-        ):
-            # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
-            m = importlib.import_module("nbdev_mkdocs")
-        else:
-            raise e
+        #         if (
+        #             "NBDEV_MKDOCS_PATCH_IMPORTLIB" in os.environ
+        #             and os.environ["NBDEV_MKDOCS_PATCH_IMPORTLIB"] != "false"
+        #         ):
+        #             # nosemgrep: python.lang.security.audit.non-literal-import.non-literal-import
+        #             m = importlib.import_module("nbdev_mkdocs")
+        #         else:
+        raise e
     submodules = [
         info.name
         for info in pkgutil.walk_packages(m.__path__, prefix=f"{package_name}.")
@@ -842,7 +842,7 @@ def _get_submodules(package_name: str) -> List[str]:
     ]
     return [package_name] + submodules
 
-# %% ../nbs/Mkdocs.ipynb 68
+# %% ../nbs/Mkdocs.ipynb 69
 def _import_submodules(module_name: str) -> List[types.ModuleType]:
     def import_module(name: str) -> Optional[types.ModuleType]:
         try:
@@ -855,18 +855,18 @@ def _import_submodules(module_name: str) -> List[types.ModuleType]:
     modules = [import_module(n) for n in package_names]
     return [m for m in modules if m is not None]
 
-# %% ../nbs/Mkdocs.ipynb 71
+# %% ../nbs/Mkdocs.ipynb 72
 def _import_functions_and_classes(
     m: types.ModuleType,
 ) -> List[Tuple[str, Union[types.FunctionType, Type[Any]]]]:
     return [(x, y) for x, y in getmembers(m) if isfunction(y) or isclass(y)]
 
-# %% ../nbs/Mkdocs.ipynb 73
+# %% ../nbs/Mkdocs.ipynb 74
 def _is_private(name: str) -> bool:
     parts = name.split(".")
     return any([part.startswith("_") for part in parts])
 
-# %% ../nbs/Mkdocs.ipynb 75
+# %% ../nbs/Mkdocs.ipynb 76
 def _import_all_members(module_name: str) -> List[str]:
     submodules = _import_submodules(module_name)
     members: List[Tuple[str, Union[types.FunctionType, Type[Any]]]] = list(
@@ -879,7 +879,7 @@ def _import_all_members(module_name: str) -> List[str]:
     ]
     return names
 
-# %% ../nbs/Mkdocs.ipynb 77
+# %% ../nbs/Mkdocs.ipynb 78
 def _add_all_submodules(members: List[str]) -> List[str]:
     def _f(x: str) -> List[str]:
         xs = x.split(".")
@@ -890,7 +890,7 @@ def _add_all_submodules(members: List[str]) -> List[str]:
     members = sorted(set(members))
     return members
 
-# %% ../nbs/Mkdocs.ipynb 80
+# %% ../nbs/Mkdocs.ipynb 81
 def _get_api_summary_item(x: str) -> str:
     xs = x.split(".")
     if x.endswith("."):
@@ -900,11 +900,11 @@ def _get_api_summary_item(x: str) -> str:
         indent = " " * (4 * (len(xs)))
         return f"{indent}- [{xs[-1]}](api/{'/'.join(xs)}.md)"
 
-# %% ../nbs/Mkdocs.ipynb 82
+# %% ../nbs/Mkdocs.ipynb 83
 def _get_api_summary(members: List[str]) -> str:
     return "\n".join([_get_api_summary_item(x) for x in members]) + "\n"
 
-# %% ../nbs/Mkdocs.ipynb 84
+# %% ../nbs/Mkdocs.ipynb 85
 def _generate_api_doc(name: str, docs_path: Path) -> Path:
     xs = name.split(".")
     module_name = ".".join(xs[:-1])
@@ -918,11 +918,11 @@ def _generate_api_doc(name: str, docs_path: Path) -> Path:
 
     return path
 
-# %% ../nbs/Mkdocs.ipynb 86
+# %% ../nbs/Mkdocs.ipynb 87
 def _generate_api_docs(members: List[str], docs_path: Path) -> List[Path]:
     return [_generate_api_doc(x, docs_path) for x in members if not x.endswith(".")]
 
-# %% ../nbs/Mkdocs.ipynb 88
+# %% ../nbs/Mkdocs.ipynb 89
 def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     """Generate API documentation for a module.
 
@@ -951,7 +951,7 @@ def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
 
 #     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 91
+# %% ../nbs/Mkdocs.ipynb 93
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of a string.
 
@@ -979,7 +979,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 93
+# %% ../nbs/Mkdocs.ipynb 95
 def _generate_cli_doc_for_submodule(
     root_path: str, docs_dir_name: str, cmd: str
 ) -> str:
@@ -1072,7 +1072,7 @@ def _generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 97
+# %% ../nbs/Mkdocs.ipynb 99
 def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
     """Copy the CHANGELOG.md file to the docs folder if it's not already present.
 
@@ -1100,7 +1100,7 @@ def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> s
 
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 100
+# %% ../nbs/Mkdocs.ipynb 102
 def _build_summary(
     root_path: str,
     module: str,
@@ -1156,7 +1156,7 @@ def _build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 103
+# %% ../nbs/Mkdocs.ipynb 105
 def _copy_cname_if_needed(root_path: str) -> None:
     """Copy the CNAME file to mkdocs/docs/CNAME if it's not already present.
 
@@ -1180,7 +1180,7 @@ def _copy_cname_if_needed(root_path: str) -> None:
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 105
+# %% ../nbs/Mkdocs.ipynb 107
 def _copy_docs_overrides(root_path: str) -> None:
     """Copy the docs_overrides directory to the mkdocs/docs/overrides directory.
 
@@ -1202,7 +1202,7 @@ def _copy_docs_overrides(root_path: str) -> None:
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 107
+# %% ../nbs/Mkdocs.ipynb 109
 def _get_backtick_enclosed_string(s: str) -> str:
     """Get the string enclosed in backticks.
 
@@ -1220,7 +1220,7 @@ def _get_backtick_enclosed_string(s: str) -> str:
     match = re.search(pattern, s)
     return match.group(1)  # type: ignore
 
-# %% ../nbs/Mkdocs.ipynb 109
+# %% ../nbs/Mkdocs.ipynb 111
 def _get_sym_path_from_nbdev_lookup(nbdev_lookup: NbdevLookup, v: Tuple[str, str, str]) -> str:  # type: ignore
     """Get the symbol path from the NbdevLookup instance
 
@@ -1241,7 +1241,7 @@ def _get_sym_path_from_nbdev_lookup(nbdev_lookup: NbdevLookup, v: Tuple[str, str
     ret_val: List[str] = [key for key, value in py_syms.items() if value == v]
     return ret_val[0]
 
-# %% ../nbs/Mkdocs.ipynb 111
+# %% ../nbs/Mkdocs.ipynb 113
 def _get_current_docs_version(docs_versioning: str, lib_version: str) -> str:
     """Get the current docs version.
 
@@ -1262,7 +1262,7 @@ def _get_current_docs_version(docs_versioning: str, lib_version: str) -> str:
         else lib_version
     )
 
-# %% ../nbs/Mkdocs.ipynb 113
+# %% ../nbs/Mkdocs.ipynb 115
 def _fix_sym_links(s: str, nbdev_lookup: NbdevLookup, docs_versioning: str, lib_version: str) -> str:  # type: ignore
     """Fix the default sym links generated by nbdev in the given string.
 
@@ -1292,11 +1292,12 @@ def _fix_sym_links(s: str, nbdev_lookup: NbdevLookup, docs_versioning: str, lib_
                 else fixed_part
             )
             sym_path = _get_sym_path_from_nbdev_lookup(nbdev_lookup, symbol_details)
-            updated_link = f"{fixed_part_with_docs_version}/{package_name}_api_docs/{package_name}/{symbol_details[1].split('/')[1].replace('.py', '')}/#{sym_path})"
+            mod_path = ".".join(symbol_details[1].split("/")).replace(".py", "")
+            updated_link = f"{fixed_part_with_docs_version}/api/{package_name}/{mod_path.split('.')[1]}/{sym_path.replace(f'{mod_path}.', '').split('.')[0]}/#{sym_path})"
             s = s.replace(match, updated_link)
     return s
 
-# %% ../nbs/Mkdocs.ipynb 117
+# %% ../nbs/Mkdocs.ipynb 119
 def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevLookup, docs_versioning: str, lib_version: str) -> None:  # type: ignore
     """Fix the default sym links generated by nbdev in the notebooks
 
@@ -1331,7 +1332,7 @@ def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevL
 
         nbformat.write(_f, file)
 
-# %% ../nbs/Mkdocs.ipynb 121
+# %% ../nbs/Mkdocs.ipynb 123
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False) -> None:
     """Prepare mkdocs documentation
 
@@ -1391,7 +1392,7 @@ def prepare(root_path: str, no_test: bool = False) -> None:
 
     nbdev_mkdocs_docs(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 125
+# %% ../nbs/Mkdocs.ipynb 127
 def preview(root_path: str, port: Optional[int] = None) -> None:
     """Preview the mkdocs documentation.
 
