@@ -1238,7 +1238,7 @@ def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevL
 
         nbformat.write(_f, file)
 
-# %% ../nbs/Mkdocs.ipynb 113
+# %% ../nbs/Mkdocs.ipynb 111
 def nbdev_mkdocs_docs(root_path: str, refresh_quarto_settings: bool = False) -> None:
     """Prepare mkdocs documentation
 
@@ -1298,7 +1298,7 @@ def prepare(root_path: str, no_test: bool = False) -> None:
 
     nbdev_mkdocs_docs(root_path)
 
-# %% ../nbs/Mkdocs.ipynb 117
+# %% ../nbs/Mkdocs.ipynb 115
 def preview(root_path: str, port: Optional[int] = None) -> None:
     """Preview the mkdocs documentation.
 
