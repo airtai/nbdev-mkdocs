@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.2.1rc0
+
+
+### Bugs Squashed
+
+- Load symbols dynamically and link it to the docs ([#160](https://github.com/airtai/nbdev-mkdocs/issues/160))
+
+
 ## 0.2.0
 
 
