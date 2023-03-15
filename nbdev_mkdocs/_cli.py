@@ -51,11 +51,20 @@ def preview(
     root_path: str = typer.Option(
         ".", help="path under which mkdocs directory will be created"
     ),
+    use_relative_doc_links: bool = typer.Option(
+        True,
+        "--use-relative-doc-links/--no-relative-doc-links",
+        help="If set to use-relative-doc-links, relative link to symbols will be add in the generated documentation for easier local navigation.",
+    ),
     port: int = typer.Option(4000, help="port to use"),
 ) -> None:
     """CLI command for creating files for nbdev_mkdocs command"""
     try:
-        nbdev_mkdocs.mkdocs.preview(root_path=root_path, port=port)
+        nbdev_mkdocs.mkdocs.preview(
+            root_path=root_path,
+            use_relative_doc_links=use_relative_doc_links,
+            port=port,
+        )
     except Exception as e:
         typer.secho(f"Unexpected internal error: {e}", err=True, fg=typer.colors.RED)
         raise typer.Exit(1)
