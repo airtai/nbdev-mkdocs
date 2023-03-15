@@ -1213,8 +1213,8 @@ def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevL
         nbdev_lookup: Instance of NbdevLookup.
         docs_versioning: The value set for docs_versioning flag in settings.ini file.
         lib_version: The current version of the library.
-        use_relative_doc_links: If set to True, relative link to symbols will be add in the generated
-            documentation for easier local navigation.
+        use_relative_doc_links: If set to True, relative links are added to symbol references in generated
+            documentation. Else, the value set in doc_host in settings.ini is added to symbol references in generated documentation.
 
 
     !!! note
@@ -1257,9 +1257,10 @@ def nbdev_mkdocs_docs(
         root_path: The root path of the project
         refresh_quarto_settings: Flag to refresh quarto yml file. This flag should be set to `True`
             if this function is called directly without calling prepare.
-        use_relative_doc_links: Flag to add relative link to symbols in the generated documentation
-            for easier local navigation. This flag should be set to `False` if this function is called
-            directly without calling preview.
+        use_relative_doc_links: If set to True, relative links are added to symbol references in generated
+            documentation. Else, the value set in doc_host in settings.ini is added to symbol references in
+            generated documentation. This flag should be set to `False` if this function is called directly
+            without calling preview.
         no_mkdocs_build: If set to True, then the mkdocs build will be skipped. This flag should be set to
             `False` if this function is called directly without calling preview.
 
@@ -1308,8 +1309,10 @@ def prepare(
 
     Args:
         root_path: The root path of the project
-        use_relative_doc_links: If set to True, relative link to symbols will be add in the
-            generated documentation for easier local navigation.
+        use_relative_doc_links: If set to True, relative links are added to symbol references in generated
+            documentation. Else, the value set in doc_host in settings.ini is added to symbol references in
+            generated documentation. This flag should be set to `False` if this function is called directly
+            without calling preview.
         no_test: If set to False, the unit tests will be run, else they will be skipped
         no_mkdocs_build: If set to True, then the mkdocs build will be skipped. This flag
             should be set to `False` if this function is called directly without calling preview
@@ -1341,8 +1344,9 @@ def preview(
 
     Args:
         root_path: The root path of the documentation.
-        use_relative_doc_links: If set to True, relative link to symbols will be add in the generated
-            documentation for easier local navigation.
+        use_relative_doc_links: If set to True, relative links are added to symbol references in generated
+            documentation. Else, the value set in doc_host in settings.ini is added to symbol references in
+            generated documentation.
         port: The port to serve the documentation on.
 
     !!! note

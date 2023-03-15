@@ -53,8 +53,9 @@ def preview(
     ),
     use_relative_doc_links: bool = typer.Option(
         True,
-        "--use-relative-doc-links/--no-relative-doc-links",
-        help="If set to use-relative-doc-links, relative link to symbols will be add in the generated documentation for easier local navigation.",
+        "--use-relative-doc-links/--use-host-doc-links",
+        help="If set to --use-relative-doc-links, relative links are added to symbol references in "
+        "generated documentation. If set to --use-host-doc-links, the value set in doc_host in settings.ini is added to symbol references in generated documentation.",
     ),
     port: int = typer.Option(4000, help="port to use"),
 ) -> None:
