@@ -21,7 +21,7 @@
         <link rel="next" href="../new/">
       
       <link rel="icon" href="../../../../overrides/images/compass-outline.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.1">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.402914a4.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.c4a75a56.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -974,7 +974,7 @@
 
 
 <h4 id="nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">nbdev_mkdocs</span><span class="o">.</span><span class="n">mkdocs</span><span class="o">.</span><span class="n">nbdev_mkdocs_docs</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">refresh_quarto_settings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+<code class="highlight language-python"><span class="n">nbdev_mkdocs</span><span class="o">.</span><span class="n">mkdocs</span><span class="o">.</span><span class="n">nbdev_mkdocs_docs</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">refresh_quarto_settings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">use_relative_doc_links</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">no_mkdocs_build</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
 <a href="#nbdev_mkdocs.mkdocs.nbdev_mkdocs_docs" class="headerlink" title="Permanent link">¤</a></h4>
 
@@ -1015,6 +1015,30 @@ if this function is called directly without calling prepare.</p></td>
                 <code>False</code>
           </td>
         </tr>
+        <tr>
+          <td><code>use_relative_doc_links</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+          </td>
+          <td><p>If set to True, relative links are added to symbol references in generated
+documentation. Else, the value set in doc_host in settings.ini is added to symbol references in
+generated documentation. This flag should be set to <code>False</code> if this function is called directly
+without calling preview.</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>no_mkdocs_build</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+          </td>
+          <td><p>If set to True, then the mkdocs build will be skipped. This flag should be set to
+<code>False</code> if this function is called directly without calling preview.</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
     </tbody>
   </table>
       <div class="admonition note">
@@ -1024,47 +1048,75 @@ if this function is called directly without calling prepare.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1336</span>
-<span class="normal">1337</span>
-<span class="normal">1338</span>
-<span class="normal">1339</span>
-<span class="normal">1340</span>
-<span class="normal">1341</span>
-<span class="normal">1342</span>
-<span class="normal">1343</span>
-<span class="normal">1344</span>
-<span class="normal">1345</span>
-<span class="normal">1346</span>
-<span class="normal">1347</span>
-<span class="normal">1348</span>
-<span class="normal">1349</span>
-<span class="normal">1350</span>
-<span class="normal">1351</span>
-<span class="normal">1352</span>
-<span class="normal">1353</span>
-<span class="normal">1354</span>
-<span class="normal">1355</span>
-<span class="normal">1356</span>
-<span class="normal">1357</span>
-<span class="normal">1358</span>
-<span class="normal">1359</span>
-<span class="normal">1360</span>
-<span class="normal">1361</span>
-<span class="normal">1362</span>
-<span class="normal">1363</span>
-<span class="normal">1364</span>
-<span class="normal">1365</span>
-<span class="normal">1366</span>
-<span class="normal">1367</span>
-<span class="normal">1368</span>
-<span class="normal">1369</span>
-<span class="normal">1370</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">nbdev_mkdocs_docs</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">refresh_quarto_settings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1248</span>
+<span class="normal">1249</span>
+<span class="normal">1250</span>
+<span class="normal">1251</span>
+<span class="normal">1252</span>
+<span class="normal">1253</span>
+<span class="normal">1254</span>
+<span class="normal">1255</span>
+<span class="normal">1256</span>
+<span class="normal">1257</span>
+<span class="normal">1258</span>
+<span class="normal">1259</span>
+<span class="normal">1260</span>
+<span class="normal">1261</span>
+<span class="normal">1262</span>
+<span class="normal">1263</span>
+<span class="normal">1264</span>
+<span class="normal">1265</span>
+<span class="normal">1266</span>
+<span class="normal">1267</span>
+<span class="normal">1268</span>
+<span class="normal">1269</span>
+<span class="normal">1270</span>
+<span class="normal">1271</span>
+<span class="normal">1272</span>
+<span class="normal">1273</span>
+<span class="normal">1274</span>
+<span class="normal">1275</span>
+<span class="normal">1276</span>
+<span class="normal">1277</span>
+<span class="normal">1278</span>
+<span class="normal">1279</span>
+<span class="normal">1280</span>
+<span class="normal">1281</span>
+<span class="normal">1282</span>
+<span class="normal">1283</span>
+<span class="normal">1284</span>
+<span class="normal">1285</span>
+<span class="normal">1286</span>
+<span class="normal">1287</span>
+<span class="normal">1288</span>
+<span class="normal">1289</span>
+<span class="normal">1290</span>
+<span class="normal">1291</span>
+<span class="normal">1292</span>
+<span class="normal">1293</span>
+<span class="normal">1294</span>
+<span class="normal">1295</span>
+<span class="normal">1296</span>
+<span class="normal">1297</span>
+<span class="normal">1298</span>
+<span class="normal">1299</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">nbdev_mkdocs_docs</span><span class="p">(</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">refresh_quarto_settings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_relative_doc_links</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">no_mkdocs_build</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare mkdocs documentation</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        root_path: The root path of the project</span>
 <span class="sd">        refresh_quarto_settings: Flag to refresh quarto yml file. This flag should be set to `True`</span>
 <span class="sd">            if this function is called directly without calling prepare.</span>
+<span class="sd">        use_relative_doc_links: If set to True, relative links are added to symbol references in generated</span>
+<span class="sd">            documentation. Else, the value set in doc_host in settings.ini is added to symbol references in</span>
+<span class="sd">            generated documentation. This flag should be set to `False` if this function is called directly</span>
+<span class="sd">            without calling preview.</span>
+<span class="sd">        no_mkdocs_build: If set to True, then the mkdocs build will be skipped. This flag should be set to</span>
+<span class="sd">            `False` if this function is called directly without calling preview.</span>
 
 <span class="sd">    !!! note</span>
 
@@ -1081,18 +1133,24 @@ if this function is called directly without calling prepare.</p></td>
         <span class="n">lib_name</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;lib_name&quot;</span><span class="p">)</span>
         <span class="n">lib_path</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;lib_path&quot;</span><span class="p">)</span>
 
-        <span class="n">cache_path</span> <span class="o">=</span> <span class="n">proc_nbs</span><span class="p">()</span>
+        <span class="n">cache_path</span> <span class="o">=</span> <span class="n">proc_nbs</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">nbdev_lookup</span> <span class="o">=</span> <span class="n">NbdevLookup</span><span class="p">(</span><span class="n">incl_libs</span><span class="o">=</span><span class="n">lib_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">))</span>
         <span class="n">docs_versioning</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;docs_versioning&quot;</span><span class="p">)</span>
         <span class="n">lib_version</span> <span class="o">=</span> <span class="n">get_value_from_config</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">)</span>
         <span class="n">_fix_sym_links_in_nbs</span><span class="p">(</span>
-            <span class="n">root_path</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">,</span> <span class="n">nbdev_lookup</span><span class="p">,</span> <span class="n">docs_versioning</span><span class="p">,</span> <span class="n">lib_version</span>
+            <span class="n">root_path</span><span class="p">,</span>
+            <span class="n">cache_path</span><span class="p">,</span>
+            <span class="n">nbdev_lookup</span><span class="p">,</span>
+            <span class="n">docs_versioning</span><span class="p">,</span>
+            <span class="n">lib_version</span><span class="p">,</span>
+            <span class="n">use_relative_doc_links</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">_build_summary</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">lib_path</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">)</span>
 
-        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;mkdocs build -f </span><span class="se">\&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="s1">&#39;mkdocs&#39;</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="s1">&#39;mkdocs.yml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
-        <span class="n">_sprun</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">no_mkdocs_build</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;mkdocs build -f </span><span class="se">\&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="s1">&#39;mkdocs&#39;</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="s1">&#39;mkdocs.yml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+            <span class="n">_sprun</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1112,10 +1170,10 @@ if this function is called directly without calling prepare.</p></td>
           
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
             Back to top
-          </a>
+          </button>
         
       </main>
       
@@ -1153,7 +1211,7 @@ if this function is called directly without calling prepare.</p></td>
     <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.b78d2936.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.efa0ade1.min.js"></script>
       
         <script src="../../../../overrides/js/extra.js"></script>
       

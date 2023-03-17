@@ -21,7 +21,7 @@
         <link rel="next" href="../../social_image_generator/generate_social_image/">
       
       <link rel="icon" href="../../../../overrides/images/compass-outline.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.1">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.402914a4.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.c4a75a56.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -974,7 +974,7 @@
 
 
 <h4 id="nbdev_mkdocs.mkdocs.preview" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">nbdev_mkdocs</span><span class="o">.</span><span class="n">mkdocs</span><span class="o">.</span><span class="n">preview</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+<code class="highlight language-python"><span class="n">nbdev_mkdocs</span><span class="o">.</span><span class="n">mkdocs</span><span class="o">.</span><span class="n">preview</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">use_relative_doc_links</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
 <a href="#nbdev_mkdocs.mkdocs.preview" class="headerlink" title="Permanent link">¤</a></h4>
 
@@ -1005,6 +1005,18 @@
           </td>
         </tr>
         <tr>
+          <td><code>use_relative_doc_links</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+          </td>
+          <td><p>If set to True, relative links are added to symbol references in generated
+documentation. Else, the value set in doc_host in settings.ini is added to symbol references in
+generated documentation.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
           <td><code>port</code></td>
           <td>
                 <code>Optional[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>]</code>
@@ -1023,45 +1035,60 @@
 
       <details class="quote">
         <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1396</span>
-<span class="normal">1397</span>
-<span class="normal">1398</span>
-<span class="normal">1399</span>
-<span class="normal">1400</span>
-<span class="normal">1401</span>
-<span class="normal">1402</span>
-<span class="normal">1403</span>
-<span class="normal">1404</span>
-<span class="normal">1405</span>
-<span class="normal">1406</span>
-<span class="normal">1407</span>
-<span class="normal">1408</span>
-<span class="normal">1409</span>
-<span class="normal">1410</span>
-<span class="normal">1411</span>
-<span class="normal">1412</span>
-<span class="normal">1413</span>
-<span class="normal">1414</span>
-<span class="normal">1415</span>
-<span class="normal">1416</span>
-<span class="normal">1417</span>
-<span class="normal">1418</span>
-<span class="normal">1419</span>
-<span class="normal">1420</span>
-<span class="normal">1421</span>
-<span class="normal">1422</span>
-<span class="normal">1423</span>
-<span class="normal">1424</span>
-<span class="normal">1425</span>
-<span class="normal">1426</span>
-<span class="normal">1427</span>
-<span class="normal">1428</span>
-<span class="normal">1429</span>
-<span class="normal">1430</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">preview</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1340</span>
+<span class="normal">1341</span>
+<span class="normal">1342</span>
+<span class="normal">1343</span>
+<span class="normal">1344</span>
+<span class="normal">1345</span>
+<span class="normal">1346</span>
+<span class="normal">1347</span>
+<span class="normal">1348</span>
+<span class="normal">1349</span>
+<span class="normal">1350</span>
+<span class="normal">1351</span>
+<span class="normal">1352</span>
+<span class="normal">1353</span>
+<span class="normal">1354</span>
+<span class="normal">1355</span>
+<span class="normal">1356</span>
+<span class="normal">1357</span>
+<span class="normal">1358</span>
+<span class="normal">1359</span>
+<span class="normal">1360</span>
+<span class="normal">1361</span>
+<span class="normal">1362</span>
+<span class="normal">1363</span>
+<span class="normal">1364</span>
+<span class="normal">1365</span>
+<span class="normal">1366</span>
+<span class="normal">1367</span>
+<span class="normal">1368</span>
+<span class="normal">1369</span>
+<span class="normal">1370</span>
+<span class="normal">1371</span>
+<span class="normal">1372</span>
+<span class="normal">1373</span>
+<span class="normal">1374</span>
+<span class="normal">1375</span>
+<span class="normal">1376</span>
+<span class="normal">1377</span>
+<span class="normal">1378</span>
+<span class="normal">1379</span>
+<span class="normal">1380</span>
+<span class="normal">1381</span>
+<span class="normal">1382</span>
+<span class="normal">1383</span>
+<span class="normal">1384</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">preview</span><span class="p">(</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">use_relative_doc_links</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Preview the mkdocs documentation.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        root_path: The root path of the documentation.</span>
+<span class="sd">        use_relative_doc_links: If set to True, relative links are added to symbol references in generated</span>
+<span class="sd">            documentation. Else, the value set in doc_host in settings.ini is added to symbol references in</span>
+<span class="sd">            generated documentation.</span>
 <span class="sd">        port: The port to serve the documentation on.</span>
 
 <span class="sd">    !!! note</span>
@@ -1069,7 +1096,12 @@
 <span class="sd">        The above docstring is autogenerated by docstring-gen library (https://github.com/airtai/docstring-gen)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">set_cwd</span><span class="p">(</span><span class="n">root_path</span><span class="p">):</span>
-        <span class="n">prepare</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="n">root_path</span><span class="p">,</span> <span class="n">no_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">prepare</span><span class="p">(</span>
+            <span class="n">root_path</span><span class="o">=</span><span class="n">root_path</span><span class="p">,</span>
+            <span class="n">use_relative_doc_links</span><span class="o">=</span><span class="n">use_relative_doc_links</span><span class="p">,</span>
+            <span class="n">no_test</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">no_mkdocs_build</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;mkdocs serve -f </span><span class="si">{</span><span class="n">root_path</span><span class="si">}</span><span class="s2">/mkdocs/mkdocs.yml -a 0.0.0.0&quot;</span>
         <span class="k">if</span> <span class="n">port</span><span class="p">:</span>
@@ -1111,10 +1143,10 @@
           
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
             Back to top
-          </a>
+          </button>
         
       </main>
       
@@ -1152,7 +1184,7 @@
     <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.b78d2936.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.efa0ade1.min.js"></script>
       
         <script src="../../../../overrides/js/extra.js"></script>
       
