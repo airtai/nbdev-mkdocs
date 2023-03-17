@@ -29,4 +29,4 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: ${{ steps.gh_pages_url.outputs.result }}
-          cmd_params: '--exclude=https://fonts.gstatic.com --buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --timeout=20'
+          cmd_params: '--exclude=https://fonts.gstatic.com --buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --timeout=20 --verbose'
