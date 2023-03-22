@@ -4,10 +4,10 @@
 __all__ = ['new', 'prepare', 'preview', 'docs', 'delete_pre_release_docs']
 
 # %% ../nbs/CLI.ipynb 1
+import subprocess  # nosec: B404
 from asyncio import run as aiorun
 from pathlib import Path
 from typing import *
-import subprocess  # nosec: B404
 
 import typer
 from docstring_gen.docstring_generator import add_docstring_to_source

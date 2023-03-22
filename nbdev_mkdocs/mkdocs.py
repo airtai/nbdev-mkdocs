@@ -19,37 +19,37 @@ import sys
 import textwrap
 import types
 from configparser import ConfigParser
-from inspect import getmembers, isfunction, isclass, ismethod, getmodule, iscoroutine
+from inspect import getmembers, getmodule, isclass, iscoroutine, isfunction, ismethod
 from pathlib import Path
 from typing import *
 
 import nbdev
+import nbformat
 import typer
 import yaml
-import nbformat
 from configupdater import ConfigUpdater, Section
 from configupdater.option import Option
+from fastcore.basics import merge
+from fastcore.foundation import L
 from fastcore.shutil import move
-from nbdev.doclinks import nbdev_export, NbdevLookup
+from nbdev.clean import nbdev_clean
+from nbdev.doclinks import NbdevLookup, nbdev_export
 from nbdev.frontmatter import FrontmatterProc, _fm2dict
 from nbdev.process import NBProcessor
 from nbdev.quarto import prepare as nbdev_prepare
 from nbdev.quarto import refresh_quarto_yml
 from nbdev.serve import proc_nbs
 from nbdev.test import nbdev_test
-from nbdev.clean import nbdev_clean
-from fastcore.basics import merge
-from fastcore.foundation import L
 
 from ._helpers.cli_doc import generate_cli_doc
+from ._helpers.doc_links_utils import fix_sym_links
 from nbdev_mkdocs._helpers.utils import (
     get_value_from_config,
-    set_cwd,
     raise_error_and_exit,
+    set_cwd,
 )
 from ._package_data import get_root_data_path
 from .social_image_generator import _update_social_image_in_mkdocs_yml
-from ._helpers.doc_links_utils import fix_sym_links
 
 # %% ../nbs/Mkdocs.ipynb 5
 def _create_mkdocs_dir(root_path: str) -> None:
