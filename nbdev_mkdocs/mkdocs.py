@@ -33,7 +33,6 @@ from fastcore.shutil import move
 from nbdev.doclinks import nbdev_export, NbdevLookup
 from nbdev.frontmatter import FrontmatterProc, _fm2dict
 from nbdev.process import NBProcessor
-from nbdev.quarto import nbdev_readme
 from nbdev.quarto import prepare as nbdev_prepare
 from nbdev.quarto import refresh_quarto_yml
 from nbdev.serve import proc_nbs
@@ -1325,7 +1324,6 @@ def prepare(
         if no_test:
             nbdev_export.__wrapped__()
             refresh_quarto_yml()
-            nbdev_readme.__wrapped__(chk_time=True)
         else:
             cmd = "nbdev_prepare"
             _sprun(cmd)
