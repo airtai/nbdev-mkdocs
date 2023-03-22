@@ -36,8 +36,11 @@ from nbdev.process import NBProcessor
 from nbdev.quarto import prepare as nbdev_prepare
 from nbdev.quarto import refresh_quarto_yml
 from nbdev.serve import proc_nbs
+from nbdev.test import nbdev_test
+from nbdev.clean import nbdev_clean
 from fastcore.basics import merge
 from fastcore.foundation import L
+
 from ._helpers.cli_doc import generate_cli_doc
 from nbdev_mkdocs._helpers.utils import (
     get_value_from_config,
@@ -1325,8 +1328,10 @@ def prepare(
             nbdev_export.__wrapped__()
             refresh_quarto_yml()
         else:
-            cmd = "nbdev_prepare"
-            _sprun(cmd)
+            nbdev_export.__wrapped__()
+            nbdev_test.__wrapped__()
+            nbdev_clean.__wrapped__()
+            refresh_quarto_yml()
 
     nbdev_mkdocs_docs(
         root_path=root_path,
