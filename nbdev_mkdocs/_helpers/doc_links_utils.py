@@ -8,9 +8,9 @@ import importlib
 import re
 from typing import *
 
-from nbdev.doclinks import NbdevLookup
 from fastcore.basics import merge
 from fastcore.foundation import L
+from nbdev.doclinks import NbdevLookup
 
 # %% ../../nbs/Doc_Links_Utils.ipynb 3
 def _get_backtick_enclosed_string(s: str) -> str:
