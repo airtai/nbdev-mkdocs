@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.2.2
+
+
+### Bugs Squashed
+
+- Don't run nbdev_readme automatically ([#168](https://github.com/airtai/nbdev-mkdocs/pull/168)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+  - Closes #166
+
 ## 0.2.1
 
 
