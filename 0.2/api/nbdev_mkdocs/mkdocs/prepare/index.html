@@ -1047,9 +1047,7 @@ should be set to <code>False</code> if this function is called directly without 
 
       <details class="quote">
         <summary>Source code in <code>nbdev_mkdocs/mkdocs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1302</span>
-<span class="normal">1303</span>
-<span class="normal">1304</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1304</span>
 <span class="normal">1305</span>
 <span class="normal">1306</span>
 <span class="normal">1307</span>
@@ -1082,7 +1080,10 @@ should be set to <code>False</code> if this function is called directly without 
 <span class="normal">1334</span>
 <span class="normal">1335</span>
 <span class="normal">1336</span>
-<span class="normal">1337</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span>
+<span class="normal">1337</span>
+<span class="normal">1338</span>
+<span class="normal">1339</span>
+<span class="normal">1340</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span>
     <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">use_relative_doc_links</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">no_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1108,10 +1109,11 @@ should be set to <code>False</code> if this function is called directly without 
         <span class="k">if</span> <span class="n">no_test</span><span class="p">:</span>
             <span class="n">nbdev_export</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">()</span>
             <span class="n">refresh_quarto_yml</span><span class="p">()</span>
-            <span class="n">nbdev_readme</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="n">chk_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;nbdev_prepare&quot;</span>
-            <span class="n">_sprun</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">nbdev_export</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">()</span>
+            <span class="n">nbdev_test</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">()</span>
+            <span class="n">nbdev_clean</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">()</span>
+            <span class="n">refresh_quarto_yml</span><span class="p">()</span>
 
     <span class="n">nbdev_mkdocs_docs</span><span class="p">(</span>
         <span class="n">root_path</span><span class="o">=</span><span class="n">root_path</span><span class="p">,</span>
