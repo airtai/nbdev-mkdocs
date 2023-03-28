@@ -73,10 +73,11 @@ RUN python3 -m pip install --no-cache-dir git+https://github.com/airtai/jupyter-
 
 ## Customize your jupyter notebook
 COPY airt-neg-trans-small.png /tmp
-RUN chmod 644 /tmp/airt-neg-trans-small.png
+COPY AIRT_logo_blue_white.png /tmp
+RUN chmod 644 /tmp/AIRT_logo_blue_white.png
 COPY airt_favicons /tmp/airt_favicons
 RUN chmod -R 755 /tmp/airt_favicons
-# RUN jt -t airtd -cellw 90% -N -T --logo /root/airt-neg-trans-small.png --fav_icon_dir /root/airt_favicons
+# RUN jt -t airtd -cellw 90% -N -T --logo /root/AIRT_logo_blue_white.png --fav_icon_dir /root/airt_favicons
 # RUN rm -rf /root/airt-neg-trans-small.png /root/airt_favicons
 
 ## Set default shell and home for jupyter notebook

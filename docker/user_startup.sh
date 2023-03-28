@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-jt -t airtd -cellw 90% -N -T  --logo /tmp/airt-neg-trans-small.png --fav_icon_dir /tmp/airt_favicons
+jt -t airtd -cellw 90% -N -T  --logo /tmp/AIRT_logo_blue_white.png --fav_icon_dir /tmp/airt_favicons
 
 jupyter nbextension install https://github.com/airtai/jupyter-docstring-gen/archive/main.zip --user
 
