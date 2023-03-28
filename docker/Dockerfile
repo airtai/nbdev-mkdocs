@@ -72,7 +72,6 @@ RUN python3 -m pip install --no-cache-dir git+https://github.com/airtai/jupyter-
 
 
 ## Customize your jupyter notebook
-COPY airt-neg-trans-small.png /tmp
 COPY AIRT_logo_blue_white.png /tmp
 RUN chmod 644 /tmp/AIRT_logo_blue_white.png
 COPY airt_favicons /tmp/airt_favicons

@@ -12,7 +12,7 @@ fi
 
 if [[ $CI_COMMIT_REF_NAME == "main" ]]; then TAG=latest ; else TAG=$CI_COMMIT_REF_NAME ; fi;
 
-export TF_VERSION=2.11.0
+export TF_VERSION=2.12.0
 
 export CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE-tensorflow-$TF_VERSION
 export BASE=tensorflow/tensorflow:$TF_VERSION-gpu-jupyter
