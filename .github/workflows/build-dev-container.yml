@@ -74,6 +74,6 @@ jobs:
       if: github.ref_name == 'main' || github.ref_name == 'dev'
       run: |
         docker images
-        echo docker push $IMAGE_TF --all-tags
-        docker push $IMAGE_TF --all-tags
+        echo docker push --all-tags $IMAGE_TF
+        docker push --all-tags $IMAGE_TF
         
