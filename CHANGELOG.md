@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.3.0
+
+
+### Bugs Squashed
+
+- Switch to chatGPT model from codex model ([#171](https://github.com/airtai/nbdev-mkdocs/issues/171))
+
+
 ## 0.2.2
 
 
