@@ -161,7 +161,7 @@ def _fix_callout_syntax(text: str) -> str:
             mkdocs_callout = MKDOCS_CALLOUT_TEMPLATE_WITH_TITLE.format(
                 callout_identifier=callout_identifier,
                 callout_type=callout_type,
-                callout_title=f'"{callout_title}"',
+                callout_title=f'\\"{callout_title}\\"',
                 callout_content=textwrap.indent(callout_content, " " * 4),
             )
 
