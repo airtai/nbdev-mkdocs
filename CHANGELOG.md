@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.4.0
+
+
+### Bugs Squashed
+
+- Callout does not work ([#179](https://github.com/airtai/nbdev-mkdocs/pull/179)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
 
 ## 0.3.0
 
