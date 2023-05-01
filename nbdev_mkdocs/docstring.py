@@ -98,9 +98,9 @@ def _extract_examples_from_docstring(o: Any) -> List[str]:
         return "\n\n".join(code)
 
     examples = [
-        find_python_code(section.value.description)
+        find_python_code(section.value.description)  # type: ignore
         for section in sections
-        if section.kind.value == "admonition" and section.value.annotation == "example"
+        if section.kind.value == "admonition" and section.value.annotation == "example"  # type: ignore
     ]
 
     return examples
