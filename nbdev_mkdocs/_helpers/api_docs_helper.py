@@ -7,7 +7,16 @@ __all__ = ['get_formatted_docstring_for_symbol']
 from typing import *
 import re
 import types
-from inspect import Signature, getmembers, isclass, isfunction, signature
+from inspect import (
+    Signature,
+    getmembers,
+    isclass,
+    isfunction,
+    signature,
+    getsource,
+    getsourcefile,
+)
+import textwrap
 
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
@@ -22,6 +31,8 @@ from griffe.docstrings.dataclasses import (
     DocstringRaise,
     DocstringParameter,
 )
+
+from nbdev.config import get_config
 
 # %% ../../nbs/API_Docs_Helper.ipynb 3
 def _convert_union_to_optional(annotation_str: str) -> str:
@@ -65,14 +76,14 @@ def _get_return_annotation(sig: Signature, symbol_definition: str) -> str:
     if sig.return_annotation and "inspect._empty" not in str(sig.return_annotation):
         if isinstance(sig.return_annotation, type):
             symbol_definition = (
-                symbol_definition + f" -> {sig.return_annotation.__name__}`\n"
+                symbol_definition + f" -> {sig.return_annotation.__name__}\n"
             )
         else:
-            symbol_definition = symbol_definition + f" -> {sig.return_annotation}`\n"
+            symbol_definition = symbol_definition + f" -> {sig.return_annotation}\n"
             symbol_definition = symbol_definition.replace("typing.", "")
 
     else:
-        symbol_definition = symbol_definition + " -> None`\n"
+        symbol_definition = symbol_definition + " -> None\n"
     return symbol_definition
 
 # %% ../../nbs/API_Docs_Helper.ipynb 12
@@ -92,11 +103,11 @@ def _get_symbol_definition(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     if isfunction(symbol):
         ret_val = f"### `{symbol.__name__}`\n\n"
         ret_val = ret_val + f"`def {symbol.__name__}({arg_list})"
-        ret_val = _get_return_annotation(_signature, ret_val)
+        ret_val = _get_return_annotation(_signature, ret_val) + "`"
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 19
+# %% ../../nbs/API_Docs_Helper.ipynb 18
 def _format_raises_section(
     section_dict: Dict[str, Union[str, List[DocstringRaise]]]
 ) -> str:
@@ -113,7 +124,7 @@ def _format_raises_section(
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 21
+# %% ../../nbs/API_Docs_Helper.ipynb 20
 def _format_return_section(
     section_dict: Dict[str, Union[str, List[DocstringRaise]]],
     symbol: Union[types.FunctionType, Type[Any]],
@@ -125,6 +136,7 @@ def _format_return_section(
     return_type = (
         "`"
         + _get_return_annotation(sig, "").replace("->", "").replace("\n", "").strip()
+        + "`"
     )
 
     ret_val += "\n".join(
@@ -136,7 +148,7 @@ def _format_return_section(
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 24
+# %% ../../nbs/API_Docs_Helper.ipynb 23
 def _get_default_value(default_value: List[str], param_name: str) -> str:
     if param_name == "**kwargs":
         return "`{}`"
@@ -158,7 +170,7 @@ def _format_params_annotations(
         }
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 28
+# %% ../../nbs/API_Docs_Helper.ipynb 27
 def _format_param(
     param: DocstringParameter, param_annotations_dict: Dict[str, Dict[str, str]]
 ) -> str:
@@ -171,7 +183,7 @@ def _format_param(
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 31
+# %% ../../nbs/API_Docs_Helper.ipynb 30
 def _format_parameters_section(
     section_dict: Dict[str, Union[str, List[DocstringParameter]]],
     symbol: Union[types.FunctionType, Type[Any]],
@@ -193,7 +205,14 @@ def _format_parameters_section(
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 35
+# %% ../../nbs/API_Docs_Helper.ipynb 34
+def _get_source_filename(source_filename: str) -> str:
+    """ """
+    cfg = get_config()
+    lib_name = cfg["lib_name"].replace("-", "_")
+    return f"{lib_name}{source_filename.split(lib_name)[1]}"
+
+# %% ../../nbs/API_Docs_Helper.ipynb 36
 def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Converts a docstring to a markdown-formatted string.
 
@@ -209,7 +228,7 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     for section in parsed_docstring_sections:
         section_dict = section.as_dict()
         if section_dict["kind"] == "text":
-            formatted_docstring += f"{section.value}\n\n"  # type: ignore
+            formatted_docstring += f"{section.value}\n\n"
 
         elif section_dict["kind"] == "examples":
             section_header = f"**{section_dict['kind'].capitalize()}**:\n\n"
@@ -237,10 +256,25 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
                 + _format_parameters_section(section_dict, symbol)
                 + "\n\n"
             )
+        elif section_dict["kind"] == "admonition":
+            value = section_dict["value"]
+            annotation = value["annotation"]
+            description = value["description"]
+            formatted_docstring += (
+                f"??? {annotation}"
+                + "\n\n"
+                + f"{textwrap.indent(description, '    ')}\n\n"
+            )
+
+    source_filename = _get_source_filename(getsourcefile(symbol))
+    formatted_docstring += (
+        f'??? quote "Source code in `{source_filename}`"\n\n'
+        + f"    ```python\n{textwrap.indent(getsource(symbol), '    ')}    ```\n\n"
+    )
 
     return formatted_docstring
 
-# %% ../../nbs/API_Docs_Helper.ipynb 37
+# %% ../../nbs/API_Docs_Helper.ipynb 40
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
@@ -269,17 +303,17 @@ def get_formatted_docstring_for_symbol(
             if not x.startswith("_") or x == "__init__":
                 if isfunction(y) and y.__doc__ is not None:
                     contents += (
-                        f"{_get_symbol_definition(y)}\n{_docstring_to_markdown(y)}"
+                        f"{_get_symbol_definition(y)}\n\n{_docstring_to_markdown(y)}"
                     )
                 elif isclass(y) and not x.startswith("__") and y.__doc__ is not None:
                     contents += (
-                        f"{_get_symbol_definition(y)}\n{_docstring_to_markdown(y)}"
+                        f"{_get_symbol_definition(y)}\n\n{_docstring_to_markdown(y)}"
                     )
                     contents = traverse(y, contents)
         return contents
 
     contents = (
-        f"{_get_symbol_definition(symbol)}\n{_docstring_to_markdown(symbol)}"
+        f"{_get_symbol_definition(symbol)}\n\n{_docstring_to_markdown(symbol)}"
         if symbol.__doc__ is not None
         else ""
     )
