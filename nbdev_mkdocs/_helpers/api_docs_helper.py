@@ -206,8 +206,11 @@ def _format_parameters_section(
     return ret_val
 
 # %% ../../nbs/API_Docs_Helper.ipynb 34
-def _get_source_filename(source_filename: str) -> str:
-    """ """
+def _get_source_relative_filename(
+    source_filename: Optional[str] = None,
+) -> Optional[str]:
+    if source_filename is None:
+        return None
     cfg = get_config()
     lib_name = cfg["lib_name"].replace("-", "_")
     return f"{lib_name}{source_filename.split(lib_name)[1]}"
@@ -266,11 +269,12 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
                 + f"{textwrap.indent(description, '    ')}\n\n"
             )
 
-    source_filename = _get_source_filename(getsourcefile(symbol))
-    formatted_docstring += (
-        f'??? quote "Source code in `{source_filename}`"\n\n'
-        + f"    ```python\n{textwrap.indent(getsource(symbol), '    ')}    ```\n\n"
-    )
+    source_relative_filename = _get_source_relative_filename(getsourcefile(symbol))
+    if source_relative_filename is not None:
+        formatted_docstring += (
+            f'??? quote "Source code in `{source_relative_filename}`"\n\n'
+            + f"    ```python\n{textwrap.indent(getsource(symbol), '    ')}    ```\n\n"
+        )
 
     return formatted_docstring
 
