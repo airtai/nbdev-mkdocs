@@ -216,6 +216,10 @@ def _get_source_relative_filename(
     return f"{lib_name}{source_filename.split(lib_name)[1]}"
 
 # %% ../../nbs/API_Docs_Helper.ipynb 36
+def _get_source_code(symbol: Union[types.FunctionType, Type[Any]]) -> str:
+    return getsource(symbol)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 38
 def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Converts a docstring to a markdown-formatted string.
 
@@ -271,14 +275,15 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
 
     source_relative_filename = _get_source_relative_filename(getsourcefile(symbol))
     if source_relative_filename is not None:
+        source_code = _get_source_code(symbol)
         formatted_docstring += (
             f'??? quote "Source code in `{source_relative_filename}`"\n\n'
-            + f"    ```python\n{textwrap.indent(getsource(symbol), '    ')}    ```\n\n"
+            + f"    ```python\n{textwrap.indent(source_code, '    ')}    ```\n\n"
         )
 
     return formatted_docstring
 
-# %% ../../nbs/API_Docs_Helper.ipynb 40
+# %% ../../nbs/API_Docs_Helper.ipynb 43
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
