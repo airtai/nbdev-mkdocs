@@ -101,7 +101,7 @@ def _get_symbol_definition(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     ret_val = ""
 
     if isfunction(symbol):
-        ret_val = f"### `{symbol.__name__}`\n\n"
+        #         ret_val = f"### `{symbol.__name__}`\n\n"
         ret_val = ret_val + f"`def {symbol.__name__}({arg_list})"
         ret_val = _get_return_annotation(_signature, ret_val) + "`"
 
