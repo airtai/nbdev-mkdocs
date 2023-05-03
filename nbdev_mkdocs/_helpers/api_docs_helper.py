@@ -99,6 +99,12 @@ def _get_handler(md_config: Markdown) -> PythonHandler:
     return handler
 
 # %% ../../nbs/API_Docs_Helper.ipynb 14
+def _generate_markup_for_docstring_section(section, handler: PythonHandler) -> str:
+    template = handler.env.get_template(f"docstring/{section.kind.value}.html")
+    rendered_html = template.render(section=section, config=handler.default_config)
+    return f"{rendered_html}\n"
+
+
 def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Converts a docstring to a markdown-formatted string.
 
@@ -114,18 +120,14 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     md_config = _get_sample_markdown_handler_config()
     handler = _get_handler(md_config)
 
-    formatted_docstring = ""
-    for section in parsed_docstring_sections:
-        if section.kind.value == "text":
-            formatted_docstring += f"{section.value}\n\n"  # type: ignore
-        else:
-            template = handler.env.get_template(f"docstring/{section.kind.value}.html")
-            rendered_html = template.render(
-                section=section, config=handler.default_config
-            )
-            formatted_docstring += f"{rendered_html}\n\n"
+    ret_val = [
+        f"{section.value}\n"
+        if section.kind.value == "text"
+        else _generate_markup_for_docstring_section(section, handler)
+        for section in parsed_docstring_sections
+    ]
 
-    return formatted_docstring
+    return "".join(ret_val)
 
 # %% ../../nbs/API_Docs_Helper.ipynb 16
 def get_formatted_docstring_for_symbol(
