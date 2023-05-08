@@ -8,16 +8,40 @@ from typing import *
 import types
 import enum
 import re
-from inspect import Signature, signature, isfunction, isclass, getmembers, getdoc
+import ast
+import textwrap
+from ast import ClassDef, FunctionDef, alias, ImportFrom
+from inspect import (
+    Signature,
+    signature,
+    isfunction,
+    isclass,
+    getmembers,
+    getdoc,
+    getsource,
+)
+from importlib import import_module
 
-from griffe.dataclasses import Docstring, Function, Parameters, Parameter, ParameterKind
+from griffe.dataclasses import (
+    Docstring,
+    Function,
+    Parameters,
+    Parameter,
+    ParameterKind,
+    Module,
+    Class,
+)
 from griffe.docstrings.parsers import Parser, parse
 from griffe.expressions import Expression, Name
+from griffe.agents.nodes import get_annotation, relative_to_absolute
+from griffe.exceptions import BuiltinModuleError
 
 from mkdocstrings_handlers.python.handler import get_handler, PythonHandler
 from markdown.core import Markdown
 
-# %% ../../nbs/API_Docs_Helper.ipynb 2
+import typer
+
+# %% ../../nbs/API_Docs_Helper.ipynb 3
 def _convert_union_to_optional(annotation_str: str) -> str:
     """Convert the 'Union[Type1, Type2, ..., NoneType]' to 'Optional[Type1, Type2, ...]' in the given annotation string
 
@@ -36,7 +60,7 @@ def _convert_union_to_optional(annotation_str: str) -> str:
     else:
         return annotation_str
 
-# %% ../../nbs/API_Docs_Helper.ipynb 4
+# %% ../../nbs/API_Docs_Helper.ipynb 5
 def _get_arg_list_with_signature(
     _signature: Signature, return_as_list: bool = False
 ) -> Union[str, List[str]]:
@@ -54,7 +78,7 @@ def _get_arg_list_with_signature(
 
     return arg_list if return_as_list else ", ".join(arg_list)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 6
+# %% ../../nbs/API_Docs_Helper.ipynb 7
 def _get_return_annotation(sig: Signature, symbol_definition: str) -> str:
     if sig.return_annotation and "inspect._empty" not in str(sig.return_annotation):
         if isinstance(sig.return_annotation, type):
@@ -69,7 +93,7 @@ def _get_return_annotation(sig: Signature, symbol_definition: str) -> str:
         symbol_definition = symbol_definition + " -> None\n"
     return symbol_definition
 
-# %% ../../nbs/API_Docs_Helper.ipynb 8
+# %% ../../nbs/API_Docs_Helper.ipynb 9
 def _get_symbol_definition(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Return the definition of a given symbol.
 
@@ -89,18 +113,18 @@ def _get_symbol_definition(symbol: Union[types.FunctionType, Type[Any]]) -> str:
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 10
+# %% ../../nbs/API_Docs_Helper.ipynb 11
 def _get_sample_markdown_handler_config() -> Markdown:
     md_config = Markdown(extensions=["toc"], extension_configs={})
     return md_config
 
-# %% ../../nbs/API_Docs_Helper.ipynb 12
+# %% ../../nbs/API_Docs_Helper.ipynb 13
 def _get_handler(md_config: Markdown) -> PythonHandler:
     handler = get_handler(theme="material")
     handler._update_env(md_config, {"mdx": [], "mdx_configs": []})
     return handler
 
-# %% ../../nbs/API_Docs_Helper.ipynb 14
+# %% ../../nbs/API_Docs_Helper.ipynb 15
 class ParameterKindMapper(enum.Enum):
     POSITIONAL_ONLY: ParameterKind = ParameterKind.positional_only
     POSITIONAL_OR_KEYWORD: ParameterKind = ParameterKind.positional_or_keyword
@@ -108,44 +132,128 @@ class ParameterKindMapper(enum.Enum):
     KEYWORD_ONLY: ParameterKind = ParameterKind.keyword_only
     VAR_KEYWORD: ParameterKind = ParameterKind.var_keyword
 
-# %% ../../nbs/API_Docs_Helper.ipynb 16
-def _get_function_parameters(
-    symbol: Union[types.FunctionType, Type[Any]]
-) -> Parameters:
-    sig = signature(symbol)
-    params = [param for param in sig.parameters.values()]
-    return Parameters(
-        *[
-            Parameter(
-                param.name,
-                annotation=Name(
-                    source=str(sig.parameters[param.name])
-                    .split(": ")[1]
-                    .split(" =")[0],
-                    full=str(sig.parameters[param.name]).split(": ")[1].split(" =")[0],
-                )
-                if param.annotation is not param.empty
-                else None,
-                default="{}"
-                if param.name == "kwargs"
-                else None
-                if param.default is param.empty
-                else str(param.default),
-                kind=ParameterKindMapper[param.kind.name].value,
-            )
-            for param in params
-        ]
-    )
+# %% ../../nbs/API_Docs_Helper.ipynb 17
+def _get_module_source(module_name: str) -> str:
+    m = import_module(module_name)
+    return getsource(m)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 18
-def _get_func_object_for_symbol(symbol):
-    function = Function(
-        symbol.__name__, parameters=_get_function_parameters(symbol)
-    )  # todo: add returns and decorators
-    return function
+
+def _relative_to_absolute(node: ImportFrom, name: alias, current_module: Module) -> str:
+    try:
+        return relative_to_absolute(node, name, current_module)
+    except BuiltinModuleError:
+        return name.name
+
+
+def _get_absolute_module_import_path(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> Dict[str, str]:
+    m_source = _get_module_source(symbol.__module__)
+    tree = ast.parse(m_source)
+    current_module = Module(name=symbol.__module__)
+    return {
+        name.name: _relative_to_absolute(node, name, current_module)
+        for node in tree.body
+        if isinstance(node, ImportFrom)
+        for name in node.names
+    }
 
 # %% ../../nbs/API_Docs_Helper.ipynb 20
-def _generate_markup_for_docstring_section(section, handler: PythonHandler) -> str:
+def _fix_abs_import_path(
+    annotated_args: Dict[str, Any], abs_import_path: Dict[str, str]
+) -> Dict[str, Any]:
+    return {
+        key: (
+            Name(source=annotated_args[key].source, full=abs_import_path[val.full])
+            if (isinstance(val, Name)) and (val.full in abs_import_path.keys())
+            else val
+        )
+        for key, val in annotated_args.items()
+    }
+
+# %% ../../nbs/API_Docs_Helper.ipynb 22
+def _flattern(xs: List[Any]) -> List[Any]:
+    return [subitem for item in xs if isinstance(item, list) for subitem in item] + [
+        item for item in xs if not isinstance(item, list)
+    ]
+
+
+def _get_init_node(node: ClassDef) -> Optional[FunctionDef]:
+    init_node = [
+        n for n in node.body if isinstance(n, FunctionDef) and n.name == "__init__"
+    ]
+    if len(init_node) == 0:
+        return None
+    return init_node[0]
+
+
+def _get_annotation_for_all_params(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> Dict[str, Any]:
+    source = getsource(symbol)
+    tree = ast.parse(textwrap.dedent(source))
+    parent = Module(
+        #         name=symbol.__module__,
+        name=symbol.__name__,
+        #         filepath=symbol.__module__ + "." + symbol.__name__,
+    )
+    node = (
+        _get_init_node(tree.body[0])
+        if isinstance(tree.body[0], ClassDef)
+        else tree.body[0]
+    )
+
+    if node is None:
+        return {}
+
+    args_list = {
+        key: value
+        for key, value in node.args.__dict__.items()  # type: ignore
+        if key not in ["defaults", "kw_defaults"]
+    }
+    args = [arg for arg in args_list.values() if arg and arg != [None]]
+    annotated_args = {
+        arg.arg: get_annotation(arg.annotation, parent) for arg in _flattern(args)
+    }
+    abs_import_path = _get_absolute_module_import_path(symbol)
+    return _fix_abs_import_path(annotated_args, abs_import_path)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 30
+def _get_function_parameters(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> Optional[Parameters]:
+    sig = signature(symbol)
+    params = [param for param in sig.parameters.values()]
+    annotations = _get_annotation_for_all_params(symbol)
+    parameters = [
+        Parameter(
+            param.name,
+            annotation=annotations[param.name],
+            default="{}"
+            if param.name == "kwargs"
+            else None
+            if param.default is param.empty
+            else str(param.default),
+            kind=ParameterKindMapper[param.kind.name].value,
+        )
+        for param in params
+    ]
+    if len(parameters) == 0:
+        return None
+    return Parameters(*parameters)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 33
+def _get_object_for_symbol(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> Union[Class, Function]:
+    if isfunction(symbol):
+        return Function(
+            symbol.__name__, parameters=_get_function_parameters(symbol)
+        )  # todo: add returns and decorators
+    return Class(symbol.__name__)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 36
+def _generate_markup_for_docstring_section(section: Any, handler: PythonHandler) -> str:
     template = handler.env.get_template(f"docstring/{section.kind.value}.html")
     rendered_html = template.render(section=section, config=handler.default_config)
     return f"{rendered_html}\n"
@@ -155,21 +263,20 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Converts a docstring to a markdown-formatted string.
 
     Args:
-        docstring: The docstring to convert.
+        symbol: The symbol for which the docstring needs to be converted.
 
     Returns:
         The markdown-formatted docstring.
     """
-    #     docstring = Docstring(symbol.__doc__)  # type: ignore
-    function = _get_func_object_for_symbol(symbol)
-    docstring = Docstring(getdoc(symbol), parent=function)  # type: ignore
+    parent = _get_object_for_symbol(symbol)
+    docstring = Docstring(getdoc(symbol), parent=parent)  # type: ignore
     parsed_docstring_sections = parse(docstring, Parser.google)
 
     md_config = _get_sample_markdown_handler_config()
     handler = _get_handler(md_config)
 
     ret_val = [
-        f"{section.value}\n"
+        f"{section.value}\n"  # type: ignore
         if section.kind.value == "text"
         else _generate_markup_for_docstring_section(section, handler)
         for section in parsed_docstring_sections
@@ -177,7 +284,7 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
 
     return "".join(ret_val)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 22
+# %% ../../nbs/API_Docs_Helper.ipynb 38
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
