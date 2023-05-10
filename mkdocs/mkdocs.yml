@@ -30,6 +30,13 @@ plugins:
           show_root_heading: true
           show_signature_annotations: true
           show_if_no_docstring: true
+          members: false
+          show_docstring_attributes: false
+          show_source: false
+          show_docstring_raises: false
+          show_root_toc_entry: false
+          show_docstring_description: false
+          show_docstring_parameters: false
 
 markdown_extensions:
 - md_in_html

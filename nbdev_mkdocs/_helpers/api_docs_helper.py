@@ -10,6 +10,7 @@ import enum
 import re
 import ast
 import textwrap
+from pathlib import Path
 from ast import ClassDef, FunctionDef, alias, ImportFrom
 from inspect import (
     Signature,
@@ -19,6 +20,7 @@ from inspect import (
     getmembers,
     getdoc,
     getsource,
+    getsourcefile,
 )
 from importlib import import_module
 
@@ -38,6 +40,9 @@ from griffe.exceptions import BuiltinModuleError
 
 from mkdocstrings_handlers.python.handler import get_handler, PythonHandler
 from markdown.core import Markdown
+
+from nbdev.config import get_config
+
 
 import typer
 
@@ -115,13 +120,20 @@ def _get_symbol_definition(symbol: Union[types.FunctionType, Type[Any]]) -> str:
 
 # %% ../../nbs/API_Docs_Helper.ipynb 11
 def _get_sample_markdown_handler_config() -> Markdown:
-    md_config = Markdown(extensions=["toc"], extension_configs={})
+    md_config = Markdown(
+        extensions=["toc"],
+        extension_configs={},
+    )
     return md_config
 
 # %% ../../nbs/API_Docs_Helper.ipynb 13
 def _get_handler(md_config: Markdown) -> PythonHandler:
-    handler = get_handler(theme="material")
-    handler._update_env(md_config, {"mdx": [], "mdx_configs": []})
+    handler = get_handler(
+        theme="material",
+    )
+    handler._update_env(
+        md_config, {"mdx": [], "mdx_configs": []}
+    )  # check what config i need to pass
     return handler
 
 # %% ../../nbs/API_Docs_Helper.ipynb 15
@@ -133,16 +145,17 @@ class ParameterKindMapper(enum.Enum):
     VAR_KEYWORD: ParameterKind = ParameterKind.var_keyword
 
 # %% ../../nbs/API_Docs_Helper.ipynb 17
+def _get_symbol_filepath(symbol) -> Path:
+    config = get_config()
+    filepath = getsourcefile(symbol)
+    return Path(filepath).relative_to(
+        filepath.split(f'{config["lib_name"].replace("-", "_")}/')[0]
+    )
+
+# %% ../../nbs/API_Docs_Helper.ipynb 20
 def _get_module_source(module_name: str) -> str:
     m = import_module(module_name)
     return getsource(m)
-
-
-def _relative_to_absolute(node: ImportFrom, name: alias, current_module: Module) -> str:
-    try:
-        return relative_to_absolute(node, name, current_module)
-    except BuiltinModuleError:
-        return name.name
 
 
 def _get_absolute_module_import_path(
@@ -150,15 +163,17 @@ def _get_absolute_module_import_path(
 ) -> Dict[str, str]:
     m_source = _get_module_source(symbol.__module__)
     tree = ast.parse(m_source)
-    current_module = Module(name=symbol.__module__)
+    filepath = _get_symbol_filepath(symbol)
+    name = ".".join(symbol.__module__.split(".")[:-1])
+    current_module = Module(name=name, filepath=Path(filepath))
     return {
-        name.name: _relative_to_absolute(node, name, current_module)
+        name.name: relative_to_absolute(node, name, current_module)
         for node in tree.body
         if isinstance(node, ImportFrom)
         for name in node.names
     }
 
-# %% ../../nbs/API_Docs_Helper.ipynb 20
+# %% ../../nbs/API_Docs_Helper.ipynb 23
 def _fix_abs_import_path(
     annotated_args: Dict[str, Any], abs_import_path: Dict[str, str]
 ) -> Dict[str, Any]:
@@ -171,7 +186,7 @@ def _fix_abs_import_path(
         for key, val in annotated_args.items()
     }
 
-# %% ../../nbs/API_Docs_Helper.ipynb 22
+# %% ../../nbs/API_Docs_Helper.ipynb 25
 def _flattern(xs: List[Any]) -> List[Any]:
     return [subitem for item in xs if isinstance(item, list) for subitem in item] + [
         item for item in xs if not isinstance(item, list)
@@ -192,9 +207,11 @@ def _get_annotation_for_all_params(
 ) -> Dict[str, Any]:
     source = getsource(symbol)
     tree = ast.parse(textwrap.dedent(source))
+    name = ".".join(symbol.__module__.split(".")[:-1])
     parent = Module(
         #         name=symbol.__module__,
-        name=symbol.__name__,
+        #         name=symbol.__name__,
+        name=name,
         #         filepath=symbol.__module__ + "." + symbol.__name__,
     )
     node = (
@@ -218,7 +235,7 @@ def _get_annotation_for_all_params(
     abs_import_path = _get_absolute_module_import_path(symbol)
     return _fix_abs_import_path(annotated_args, abs_import_path)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 30
+# %% ../../nbs/API_Docs_Helper.ipynb 34
 def _get_function_parameters(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> Optional[Parameters]:
@@ -242,7 +259,7 @@ def _get_function_parameters(
         return None
     return Parameters(*parameters)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 33
+# %% ../../nbs/API_Docs_Helper.ipynb 37
 def _get_object_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> Union[Class, Function]:
@@ -252,7 +269,7 @@ def _get_object_for_symbol(
         )  # todo: add returns and decorators
     return Class(symbol.__name__)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 36
+# %% ../../nbs/API_Docs_Helper.ipynb 40
 def _generate_markup_for_docstring_section(section: Any, handler: PythonHandler) -> str:
     template = handler.env.get_template(f"docstring/{section.kind.value}.html")
     rendered_html = template.render(section=section, config=handler.default_config)
@@ -284,7 +301,7 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
 
     return "".join(ret_val)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 38
+# %% ../../nbs/API_Docs_Helper.ipynb 42
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
@@ -312,21 +329,22 @@ def get_formatted_docstring_for_symbol(
         for x, y in getmembers(symbol):
             if not x.startswith("_") or x == "__init__":
                 if isfunction(y) and y.__doc__ is not None:
-                    contents += (
-                        f"{_get_symbol_definition(y)}\n\n{_docstring_to_markdown(y)}"
-                    )
+                    contents += f"\n\n{_get_symbol_definition(y)}\n\n{_docstring_to_markdown(y)}"
+                #                     contents += f"{_docstring_to_markdown(y)}"
                 elif isclass(y) and not x.startswith("__") and y.__doc__ is not None:
-                    contents += (
-                        f"{_get_symbol_definition(y)}\n\n{_docstring_to_markdown(y)}"
-                    )
+                    #                     contents += f"{_get_symbol_definition(y)}\n\n{_docstring_to_markdown(y)}"
+                    contents += f"{_docstring_to_markdown(y)}"
                     contents = traverse(y, contents)
         return contents
 
     contents = (
-        f"{_get_symbol_definition(symbol)}\n\n{_docstring_to_markdown(symbol)}"
+        #         f"{_get_symbol_definition(symbol)}\n\n{_docstring_to_markdown(symbol)}"
+        f"{_docstring_to_markdown(symbol)}"
         if symbol.__doc__ is not None
         else ""
     )
     if isclass(symbol):
         contents = traverse(symbol, contents)
+
+    contents = f"::: {symbol.__module__}.{symbol.__name__}\n\n{contents}"
     return contents
