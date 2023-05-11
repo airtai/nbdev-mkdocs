@@ -7,13 +7,11 @@ __all__ = ['MKDOCS_LOCAL_CONFIG', 'ParameterKindMapper', 'get_formatted_docstrin
 from typing import *
 import types
 import enum
-import re
 import ast
 import textwrap
 from pathlib import Path
 from ast import ClassDef, FunctionDef, alias, ImportFrom
 from inspect import (
-    Signature,
     signature,
     isfunction,
     isclass,
@@ -21,8 +19,8 @@ from inspect import (
     getdoc,
     getsource,
     getsourcefile,
-    Parameter,
 )
+from inspect import Parameter as Parameter_Inspect
 from importlib import import_module
 
 import griffe
@@ -36,17 +34,11 @@ from griffe.dataclasses import (
     Class,
 )
 from griffe.docstrings.parsers import Parser, parse
-from griffe.expressions import Expression, Name
+from griffe.expressions import Name
 from griffe.agents.nodes import get_annotation, relative_to_absolute
-from griffe.exceptions import BuiltinModuleError
-
 from mkdocstrings_handlers.python.handler import get_handler, PythonHandler
 from markdown.core import Markdown
-
 from nbdev.config import get_config
-
-
-import typer
 
 # %% ../../nbs/API_Docs_Helper.ipynb 3
 def _get_sample_markdown_handler_config() -> Markdown:
@@ -75,11 +67,11 @@ class ParameterKindMapper(enum.Enum):
     VAR_KEYWORD: ParameterKind = ParameterKind.var_keyword
 
 # %% ../../nbs/API_Docs_Helper.ipynb 9
-def _get_symbol_filepath(symbol) -> Path:
+def _get_symbol_filepath(symbol: Union[types.FunctionType, Type[Any]]) -> Path:
     config = get_config()
     filepath = getsourcefile(symbol)
-    return Path(filepath).relative_to(
-        filepath.split(f'{config["lib_name"].replace("-", "_")}/')[0]
+    return Path(filepath).relative_to(  # type: ignore
+        filepath.split(f'{config["lib_name"].replace("-", "_")}/')[0]  # type: ignore
     )
 
 # %% ../../nbs/API_Docs_Helper.ipynb 11
@@ -103,8 +95,8 @@ def _get_absolute_module_import_path(
         for name in node.names
     }
 
-# %% ../../nbs/API_Docs_Helper.ipynb 14
-def _fix_abs_import_path(
+# %% ../../nbs/API_Docs_Helper.ipynb 13
+def _create_name_object(
     annotated_args: Dict[str, Any], abs_import_path: Dict[str, str]
 ) -> Dict[str, Any]:
     return {
@@ -116,7 +108,7 @@ def _fix_abs_import_path(
         for key, val in annotated_args.items()
     }
 
-# %% ../../nbs/API_Docs_Helper.ipynb 16
+# %% ../../nbs/API_Docs_Helper.ipynb 15
 def _flattern(xs: List[Any]) -> List[Any]:
     return [subitem for item in xs if isinstance(item, list) for subitem in item] + [
         item for item in xs if not isinstance(item, list)
@@ -163,10 +155,27 @@ def _get_annotation_for_all_params(
         arg.arg: get_annotation(arg.annotation, parent) for arg in _flattern(args)
     }
     abs_import_path = _get_absolute_module_import_path(symbol)
-    return _fix_abs_import_path(annotated_args, abs_import_path)
+    return _create_name_object(annotated_args, abs_import_path)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 25
-def _get_param_default_value(param: Parameter) -> str:
+# %% ../../nbs/API_Docs_Helper.ipynb 24
+def _get_return_annotation(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> Optional[Name]:
+    sig = signature(symbol)
+    if sig.return_annotation is None or sig.return_annotation.__name__ == "_empty":
+        return None
+
+    return_signature = sig.return_annotation.__name__
+    abs_import_path = _get_absolute_module_import_path(symbol)
+    full_return_signature = (
+        abs_import_path[return_signature]
+        if return_signature in abs_import_path.keys()
+        else return_signature
+    )
+    return Name(source=return_signature, full=full_return_signature)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 27
+def _get_param_default_value(param: Parameter_Inspect) -> Optional[str]:
     return (
         "{}"
         if param.name == "kwargs"
@@ -176,7 +185,7 @@ def _get_param_default_value(param: Parameter) -> str:
     )
 
 
-def _get_function_parameters(
+def _get_parameters(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> Optional[Parameters]:
     sig = signature(symbol)
@@ -195,18 +204,22 @@ def _get_function_parameters(
         return None
     return Parameters(*parameters)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 28
+# %% ../../nbs/API_Docs_Helper.ipynb 30
 def _get_object_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> Union[Class, Function]:
     if isfunction(symbol):
         return Function(
-            symbol.__name__, parameters=_get_function_parameters(symbol)
-        )  # todo: add returns and decorators
+            symbol.__name__,
+            parameters=_get_parameters(symbol),
+            returns=_get_return_annotation(symbol),
+        )
     return Class(symbol.__name__)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 31
-def _get_source_for_symbol(symbol: Union[types.FunctionType, Type[Any]]) -> str:
+# %% ../../nbs/API_Docs_Helper.ipynb 33
+def _add_symbol_source_to_docstring(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> str:
     source_code = getsource(symbol)
     symbol_path = _get_symbol_filepath(symbol)
     formatted_sourcecode = textwrap.dedent(source_code)
@@ -215,7 +228,7 @@ def _get_source_for_symbol(symbol: Union[types.FunctionType, Type[Any]]) -> str:
         + f"    ```python\n{textwrap.indent(formatted_sourcecode, '    ')}    ```\n\n"
     )
 
-# %% ../../nbs/API_Docs_Helper.ipynb 33
+# %% ../../nbs/API_Docs_Helper.ipynb 35
 def _generate_markup_for_docstring_section(section: Any, handler: PythonHandler) -> str:
     template = handler.env.get_template(f"docstring/{section.kind.value}.html")
     rendered_html = template.render(section=section, config=handler.default_config)
@@ -245,11 +258,13 @@ def _docstring_to_markdown(symbol: Union[types.FunctionType, Type[Any]]) -> str:
         for section in parsed_docstring_sections
     ]
 
-    ret_val = "".join(parsed_sections) + f"\n\n{_get_source_for_symbol(symbol)}"
+    ret_val = (
+        "".join(parsed_sections) + f"\n\n{_add_symbol_source_to_docstring(symbol)}"
+    )
 
     return ret_val
 
-# %% ../../nbs/API_Docs_Helper.ipynb 35
+# %% ../../nbs/API_Docs_Helper.ipynb 37
 MKDOCS_LOCAL_CONFIG = f"""
     options:
       members: false
@@ -266,7 +281,9 @@ MKDOCS_LOCAL_CONFIG = f"""
       show_source: false\n\n"""
 
 
-def _get_annotated_symbol_definition(symbol: Union[types.FunctionType, Type[Any]]):
+def _get_annotated_symbol_definition(
+    symbol: Union[types.FunctionType, Type[Any]]
+) -> str:
     try:
         module = f"{symbol.__module__}.{symbol.__qualname__}"
         griffe.load(module)
@@ -275,7 +292,7 @@ def _get_annotated_symbol_definition(symbol: Union[types.FunctionType, Type[Any]
         patched_symbol_path = _get_symbol_filepath(symbol)
         return f"\n\n::: {str(patched_symbol_path.parent)}.{str(patched_symbol_path.stem)}.{symbol.__name__}{MKDOCS_LOCAL_CONFIG}"
 
-# %% ../../nbs/API_Docs_Helper.ipynb 37
+# %% ../../nbs/API_Docs_Helper.ipynb 39
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
