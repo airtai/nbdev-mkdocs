@@ -926,10 +926,12 @@ def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
         members_with_submodules, Path(root_path) / "mkdocs" / "docs" / "api"
     )
 
-    members_with_submodules = _get_submodule_members(module_name)
-    symbols = _load_submodules(module_name, members_with_submodules)
+    #     members_with_submodules = _get_submodule_members(module_name)
+    #     symbols = _load_submodules(module_name, members_with_submodules)
 
-    _update_api_docs(symbols, Path(root_path) / "mkdocs" / "docs")
+    #     _update_api_docs(
+    #         symbols, Path(root_path) / "mkdocs" / "docs"
+    #     )
 
     return api_summary
 
