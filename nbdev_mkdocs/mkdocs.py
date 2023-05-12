@@ -830,47 +830,6 @@ def _get_api_summary_item(x: str) -> str:
 def _get_api_summary(members: List[str]) -> str:
     return "\n".join([_get_api_summary_item(x) for x in members]) + "\n"
 
-# %% ../nbs/Mkdocs.ipynb 75
-def _get_submodule_members(module_name: str) -> List[str]:
-    """Get a list of all submodules contained within the module.
-
-    Args:
-        module_name: The name of the module to retrieve submodules from
-
-    Returns:
-        A list of submodule names within the module
-    """
-    members = _import_all_members(module_name)
-    members_with_submodules = _add_all_submodules(members)
-    members_with_submodules_str: List[str] = [
-        x[:-1] if x.endswith(".") else x for x in members_with_submodules
-    ]
-    return members_with_submodules_str
-
-# %% ../nbs/Mkdocs.ipynb 77
-def _load_submodules(
-    module_name: str, members_with_submodules: List[str]
-) -> List[Union[types.FunctionType, Type[Any]]]:
-    """Load the given submodules from the module.
-
-    Args:
-        module_name: The name of the module whose submodules to load
-        members_with_submodules: A list of submodule names to load
-
-    Returns:
-        A list of imported submodule objects.
-    """
-    submodules = _import_submodules(module_name)
-    members: List[Tuple[str, Union[types.FunctionType, Type[Any]]]] = list(
-        itertools.chain(*[_import_functions_and_classes(m) for m in submodules])
-    )
-    names = [
-        y
-        for x, y in members
-        if f"{y.__module__}.{y.__name__}" in members_with_submodules
-    ]
-    return names
-
 # %% ../nbs/Mkdocs.ipynb 79
 def _generate_api_doc(name: str, docs_path: Path) -> Path:
     xs = name.split(".")
@@ -888,20 +847,6 @@ def _generate_api_doc(name: str, docs_path: Path) -> Path:
 # %% ../nbs/Mkdocs.ipynb 81
 def _generate_api_docs(members: List[str], docs_path: Path) -> List[Path]:
     return [_generate_api_doc(x, docs_path) for x in members if not x.endswith(".")]
-
-# %% ../nbs/Mkdocs.ipynb 83
-def _update_api_docs(
-    symbols: List[Union[types.FunctionType, Type[Any]]], docs_path: Path
-) -> None:
-    for symbol in symbols:
-        content = ""
-        content += get_formatted_docstring_for_symbol(symbol)
-        target_file_path = (
-            "/".join(f"{symbol.__module__}.{symbol.__name__}".split(".")) + ".md"
-        )
-
-        with open((Path(docs_path) / "api" / target_file_path), "w") as f:
-            f.write(content)
 
 # %% ../nbs/Mkdocs.ipynb 85
 def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
