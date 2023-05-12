@@ -34,7 +34,7 @@ def _get_annotated_symbol_definition(
         patched_symbol_path = _get_symbol_filepath(symbol)
         return f"\n\n::: {str(patched_symbol_path.parent)}.{str(patched_symbol_path.stem)}.{symbol.__name__}\n"
 
-# %% ../../nbs/API_Docs_Helper.ipynb 7
+# %% ../../nbs/API_Docs_Helper.ipynb 8
 def _get_attributes_to_exclude_in_docstring(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
@@ -46,7 +46,7 @@ def _get_attributes_to_exclude_in_docstring(
     return f"""    options:
       filters: [{", ".join(members_list)}]"""
 
-# %% ../../nbs/API_Docs_Helper.ipynb 9
+# %% ../../nbs/API_Docs_Helper.ipynb 10
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
