@@ -894,7 +894,8 @@ def _update_api_docs(
     symbols: List[Union[types.FunctionType, Type[Any]]], docs_path: Path
 ) -> None:
     for symbol in symbols:
-        content = f"## `{symbol.__module__}.{symbol.__name__}`\n\n"
+        #         content = f"## `{symbol.__module__}.{symbol.__name__}`\n\n"
+        content = ""
         content += get_formatted_docstring_for_symbol(symbol)
         target_file_path = (
             "/".join(f"{symbol.__module__}.{symbol.__name__}".split(".")) + ".md"
