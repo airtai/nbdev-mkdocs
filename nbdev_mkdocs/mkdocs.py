@@ -53,6 +53,7 @@ from .social_image_generator import _update_social_image_in_mkdocs_yml
 from nbdev_mkdocs._helpers.quarto_to_mkdocs import (
     _update_quarto_tags_to_markdown_format,
 )
+from ._helpers.api_docs_helper import get_formatted_docstring_for_symbol
 
 # %% ../nbs/Mkdocs.ipynb 5
 def _create_mkdocs_dir(root_path: str) -> None:
@@ -830,6 +831,47 @@ def _get_api_summary(members: List[str]) -> str:
     return "\n".join([_get_api_summary_item(x) for x in members]) + "\n"
 
 # %% ../nbs/Mkdocs.ipynb 75
+def _get_submodule_members(module_name: str) -> List[str]:
+    """Get a list of all submodules contained within the module.
+
+    Args:
+        module_name: The name of the module to retrieve submodules from
+
+    Returns:
+        A list of submodule names within the module
+    """
+    members = _import_all_members(module_name)
+    members_with_submodules = _add_all_submodules(members)
+    members_with_submodules_str: List[str] = [
+        x[:-1] if x.endswith(".") else x for x in members_with_submodules
+    ]
+    return members_with_submodules_str
+
+# %% ../nbs/Mkdocs.ipynb 77
+def _load_submodules(
+    module_name: str, members_with_submodules: List[str]
+) -> List[Union[types.FunctionType, Type[Any]]]:
+    """Load the given submodules from the module.
+
+    Args:
+        module_name: The name of the module whose submodules to load
+        members_with_submodules: A list of submodule names to load
+
+    Returns:
+        A list of imported submodule objects.
+    """
+    submodules = _import_submodules(module_name)
+    members: List[Tuple[str, Union[types.FunctionType, Type[Any]]]] = list(
+        itertools.chain(*[_import_functions_and_classes(m) for m in submodules])
+    )
+    names = [
+        y
+        for x, y in members
+        if f"{y.__module__}.{y.__name__}" in members_with_submodules
+    ]
+    return names
+
+# %% ../nbs/Mkdocs.ipynb 79
 def _generate_api_doc(name: str, docs_path: Path) -> Path:
     xs = name.split(".")
     module_name = ".".join(xs[:-1])
@@ -843,11 +885,25 @@ def _generate_api_doc(name: str, docs_path: Path) -> Path:
 
     return path
 
-# %% ../nbs/Mkdocs.ipynb 77
+# %% ../nbs/Mkdocs.ipynb 81
 def _generate_api_docs(members: List[str], docs_path: Path) -> List[Path]:
     return [_generate_api_doc(x, docs_path) for x in members if not x.endswith(".")]
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 83
+def _update_api_docs(
+    symbols: List[Union[types.FunctionType, Type[Any]]], docs_path: Path
+) -> None:
+    for symbol in symbols:
+        content = ""
+        content += get_formatted_docstring_for_symbol(symbol)
+        target_file_path = (
+            "/".join(f"{symbol.__module__}.{symbol.__name__}".split(".")) + ".md"
+        )
+
+        with open((Path(docs_path) / "api" / target_file_path), "w") as f:
+            f.write(content)
+
+# %% ../nbs/Mkdocs.ipynb 85
 def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     """Generate API documentation for a module.
 
@@ -864,19 +920,23 @@ def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     """
     members = _import_all_members(module_name)
     members_with_submodules = _add_all_submodules(members)
-
     api_summary = _get_api_summary(members_with_submodules)
 
     _generate_api_docs(
         members_with_submodules, Path(root_path) / "mkdocs" / "docs" / "api"
     )
 
+    members_with_submodules = _get_submodule_members(module_name)
+    symbols = _load_submodules(module_name, members_with_submodules)
+
+    _update_api_docs(symbols, Path(root_path) / "mkdocs" / "docs")
+
     return api_summary
 
 
 #     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 83
+# %% ../nbs/Mkdocs.ipynb 87
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of a string.
 
@@ -904,7 +964,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 85
+# %% ../nbs/Mkdocs.ipynb 89
 def _generate_cli_doc_for_submodule(
     root_path: str, docs_dir_name: str, cmd: str
 ) -> str:
@@ -997,7 +1057,7 @@ def _generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 89
+# %% ../nbs/Mkdocs.ipynb 93
 def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
     """Copy the CHANGELOG.md file to the docs folder if it's not already present.
 
@@ -1025,7 +1085,7 @@ def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> s
 
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 92
+# %% ../nbs/Mkdocs.ipynb 96
 def _build_summary(
     root_path: str,
     module: str,
@@ -1081,7 +1141,7 @@ def _build_summary(
     with open(docs_path / "SUMMARY.md", mode="w") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 95
+# %% ../nbs/Mkdocs.ipynb 99
 def _copy_cname_if_needed(root_path: str) -> None:
     """Copy the CNAME file to mkdocs/docs/CNAME if it's not already present.
 
@@ -1105,7 +1165,7 @@ def _copy_cname_if_needed(root_path: str) -> None:
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 97
+# %% ../nbs/Mkdocs.ipynb 101
 def _copy_docs_overrides(root_path: str) -> None:
     """Copy the docs_overrides directory to the mkdocs/docs/overrides directory.
 
@@ -1127,7 +1187,7 @@ def _copy_docs_overrides(root_path: str) -> None:
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 99
+# %% ../nbs/Mkdocs.ipynb 103
 def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevLookup, docs_versioning: str, lib_version: str, use_relative_doc_links: bool) -> None:  # type: ignore
     """Fix the default sym links generated by nbdev in the notebooks
 
@@ -1168,7 +1228,7 @@ def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevL
 
         nbformat.write(_f, file)
 
-# %% ../nbs/Mkdocs.ipynb 102
+# %% ../nbs/Mkdocs.ipynb 106
 def nbdev_mkdocs_docs(
     root_path: str,
     refresh_quarto_settings: bool = False,
@@ -1261,7 +1321,7 @@ def prepare(
         no_mkdocs_build=no_mkdocs_build,
     )
 
-# %% ../nbs/Mkdocs.ipynb 106
+# %% ../nbs/Mkdocs.ipynb 109
 def preview(
     root_path: str, use_relative_doc_links: bool, port: Optional[int] = None
 ) -> None:
