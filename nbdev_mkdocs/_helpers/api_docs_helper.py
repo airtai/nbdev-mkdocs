@@ -41,7 +41,7 @@ def _get_attributes_to_exclude_in_docstring(
     members_list = [
         f'"!^{a}$"'
         for a in dir(symbol)
-        if callable(getattr(symbol, a)) and (not a.startswith("__") or a == "__init__")
+        if callable(getattr(symbol, a)) and (not a.startswith("__"))
     ]
     return f"""    options:
       filters: [{", ".join(members_list)}]"""
@@ -72,7 +72,7 @@ def get_formatted_docstring_for_symbol(
 
         """
         for x, y in getmembers(symbol):
-            if not x.startswith("_") or x == "__init__":
+            if not x.startswith("_"):
                 if isfunction(y) and y.__doc__ is not None:
                     contents += f"{_get_annotated_symbol_definition(y)}\n\n"
                 elif isclass(y) and not x.startswith("__") and y.__doc__ is not None:
