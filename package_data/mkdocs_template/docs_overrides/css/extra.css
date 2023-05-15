@@ -27,3 +27,15 @@
   -webkit-mask-image: var(--md-admonition-icon--danger);
           mask-image: var(--md-admonition-icon--danger);
 }
+
+.md-sidebar.md-sidebar--secondary nav.md-nav.md-nav--secondary > ul > li + li > a {
+	padding-left: 1rem;
+}
+
+.doc.doc-object.doc-class + .doc.doc-object.doc-function h4 {
+	font-size: 0.85em;
+}
+
+.doc.doc-object.doc-function + .doc.doc-object.doc-function h4 {
+	font-size: 0.85em;
+}
