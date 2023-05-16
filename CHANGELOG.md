@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.5.0
+
+### New Features
+
+- Replace static parsing of source files with dynamic import from library when extracting symbols ([#180](https://github.com/airtai/nbdev-mkdocs/pull/180)), thanks to 
+[@harishmohanraj](https://github.com/harishmohanraj)
+
+
 ## 0.4.0
 
 
