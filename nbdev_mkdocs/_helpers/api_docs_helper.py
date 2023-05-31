@@ -6,21 +6,28 @@ __all__ = ['get_formatted_docstring_for_symbol']
 # %% ../../nbs/API_Docs_Helper.ipynb 1
 from typing import *
 import types
+import os
 from pathlib import Path
 from inspect import isfunction, isclass, getmembers, getsourcefile, isroutine
 
 import griffe
 from nbdev.config import get_config
 
-# %% ../../nbs/API_Docs_Helper.ipynb 3
+# %% ../../nbs/API_Docs_Helper.ipynb 4
 def _get_symbol_filepath(symbol: Union[types.FunctionType, Type[Any]]) -> Path:
     config = get_config()
     filepath = getsourcefile(symbol)
     return Path(filepath).relative_to(  # type: ignore
-        filepath.split(f'{config["lib_name"].replace("-", "_")}/')[0]  # type: ignore
+        filepath.split(f'{config["lib_path"].name}/')[0]  # type: ignore
     )
 
-# %% ../../nbs/API_Docs_Helper.ipynb 5
+# %% ../../nbs/API_Docs_Helper.ipynb 7
+def _generate_autodoc(
+    symbol: Union[types.FunctionType, Type[Any]], symbol_path: Path
+) -> str:
+    return f"\n\n::: {os.path.splitext(str(symbol_path).replace('/', '.'))[0]}.{symbol.__name__}\n"
+
+# %% ../../nbs/API_Docs_Helper.ipynb 9
 def _get_annotated_symbol_definition(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
@@ -32,9 +39,9 @@ def _get_annotated_symbol_definition(
         return f"\n\n::: {module}\n"
     except KeyError as e:
         patched_symbol_path = _get_symbol_filepath(symbol)
-        return f"\n\n::: {str(patched_symbol_path.parent)}.{str(patched_symbol_path.stem)}.{symbol.__name__}\n"
+        return _generate_autodoc(symbol, patched_symbol_path)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 8
+# %% ../../nbs/API_Docs_Helper.ipynb 12
 def _get_attributes_to_exclude_in_docstring(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
@@ -46,7 +53,7 @@ def _get_attributes_to_exclude_in_docstring(
     return f"""    options:
       filters: [{", ".join(members_list)}]"""
 
-# %% ../../nbs/API_Docs_Helper.ipynb 10
+# %% ../../nbs/API_Docs_Helper.ipynb 14
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]]
 ) -> str:
