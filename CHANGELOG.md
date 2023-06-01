@@ -2,6 +2,16 @@
 
 <!-- do not remove -->
 
+## 0.5.1
+
+
+### Bugs Squashed
+
+- Fix the misalignment of class methods in the documentation ([#186](https://github.com/airtai/nbdev-mkdocs/pull/186)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+- Fix build failures when the repository and exported library names differ ([#184](https://github.com/airtai/nbdev-mkdocs/pull/184)), thanks to 
+[@harishmohanraj](https://github.com/harishmohanraj)
+
+
 ## 0.5.0
 
 ### New Features
