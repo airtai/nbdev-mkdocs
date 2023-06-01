@@ -1,9 +1,0 @@
-h2#getting-started + p > img, 
-h2#getting-started + p > a > img, 
-h2#getting-started + p + p > img, 
-h2#getting-started + p + p + p > img, 
-h2#getting-started + p + p + p + p > img, 
-h2#getting-started + p + p + p + p + hr
-{
-    display: none;
-}
