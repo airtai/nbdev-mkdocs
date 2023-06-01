@@ -895,7 +895,7 @@ def _update_api_docs(
 ) -> None:
     for symbol in symbols:
         content = ""
-        content += get_formatted_docstring_for_symbol(symbol)
+        content += get_formatted_docstring_for_symbol(symbol, docs_path.parent)
         target_file_path = (
             "/".join(f"{symbol.__module__}.{symbol.__name__}".split(".")) + ".md"
         )
