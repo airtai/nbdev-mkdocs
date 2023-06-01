@@ -121,7 +121,8 @@ def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
 
     """
     with open((mkdocs_path / "mkdocs.yml"), "r") as file:
-        data = yaml.load(file, Loader=yaml.Loader)
+        # nosemgrep: python.lang.security.deserialization.avoid-pyyaml-load.avoid-pyyaml-load
+        data = yaml.load(file, Loader=yaml.Loader)  # nosec: yaml_load
         mkdocstrings_config = [
             i for i in data["plugins"] if isinstance(i, dict) and "mkdocstrings" in i
         ]
