@@ -120,7 +120,7 @@ def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
         RuntimeError: If the mkdocstrings settings cannot be read from the mkdocs.yml file.
 
     """
-    with open((mkdocs_path / "mkdocs.yml"), "r") as file:
+    with open((mkdocs_path / "mkdocs.yml"), "r", encoding="utf-8") as file:
         # nosemgrep: python.lang.security.deserialization.avoid-pyyaml-load.avoid-pyyaml-load
         data = yaml.load(file, Loader=yaml.Loader)  # nosec: yaml_load
         mkdocstrings_config = [

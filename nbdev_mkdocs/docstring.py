@@ -260,7 +260,7 @@ def run_examples_from_docstring(
     for example, executable_example in zip(examples, executable_examples):
         with TemporaryDirectory() as d:
             cmd_path = (Path(d) / "example.py").absolute()
-            with open(cmd_path, "w") as f:
+            with open(cmd_path, "w", encoding="utf-8") as f:
                 f.write(executable_example)
             process = run(  # nosec: B603
                 [sys.executable, str(cmd_path)], capture_output=True, text=True

@@ -69,7 +69,7 @@ def _generate_html_str(root_path: str, image_url: str) -> str:
             get_root_data_path() / "custom-social-image-template.html"
         )
 
-        with open(_custom_social_image_template_path, "r") as f:
+        with open(_custom_social_image_template_path, "r", encoding="utf-8") as f:
             _html_template = f.read()
 
         user_name = get_value_from_config(root_path, "user")
@@ -148,7 +148,7 @@ async def _create_social_image(root_path: str, image_url: str) -> None:
 
     with TemporaryDirectory() as d:
         html_path = Path(d) / "social_image.html"
-        with open(html_path, "w") as f:
+        with open(html_path, "w", encoding="utf-8") as f:
             f.write(html_str)
 
         if is_local_path(image_url):
@@ -231,13 +231,13 @@ def _update_social_image_in_site_overrides(root_path: str, image_url: str) -> No
                 f"Unexpected error: path {site_overrides_path.resolve()} does not exists!"
             )
 
-        with open(site_overrides_path, "r") as f:
+        with open(site_overrides_path, "r", encoding="utf-8") as f:
             _new_text = f.read()
             _pattern = re.compile(r".*?{%.*?image_url = (.*)%}")
             _match = re.search(_pattern, _new_text)
             _new_text = _new_text.replace(_match.group(1), _replace_str)  # type: ignore
 
-        with open(site_overrides_path, "w") as f:
+        with open(site_overrides_path, "w", encoding="utf-8") as f:
             f.write(_new_text)
 
 # %% ../nbs/Social_Image_Generator.ipynb 22
