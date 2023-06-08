@@ -430,10 +430,10 @@ def _update_path_in_markdown(cache_path: Path, doc_path: Path) -> None:
         dir_prefix = str(file.parent)[len(str(cache_path)) + 1 :]
         md = doc_path / f"{dir_prefix}" / f"{file.stem}.md"
 
-        with open(Path(md), "r") as f:
+        with open(Path(md), "r", encoding="utf-8") as f:
             _new_text = f.read()
             _new_text = _replace_all(_new_text, dir_prefix)
-        with open(Path(md), "w") as f:
+        with open(Path(md), "w", encoding="utf-8") as f:
             f.write(_new_text)
 
 
