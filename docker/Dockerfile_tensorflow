@@ -8,21 +8,21 @@ LABEL org.opencontainers.image.source https://github.com/airtai/nbdev-mkdocs
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-mark hold cuda-compat-11-8 cuda-cudart-11-8 cuda-nvtx-11-8 libcusparse-11-8 libnpp-11-8 \
+    libcudnn8 libnvinfer-plugin8 libnvinfer8 cuda-toolkit-config-common
+
 RUN apt update
 
-# security updates
+# # security updates
 RUN apt-get install --only-upgrade linux-libc-dev libssl1.1 openssl
 
-RUN apt-mark hold cuda-compat-11-2 cuda-cudart-11-2 cuda-nvtx-11-2 libcusparse-11-2 libnpp-11-2 \
-      libcudnn8 libnvinfer-plugin7 libnvinfer7
 
-
-# install security updates
-RUN apt update --fix-missing --yes
-RUN apt update -y && apt install --assume-yes \
-  apt-utils git zip curl sudo wget vim fish pip htop nano less wget openssh-client \
-  software-properties-common \
-  && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
+# # install security updates
+ RUN apt update --fix-missing --yes
+ RUN apt update -y && apt install --assume-yes \
+   apt-utils git zip curl sudo wget vim fish pip htop nano less wget openssh-client \
+   software-properties-common \
+   && apt purge --auto-remove && apt clean && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -V
 RUN python3 -m pip install --upgrade pip
@@ -62,11 +62,12 @@ WORKDIR /work
 
 COPY nvtop-20.04 /usr/local/bin/nvtop
 
-# Configure entrypoint and serve jupyter notebook
+# # Configure entrypoint and serve jupyter notebook
 ENTRYPOINT []
 COPY user_startup.sh /var
 RUN chmod 777 /var/user_startup.sh
-CMD ["/bin/bash", "-c", "chown -R $USER /home/$USER && sudo -u $USER /var/user_startup.sh && sudo --preserve-env=\"$PRESERVE_ENVS\" -u $USER PATH=\"$PATH:/home/$USER/.local/bin\" OPENAI_API_KEY=\"$OPENAI_API_KEY\" jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"]
+CMD ["/bin/bash", "-c", "chown -R $USER /home/$USER && rm /usr/lib/x86_64-linux-gnu/libcuda.so.1 && ln -s libcuda.so.470.182.03 /usr/lib/x86_64-linux-gnu/libcuda.so.1 && sudo -u $USER /var/user_startup.sh && sudo --preserve-env=\"$PRESERVE_ENVS\" -u $USER PATH=\"$PATH:/home/$USER/.local/bin\" OPENAI_API_KEY=\"$OPENAI_API_KEY\" jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"]
+
 EXPOSE 8888
 
 COPY set_bob_the_fish.sh /bin
