@@ -97,9 +97,9 @@ def _generate_autodoc_string(
         autodoc, heading_level, show_category_heading, is_root_object
     )
 
-# %% ../../nbs/API_Docs_Helper.ipynb 16
+# %% ../../nbs/API_Docs_Helper.ipynb 14
 def _is_method(symbol: Union[types.FunctionType, Type[Any]]) -> bool:
-    """Check if the given symbol is a method.
+    """Check if the given symbol is a method or a property.
 
     Args:
         symbol: A function or method object to check.
@@ -109,7 +109,7 @@ def _is_method(symbol: Union[types.FunctionType, Type[Any]]) -> bool:
     """
     return ismethod(symbol) or isfunction(symbol) or isinstance(symbol, property)
 
-# %% ../../nbs/API_Docs_Helper.ipynb 18
+# %% ../../nbs/API_Docs_Helper.ipynb 16
 def _filter_attributes_in_autodoc(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Add symbol attributes to exclude in the autodoc string.
 
@@ -129,7 +129,7 @@ def _filter_attributes_in_autodoc(symbol: Union[types.FunctionType, Type[Any]]) 
     return f"""    options:
       filters: [{", ".join(members_list)}]"""
 
-# %% ../../nbs/API_Docs_Helper.ipynb 20
+# %% ../../nbs/API_Docs_Helper.ipynb 18
 def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
     """Get the mkdocstring configuration from the mkdocs.yml file.
 
@@ -162,7 +162,7 @@ def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
 
     return heading_level, show_category_heading
 
-# %% ../../nbs/API_Docs_Helper.ipynb 24
+# %% ../../nbs/API_Docs_Helper.ipynb 22
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]], mkdocs_path: Path
 ) -> str:
