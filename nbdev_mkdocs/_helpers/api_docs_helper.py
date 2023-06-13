@@ -8,7 +8,15 @@ from typing import *
 import types
 import os
 from pathlib import Path
-from inspect import isfunction, isclass, getmembers, getsourcefile, isroutine
+from inspect import (
+    isfunction,
+    isclass,
+    getmembers,
+    getsourcefile,
+    isroutine,
+    ismethod,
+    isclass,
+)
 
 import griffe
 import yaml
@@ -73,6 +81,8 @@ def _generate_autodoc_string(
         The generated autodoc string with the appropriate heading level and options.
 
     """
+    if isinstance(symbol, property):
+        symbol = symbol.fget
     try:
         module = f"{symbol.__module__}.{symbol.__qualname__}"
         parsed_module = griffe.load(module)
@@ -87,7 +97,19 @@ def _generate_autodoc_string(
         autodoc, heading_level, show_category_heading, is_root_object
     )
 
-# %% ../../nbs/API_Docs_Helper.ipynb 15
+# %% ../../nbs/API_Docs_Helper.ipynb 16
+def _is_method(symbol: Union[types.FunctionType, Type[Any]]) -> bool:
+    """Check if the given symbol is a method.
+
+    Args:
+        symbol: A function or method object to check.
+
+    Returns:
+        A boolean indicating whether the symbol is a method.
+    """
+    return ismethod(symbol) or isfunction(symbol) or isinstance(symbol, property)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 18
 def _filter_attributes_in_autodoc(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Add symbol attributes to exclude in the autodoc string.
 
@@ -99,14 +121,15 @@ def _filter_attributes_in_autodoc(symbol: Union[types.FunctionType, Type[Any]]) 
 
     """
     members_list = [
-        f'"!^{a}$"'
-        for a in dir(symbol)
-        if callable(getattr(symbol, a)) and (not a.startswith("__"))
+        f'"!^{x}$"'
+        for x, y in getmembers(symbol)
+        # do not add __init__ to filters else Functions sections will not render in sidenav
+        if _is_method(y) and x != "__init__"
     ]
     return f"""    options:
       filters: [{", ".join(members_list)}]"""
 
-# %% ../../nbs/API_Docs_Helper.ipynb 17
+# %% ../../nbs/API_Docs_Helper.ipynb 20
 def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
     """Get the mkdocstring configuration from the mkdocs.yml file.
 
@@ -139,7 +162,7 @@ def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
 
     return heading_level, show_category_heading
 
-# %% ../../nbs/API_Docs_Helper.ipynb 21
+# %% ../../nbs/API_Docs_Helper.ipynb 24
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]], mkdocs_path: Path
 ) -> str:
@@ -174,13 +197,13 @@ def get_formatted_docstring_for_symbol(
         """
         for x, y in getmembers(symbol):
             if not x.startswith("_"):
-                if isfunction(y) and y.__doc__ is not None:
+                if _is_method(y) and y.__doc__ is not None:
                     contents += f"{_generate_autodoc_string(y, heading_level=heading_level, show_category_heading=show_category_heading, is_root_object=False)}\n\n"
-                elif isclass(y) and not x.startswith("__") and y.__doc__ is not None:
-                    contents += "\n" + _filter_attributes_in_autodoc(y) + "\n\n"
-                    contents = traverse(
-                        y, contents, heading_level, show_category_heading
-                    )
+        #                 elif isclass(y) and not x.startswith("_") and y.__doc__ is not None:
+        #                     contents += "\n" + _filter_attributes_in_autodoc(y) + "\n\n"
+        #                     contents = traverse(
+        #                         y, contents, heading_level, show_category_heading
+        #                     )
         return contents
 
     if symbol.__doc__ is None:
