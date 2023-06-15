@@ -93,8 +93,8 @@ def _generate_autodoc_string(
         The generated autodoc string with the appropriate heading level and options.
 
     """
-    #     if isinstance(symbol, property):
-    #         symbol = symbol.fget
+    if isinstance(type(symbol), property):
+        symbol = symbol.fget
     try:
         module = f"{symbol.__module__}.{symbol.__qualname__}"
         parsed_module = griffe.load(module)
