@@ -62,6 +62,18 @@ def _add_mkdocstring_header_config(
     return autodoc
 
 # %% ../../nbs/API_Docs_Helper.ipynb 12
+def _is_method(symbol: Union[types.FunctionType, Type[Any]]) -> bool:
+    """Check if the given symbol is a method or a property.
+
+    Args:
+        symbol: A function or method object to check.
+
+    Returns:
+        A boolean indicating whether the symbol is a method.
+    """
+    return ismethod(symbol) or isfunction(symbol) or isinstance(symbol, property)
+
+# %% ../../nbs/API_Docs_Helper.ipynb 14
 def _generate_autodoc_string(
     symbol: Union[types.FunctionType, Type[Any]],
     *,
@@ -97,19 +109,7 @@ def _generate_autodoc_string(
         autodoc, heading_level, show_category_heading, is_root_object
     )
 
-# %% ../../nbs/API_Docs_Helper.ipynb 14
-def _is_method(symbol: Union[types.FunctionType, Type[Any]]) -> bool:
-    """Check if the given symbol is a method or a property.
-
-    Args:
-        symbol: A function or method object to check.
-
-    Returns:
-        A boolean indicating whether the symbol is a method.
-    """
-    return ismethod(symbol) or isfunction(symbol) or isinstance(symbol, property)
-
-# %% ../../nbs/API_Docs_Helper.ipynb 16
+# %% ../../nbs/API_Docs_Helper.ipynb 17
 def _filter_attributes_in_autodoc(symbol: Union[types.FunctionType, Type[Any]]) -> str:
     """Add symbol attributes to exclude in the autodoc string.
 
@@ -129,7 +129,7 @@ def _filter_attributes_in_autodoc(symbol: Union[types.FunctionType, Type[Any]]) 
     return f"""    options:
       filters: [{", ".join(members_list)}]"""
 
-# %% ../../nbs/API_Docs_Helper.ipynb 18
+# %% ../../nbs/API_Docs_Helper.ipynb 19
 def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
     """Get the mkdocstring configuration from the mkdocs.yml file.
 
@@ -162,7 +162,7 @@ def _get_mkdocstring_config(mkdocs_path: Path) -> Tuple[int, bool]:
 
     return heading_level, show_category_heading
 
-# %% ../../nbs/API_Docs_Helper.ipynb 22
+# %% ../../nbs/API_Docs_Helper.ipynb 23
 def get_formatted_docstring_for_symbol(
     symbol: Union[types.FunctionType, Type[Any]], mkdocs_path: Path
 ) -> str:
@@ -199,11 +199,6 @@ def get_formatted_docstring_for_symbol(
             if not x.startswith("_"):
                 if _is_method(y) and y.__doc__ is not None:
                     contents += f"{_generate_autodoc_string(y, heading_level=heading_level, show_category_heading=show_category_heading, is_root_object=False)}\n\n"
-        #                 elif isclass(y) and not x.startswith("_") and y.__doc__ is not None:
-        #                     contents += "\n" + _filter_attributes_in_autodoc(y) + "\n\n"
-        #                     contents = traverse(
-        #                         y, contents, heading_level, show_category_heading
-        #                     )
         return contents
 
     if symbol.__doc__ is None:
