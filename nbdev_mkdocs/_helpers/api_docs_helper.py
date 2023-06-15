@@ -93,7 +93,7 @@ def _generate_autodoc_string(
         The generated autodoc string with the appropriate heading level and options.
 
     """
-    if isinstance(type(symbol), property):
+    if isinstance(symbol, property):
         symbol = symbol.fget
     try:
         module = f"{symbol.__module__}.{symbol.__qualname__}"
