@@ -100,11 +100,11 @@ def _create_generate_social_img_sub_cmd(_app: typer.Typer = _app) -> None:
         ),
         prompt: str = typer.Option(
             "Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render",
-            help="The prompt to use for generating the image.",
+            help="The prompt to use for generating the image. Please pass this option only when using 'dall_e' as the generator.",
         ),
         image_path: Optional[str] = typer.Option(
             None,
-            help="Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used.",
+            help="Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used. Please pass this option only when using 'file' as the generator.",
         ),
     ) -> None:
         """CLI command for generating a custom social share image"""
