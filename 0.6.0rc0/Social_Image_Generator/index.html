@@ -1120,10 +1120,10 @@
     <span class="k">assert</span> <span class="p">(</span><span class="n">png_path</span> <span class="o">/</span> <span class="s2">&quot;social_image.2.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
     <span class="k">assert</span> <span class="p">(</span><span class="n">png_path</span> <span class="o">/</span> <span class="s2">&quot;social_image.3.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp16hxplap/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
-Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp16hxplap/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
-Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp16hxplap/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
-Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp16hxplap/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
+<div class="highlight"><pre><span></span><code>Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp6uqfce6e/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
+Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp6uqfce6e/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
+Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp6uqfce6e/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
+Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp6uqfce6e/dst_path/mkdocs/docs_overrides/images/social_image.png&#39;
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
     <span class="n">mkdocs_dir_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs&quot;</span> <span class="o">/</span> <span class="s2">&quot;docs_overrides&quot;</span> <span class="o">/</span> <span class="s2">&quot;images&quot;</span>
@@ -1140,7 +1140,7 @@ Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqk
     <span class="n">png_path</span> <span class="o">=</span> <span class="n">mkdocs_dir_path</span> <span class="o">/</span> <span class="s2">&quot;social_image.png&quot;</span>
     <span class="k">assert</span> <span class="n">png_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp4601wh7k/mkdocs/docs_overrides/images/social_image.png&#39;
+<div class="highlight"><pre><span></span><code>Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpj_4m6w6w/mkdocs/docs_overrides/images/social_image.png&#39;
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="n">test_mkdocs_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">site_name: Test site</span>
@@ -1310,22 +1310,23 @@ extra:
     <span class="k">with</span> <span class="n">mkdocs_yml_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">test_mkdocs_yml</span><span class="p">)</span>
 
-    <span class="n">image_url</span> <span class="o">=</span> <span class="s2">&quot;https://my-random-domain/sample.png&quot;</span>
-    <span class="n">_update_social_image_in_mkdocs_yml</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">image_url</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">image_url</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;https://my-random-domain/sample.png&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sample-image.png&quot;</span><span class="p">)]:</span>
+        <span class="n">_update_social_image_in_mkdocs_yml</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">image_url</span><span class="p">)</span>
+        <span class="n">yaml</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs/mkdocs.yml&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;overrides/images/social_image.png&quot;</span>
+    <span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
 
-    <span class="n">yaml</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs/mkdocs.yml&quot;</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">])</span>
-    <span class="k">assert</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">image_url</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
-
-    <span class="n">image_url</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sample-image.png&quot;</span>
+    <span class="n">image_url</span> <span class="o">=</span> <span class="s2">&quot;https://opengraph.githubassets.com/13123.123/user/repo/sample.png&quot;</span>
     <span class="n">_update_social_image_in_mkdocs_yml</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">image_url</span><span class="p">)</span>
 
     <span class="n">yaml</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs/mkdocs.yml&quot;</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">])</span>
     <span class="k">assert</span> <span class="p">(</span>
-        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;overrides/images/social_image.png&quot;</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">image_url</span>
     <span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
 
     <span class="k">with</span> <span class="n">mkdocs_yml_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1334,9 +1335,10 @@ extra:
     <span class="nb">print</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
     <span class="k">assert</span> <span class="s2">&quot;!%21&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">contents</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpl1wm149b/mkdocs/docs_overrides/images/social_image.png&#39;
-https://my-random-domain/sample.png
+<div class="highlight"><pre><span></span><code>Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpc1i3ujc1/mkdocs/docs_overrides/images/social_image.png&#39;
 overrides/images/social_image.png
+overrides/images/social_image.png
+https://opengraph.githubassets.com/13123.123/user/repo/sample.png
 site_name: Test site
 theme:
   name: material
@@ -1375,7 +1377,7 @@ markdown_extensions:
     emoji_index: !!python/name:materialx.emoji.twemoji
     emoji_generator: !!python/name:materialx.emoji.to_svg
 extra:
-  social_image: &quot;overrides/images/social_image.png&quot;
+  social_image: &quot;https://opengraph.githubassets.com/13123.123/user/repo/sample.png&quot;
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
     <span class="n">site_overrides_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs&quot;</span> <span class="o">/</span> <span class="s2">&quot;site_overrides&quot;</span>
@@ -1385,9 +1387,7 @@ extra:
         <span class="p">(</span><span class="n">site_overrides_path</span> <span class="o">/</span> <span class="s2">&quot;main.html&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="n">image_url</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;random-image.png&quot;</span>
-    <span class="n">_update_social_image_in_site_overrides</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">image_url</span><span class="p">)</span>
-
+    <span class="n">_update_social_image_in_site_overrides</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">((</span><span class="n">site_overrides_path</span> <span class="o">/</span> <span class="s2">&quot;main.html&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">actual</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
@@ -1407,59 +1407,7 @@ extra:
   {% elif page and page.title and not page.is_homepage %}
     {% set title = title ~ &quot; - &quot; ~ page.title | striptags %}
   {% endif %}
-  {% set trailing_slash = &quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot; %}
   {% set image_url = config.site_url ~ (&quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot;) ~ config.extra.social_image %}
-  &lt;meta property=&quot;og:type&quot; content=&quot;website&quot; /&gt;
-  &lt;meta property=&quot;og:title&quot; content=&quot;{{ title }}&quot; /&gt;
-  &lt;meta property=&quot;og:description&quot; content=&quot;{{ config.site_description }}&quot; /&gt;
-  &lt;meta property=&quot;og:url&quot; content=&quot;{{ page.canonical_url }}&quot; /&gt;
-  &lt;meta property=&quot;og:image&quot; content=&quot;{{ image_url }}&quot; /&gt;
-  &lt;meta property=&quot;og:image:type&quot; content=&quot;image/png&quot; /&gt;
-  &lt;meta property=&quot;og:image:width&quot; content=&quot;1200&quot; /&gt;
-  &lt;meta property=&quot;og:image:height&quot; content=&quot;630&quot; /&gt;
-
-  &lt;meta name=&quot;twitter:card&quot; content=&quot;summary_large_image&quot; /&gt;
-  &lt;meta name=&quot;twitter:title&quot; content=&quot;{{ title }}&quot; /&gt;
-  &lt;meta name=&quot;twitter:description&quot; content=&quot;{{ config.site_description }}&quot; /&gt;
-  &lt;meta name=&quot;twitter:image&quot; content=&quot;{{ image_url }}&quot; /&gt;
-{% endblock %}
-
-{% block outdated %}
-  You&#39;re not viewing the latest version.
-  &lt;a href=&quot;{{ &#39;../&#39; ~ base_url }}&quot;&gt;
-    &lt;strong&gt;Click here to go to latest.&lt;/strong&gt;
-  &lt;/a&gt;
-{% endblock %}
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
-    <span class="n">site_overrides_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs&quot;</span> <span class="o">/</span> <span class="s2">&quot;site_overrides&quot;</span>
-    <span class="n">site_overrides_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span>
-        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs&quot;</span> <span class="o">/</span> <span class="s2">&quot;site_overrides&quot;</span> <span class="o">/</span> <span class="s2">&quot;main.html&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">site_overrides_path</span> <span class="o">/</span> <span class="s2">&quot;main.html&quot;</span><span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="n">image_url</span> <span class="o">=</span> <span class="s2">&quot;https://random-domain/random-image.png&quot;</span>
-    <span class="n">_update_social_image_in_site_overrides</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">image_url</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">((</span><span class="n">site_overrides_path</span> <span class="o">/</span> <span class="s2">&quot;main.html&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">actual</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
-
-    <span class="k">assert</span> <span class="s2">&quot;{</span><span class="si">% s</span><span class="s2">et image_url = config.extra.social_image %}&quot;</span> <span class="ow">in</span> <span class="n">actual</span><span class="p">,</span> <span class="n">actual</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>{% extends &quot;base.html&quot; %}
-
-{% block extrahead %}
-  {% set title = config.site_name %}
-  {% if page and page.meta and page.meta.title %}
-    {% set title = title ~ &quot; - &quot; ~ page.meta.title %}
-  {% elif page and page.title and not page.is_homepage %}
-    {% set title = title ~ &quot; - &quot; ~ page.title | striptags %}
-  {% endif %}
-  {% set trailing_slash = &quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot; %}
-  {% set image_url = config.extra.social_image %}
   &lt;meta property=&quot;og:type&quot; content=&quot;website&quot; /&gt;
   &lt;meta property=&quot;og:title&quot; content=&quot;{{ title }}&quot; /&gt;
   &lt;meta property=&quot;og:description&quot; content=&quot;{{ config.site_description }}&quot; /&gt;
@@ -1514,7 +1462,7 @@ extra:
 
     <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Unexpected error: path /private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp2o74__rq/invalid_image_path.png does not exists!
+<div class="highlight"><pre><span></span><code>Unexpected error: path /private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpy1rehpkv/invalid_image_path.png does not exists!
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
     <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;The quick brown fox jumps over a lazy dog&quot;</span>
@@ -1536,7 +1484,7 @@ extra:
         <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">/</span> <span class="n">image_path</span>
     <span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>/private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpg8lh6g5l/valid_image_path.png
+<div class="highlight"><pre><span></span><code>/private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpyey8qlcd/valid_image_path.png
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span>
@@ -1562,7 +1510,7 @@ extra:
         <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;valid_image_path.png&quot;</span>
     <span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>/private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpbyzdgiym/valid_image_path.png
+<div class="highlight"><pre><span></span><code>/private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmppxyhbfkx/valid_image_path.png
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
     <span class="n">generator</span> <span class="o">=</span> <span class="s2">&quot;file&quot;</span>
@@ -1575,11 +1523,11 @@ extra:
         <span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
     <span class="p">),</span> <span class="n">image_url</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>/private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpzozmfb7a/mkdocs/docs_overrides/images/default_social_logo.png
+<div class="highlight"><pre><span></span><code>/private/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpghmlcy1v/mkdocs/docs_overrides/images/default_social_logo.png
 </code></pre></div>
 <hr />
 <p><a
-href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/social_image_generator.py#L317"
+href="https://github.com/airtai/nbdev-mkdocs/blob/main/nbdev_mkdocs/social_image_generator.py#L313"
 target="_blank" style="float:right; font-size:smaller">source</a></p>
 <h3 id="generate_social_image">generate_social_image<a class="headerlink" href="#generate_social_image" title="Permanent link">¤</a></h3>
 <blockquote>
@@ -1637,32 +1585,20 @@ the default image will be used.</p>
         <span class="n">yaml</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;mkdocs/mkdocs.yml&quot;</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">])</span>
-
-        <span class="k">if</span> <span class="n">generator</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="p">(</span>
-                <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;overrides/images/social_image.png&quot;</span>
-            <span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">generator</span> <span class="o">==</span> <span class="s2">&quot;dall_e&quot;</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="p">(</span>
-                <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
-                <span class="o">==</span> <span class="s2">&quot;https://github.com/airtai/nbdev-mkdocs/raw/main/mkdocs/docs_overrides/images/default_social_logo.png&quot;</span>
-            <span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;overrides/images/social_image.png&quot;</span>
+        <span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;social_image&quot;</span><span class="p">]</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">((</span><span class="n">site_overrides_path</span> <span class="o">/</span> <span class="s2">&quot;main.html&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">actual</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
         <span class="nb">print</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">generator</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="p">(</span>
-                <span class="s1">&#39;{</span><span class="si">% s</span><span class="s1">et image_url = config.site_url ~ (&quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot;) ~ config.extra.social_image %}&#39;</span>
-                <span class="ow">in</span> <span class="n">actual</span>
-            <span class="p">),</span> <span class="n">actual</span>
-        <span class="k">elif</span> <span class="n">generator</span> <span class="o">==</span> <span class="s2">&quot;dall_e&quot;</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="s2">&quot;{</span><span class="si">% s</span><span class="s2">et image_url = config.extra.social_image %}&quot;</span> <span class="ow">in</span> <span class="n">actual</span><span class="p">,</span> <span class="n">actual</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="s1">&#39;{</span><span class="si">% s</span><span class="s1">et image_url = config.site_url ~ (&quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot;) ~ config.extra.social_image %}&#39;</span>
+            <span class="ow">in</span> <span class="n">actual</span>
+        <span class="p">),</span> <span class="n">actual</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>************************************************************************************************************************
-Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp1mgox1ev/mkdocs/docs_overrides/images/social_image.png&#39;
+Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpviw_z2gw/mkdocs/docs_overrides/images/social_image.png&#39;
 overrides/images/social_image.png
 {% extends &quot;base.html&quot; %}
 
@@ -1673,7 +1609,6 @@ overrides/images/social_image.png
   {% elif page and page.title and not page.is_homepage %}
     {% set title = title ~ &quot; - &quot; ~ page.title | striptags %}
   {% endif %}
-  {% set trailing_slash = &quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot; %}
   {% set image_url = config.site_url ~ (&quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot;) ~ config.extra.social_image %}
   &lt;meta property=&quot;og:type&quot; content=&quot;website&quot; /&gt;
   &lt;meta property=&quot;og:title&quot; content=&quot;{{ title }}&quot; /&gt;
@@ -1700,8 +1635,8 @@ overrides/images/social_image.png
 
 
 ************************************************************************************************************************
-Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmpuomv88ni/mkdocs/docs_overrides/images/social_image.png&#39;
-https://github.com/airtai/nbdev-mkdocs/raw/main/mkdocs/docs_overrides/images/default_social_logo.png
+Social share image generated and saved at: &#39;/var/folders/6n/3rjds7v52cd83wqkd565db0h0000gn/T/tmp3j5_bo6n/mkdocs/docs_overrides/images/social_image.png&#39;
+overrides/images/social_image.png
 {% extends &quot;base.html&quot; %}
 
 {% block extrahead %}
@@ -1711,8 +1646,7 @@ https://github.com/airtai/nbdev-mkdocs/raw/main/mkdocs/docs_overrides/images/def
   {% elif page and page.title and not page.is_homepage %}
     {% set title = title ~ &quot; - &quot; ~ page.title | striptags %}
   {% endif %}
-  {% set trailing_slash = &quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot; %}
-  {% set image_url = config.extra.social_image %}
+  {% set image_url = config.site_url ~ (&quot;&quot; if config.site_url.endswith(&quot;/&quot;) else &quot;/&quot;) ~ config.extra.social_image %}
   &lt;meta property=&quot;og:type&quot; content=&quot;website&quot; /&gt;
   &lt;meta property=&quot;og:title&quot; content=&quot;{{ title }}&quot; /&gt;
   &lt;meta property=&quot;og:description&quot; content=&quot;{{ config.site_description }}&quot; /&gt;

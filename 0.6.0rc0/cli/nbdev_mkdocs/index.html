@@ -1232,8 +1232,8 @@
 <ul>
 <li><code>--root-path TEXT</code>: Project's root path.  [default: .]</li>
 <li><code>--generator [file|dall_e]</code>: Generator to use to create the social image. Valid options are: 'file' and 'dall_e'. Choose 'file' if you want to use an existing image from your local machine in the social share image.  [default: file]</li>
-<li><code>--prompt TEXT</code>: The prompt to use for generating the image.  [default: Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render]</li>
-<li><code>--image-path TEXT</code>: Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used.</li>
+<li><code>--prompt TEXT</code>: The prompt to use for generating the image. Please pass this option only when using 'dall_e' as the generator.  [default: Cute animal wearing hoodie sitting in high chair in purple room, browsing computer, 3d render]</li>
+<li><code>--image-path TEXT</code>: Image file path to use in the social share image. Use images with a 1:1 aspect ratio and at least 512x512 pixels for the best results. If None, then the default image will be used. Please pass this option only when using 'file' as the generator.</li>
 <li><code>--help</code>: Show this message and exit.</li>
 </ul>
 
