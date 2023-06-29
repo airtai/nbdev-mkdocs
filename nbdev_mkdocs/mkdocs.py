@@ -806,17 +806,27 @@ def _import_all_members(module_name: str) -> List[str]:
     return names
 
 # %% ../nbs/Mkdocs.ipynb 68
+def _merge_lists(members: List[str], submodules: List[str]) -> List[str]:
+    members_copy = members[:]
+    for sm in submodules:
+        for i, el in enumerate(members_copy):
+            if el.startswith(sm):
+                members_copy.insert(i, sm)
+                break
+    return members_copy
+
+
 def _add_all_submodules(members: List[str]) -> List[str]:
     def _f(x: str) -> List[str]:
         xs = x.split(".")
         return [".".join(xs[:i]) + "." for i in range(1, len(xs))]
 
     submodules = list(set(itertools.chain(*[_f(x) for x in members])))
-    members = members + submodules
-    members = sorted(set(members))
+    members = _merge_lists(members, submodules)
+    members = list(dict.fromkeys(members))
     return members
 
-# %% ../nbs/Mkdocs.ipynb 71
+# %% ../nbs/Mkdocs.ipynb 72
 def _get_api_summary_item(x: str) -> str:
     xs = x.split(".")
     if x.endswith("."):
@@ -826,11 +836,11 @@ def _get_api_summary_item(x: str) -> str:
         indent = " " * (4 * (len(xs)))
         return f"{indent}- [{xs[-1]}](api/{'/'.join(xs)}.md)"
 
-# %% ../nbs/Mkdocs.ipynb 73
+# %% ../nbs/Mkdocs.ipynb 74
 def _get_api_summary(members: List[str]) -> str:
     return "\n".join([_get_api_summary_item(x) for x in members]) + "\n"
 
-# %% ../nbs/Mkdocs.ipynb 75
+# %% ../nbs/Mkdocs.ipynb 76
 def _get_submodule_members(module_name: str) -> List[str]:
     """Get a list of all submodules contained within the module.
 
@@ -847,7 +857,7 @@ def _get_submodule_members(module_name: str) -> List[str]:
     ]
     return members_with_submodules_str
 
-# %% ../nbs/Mkdocs.ipynb 77
+# %% ../nbs/Mkdocs.ipynb 78
 def _load_submodules(
     module_name: str, members_with_submodules: List[str]
 ) -> List[Union[types.FunctionType, Type[Any]]]:
@@ -871,7 +881,7 @@ def _load_submodules(
     ]
     return names
 
-# %% ../nbs/Mkdocs.ipynb 79
+# %% ../nbs/Mkdocs.ipynb 80
 def _generate_api_doc(name: str, docs_path: Path) -> Path:
     xs = name.split(".")
     module_name = ".".join(xs[:-1])
@@ -885,11 +895,11 @@ def _generate_api_doc(name: str, docs_path: Path) -> Path:
 
     return path
 
-# %% ../nbs/Mkdocs.ipynb 81
+# %% ../nbs/Mkdocs.ipynb 82
 def _generate_api_docs(members: List[str], docs_path: Path) -> List[Path]:
     return [_generate_api_doc(x, docs_path) for x in members if not x.endswith(".")]
 
-# %% ../nbs/Mkdocs.ipynb 83
+# %% ../nbs/Mkdocs.ipynb 84
 def _update_api_docs(
     symbols: List[Union[types.FunctionType, Type[Any]]], docs_path: Path
 ) -> None:
@@ -905,7 +915,7 @@ def _update_api_docs(
         ) as f:
             f.write(content)
 
-# %% ../nbs/Mkdocs.ipynb 86
+# %% ../nbs/Mkdocs.ipynb 87
 def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
     """Generate API documentation for a module.
 
@@ -938,7 +948,7 @@ def _generate_api_docs_for_module(root_path: str, module_name: str) -> str:
 
 #     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 88
+# %% ../nbs/Mkdocs.ipynb 89
 def _restrict_line_length(s: str, width: int = 80) -> str:
     """Restrict the line length of a string.
 
@@ -966,7 +976,7 @@ def _restrict_line_length(s: str, width: int = 80) -> str:
                 _s += "\n" + line + "\n" if line.endswith(":") else " " + line + "\n"
     return _s
 
-# %% ../nbs/Mkdocs.ipynb 90
+# %% ../nbs/Mkdocs.ipynb 91
 def _generate_cli_doc_for_submodule(
     root_path: str, docs_dir_name: str, cmd: str
 ) -> str:
@@ -1059,7 +1069,7 @@ def _generate_cli_docs_for_module(root_path: str, module_name: str) -> str:
 
     return textwrap.indent(submodule_summary, prefix=" " * 4)
 
-# %% ../nbs/Mkdocs.ipynb 94
+# %% ../nbs/Mkdocs.ipynb 95
 def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> str:
     """Copy the CHANGELOG.md file to the docs folder if it's not already present.
 
@@ -1087,7 +1097,7 @@ def _copy_change_log_if_exists(root_path: str, docs_path: Union[Path, str]) -> s
 
     return changelog
 
-# %% ../nbs/Mkdocs.ipynb 97
+# %% ../nbs/Mkdocs.ipynb 98
 def _build_summary(
     root_path: str,
     module: str,
@@ -1145,7 +1155,7 @@ def _build_summary(
     with open(docs_path / "SUMMARY.md", mode="w", encoding="utf-8") as f:
         f.write(summary)
 
-# %% ../nbs/Mkdocs.ipynb 100
+# %% ../nbs/Mkdocs.ipynb 101
 def _copy_cname_if_needed(root_path: str) -> None:
     """Copy the CNAME file to mkdocs/docs/CNAME if it's not already present.
 
@@ -1169,7 +1179,7 @@ def _copy_cname_if_needed(root_path: str) -> None:
             f"File '{cname_path.resolve()}' not found, skipping copying..",
         )
 
-# %% ../nbs/Mkdocs.ipynb 102
+# %% ../nbs/Mkdocs.ipynb 103
 def _copy_docs_overrides(root_path: str) -> None:
     """Copy the docs_overrides directory to the mkdocs/docs/overrides directory.
 
@@ -1191,7 +1201,7 @@ def _copy_docs_overrides(root_path: str) -> None:
     shutil.rmtree(dst_path, ignore_errors=True)
     shutil.copytree(src_path, dst_path)
 
-# %% ../nbs/Mkdocs.ipynb 104
+# %% ../nbs/Mkdocs.ipynb 105
 def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevLookup, docs_versioning: str, lib_version: str, use_relative_doc_links: bool) -> None:  # type: ignore
     """Fix the default sym links generated by nbdev in the notebooks
 
@@ -1232,7 +1242,7 @@ def _fix_sym_links_in_nbs(root_path: str, cache_path: Path, nbdev_lookup: NbdevL
 
         nbformat.write(_f, file)
 
-# %% ../nbs/Mkdocs.ipynb 107
+# %% ../nbs/Mkdocs.ipynb 108
 def nbdev_mkdocs_docs(
     root_path: str,
     refresh_quarto_settings: bool = False,
@@ -1325,7 +1335,7 @@ def prepare(
         no_mkdocs_build=no_mkdocs_build,
     )
 
-# %% ../nbs/Mkdocs.ipynb 110
+# %% ../nbs/Mkdocs.ipynb 111
 def preview(
     root_path: str, use_relative_doc_links: bool, port: Optional[int] = None
 ) -> None:
