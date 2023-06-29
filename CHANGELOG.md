@@ -2,6 +2,21 @@
 
 <!-- do not remove -->
 
+## 0.6.0
+
+
+### New Features 
+
+- Support for Python 3.7 has been removed. 
+
+
+### Bugs Squashed
+
+- Add correct URL to mkdocs config file when executing the social image generate CLI command ([#202](https://github.com/airtai/nbdev-mkdocs/pull/202)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+- Fix docs build failure on Windows ([#194](https://github.com/airtai/nbdev-mkdocs/pull/194)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+
 ## 0.5.1
 
 
