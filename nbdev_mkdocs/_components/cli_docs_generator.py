@@ -25,7 +25,7 @@ def update_readme() -> None:
     contents = fix_sym_links(
         s=contents,
         nbdev_lookup=NbdevLookup(incl_libs=cfg.lib_name.replace("_", "-")),
-        docs_versioning=cfg.docs_versioning,
+        docs_versioning=cfg.get("docs_versioning", ""),
         lib_version=cfg.version,
         use_relative_doc_links=False,
         use_latest_doc_version=True,
