@@ -581,8 +581,9 @@ def _read_sidebar_from_yml(root_path: str) -> List[Union[str, Any]]:
 
     custom_sidebar = get_value_from_config(root_path, "custom_sidebar")
     if custom_sidebar == "False":
-        cmd = f'cd "{root_path}" && nbdev_docs'
+        cmd = f'cd "{root_path}" && nbdev_sidebar'
         _sprun(cmd)
+        _ = proc_nbs()
 
     return (
         _get_sidebar_from_config(sidebar_yml_path)
