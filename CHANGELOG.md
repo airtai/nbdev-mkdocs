@@ -2,6 +2,19 @@
 
 <!-- do not remove -->
 
+## 0.6.1
+
+### New Features
+
+- Create new CLI command "nbdev mkdocs readme" ([#206](https://github.com/airtai/nbdev-mkdocs/pull/206)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+### Bugs Squashed
+
+- Do not run "nbdev_docs" while running "nbdev_mkdocs docs" ([#208](https://github.com/airtai/nbdev-mkdocs/pull/208)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+- AttributeError: module 'openai' has no attribute 'error ([#212](https://github.com/airtai/nbdev-mkdocs/issues/212)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+
 ## 0.6.0
 
 
