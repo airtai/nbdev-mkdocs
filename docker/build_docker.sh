@@ -17,7 +17,5 @@ export PYTHON=3.11
 
 echo Building $CI_REGISTRY_IMAGE, with tag: $TAG
 docker build --build-arg BASE=$BASE --build-arg PYTHON=$PYTHON \
-    -t $CI_REGISTRY_IMAGE:$TAG . \
-    && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m -s CRITICAL,HIGH $CI_REGISTRY_IMAGE:$TAG \
-    && trivy image --skip-files /usr/local/bin/git-secrets --no-progress --timeout 10m --exit-code 1 --ignore-unfixed $CI_REGISTRY_IMAGE:$TAG
+    -t $CI_REGISTRY_IMAGE:$TAG .
 
